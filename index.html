@@ -174,12 +174,12 @@ a{color:inherit}
 /* ═══════════════════════════════════════════════════════════════════════
    CONFIG — the one line you change.
 
-   Leave empty and the app runs offline with the three researched packs.
-   Paste your Cloudflare Worker URL here once it is deployed and live
-   lookup for any city switches on. Nothing else in this file changes.
+   Live lookup works with this EMPTY. It runs straight from the browser
+   against four open, keyless endpoints. No account, no server, nothing
+   to deploy, nothing to pay for.
 
-   The Worker is specified in "First Bite — Pipeline Specification v2".
-   It is blocked on two decisions, spec sections 12.1 and 12.2.
+   Setting a Cloudflare Worker URL here only OVERRIDES that path, if you
+   ever want the richer pipeline from the v2 specification.
    ═══════════════════════════════════════════════════════════════════════ */
 const WORKER_URL = "";
 
@@ -197,7 +197,7 @@ const SV={
 const LANGS=[["en","English"],["de","Deutsch"],["fr","Français"],["es","Español"],["it","Italiano"],["pt","Português"],["nl","Nederlands"],["pl","Polski"],["hi","हिन्दी"],["ta","தமிழ்"],["te","తెలుగు"],["bn","বাংলা"],["mr","मराठी"],["kn","ಕನ್ನಡ"]];
 
 const T={
- en:{ver:"Verified",one:"Single source",noshop:"No source names a shop for this",directions:"Directions",howver:"How this was checked",ver2:"Two independent sources name it.",ver1:"One source only. Judge it yourself.",ver0:"Not verified. Listed for completeness.",opensrc:"Open source",nowk:"Live lookup for a new city needs the Worker from the v2 specification, and it is not deployed yet. The three researched packs below work offline.",greet:"Hi. Where are you?",say:"Share your location, or type any city name. Cities without a researched pack are looked up live.",loc:"Use my location",tph:"Type any city name",go:"Go",or:"Researched packs",lang:"Language",
+ en:{whyshop:"Matched on shop type:",whynotable:"notable enough for its own Wikidata entry",whysince:"recorded open since",warnlive:"Wikidata records no origin for this dish, so it is listed as regional rather than local.",liveGap:"Assembled live from open data. Wikidata decides what each dish is and where it comes from, as recorded facts rather than keyword guesses. Shops come from OpenStreetMap, ranked by notability signals and not by reputation, because no food writing was read. A researched pack names the best shop instead.",ver:"Verified",one:"Single source",noshop:"No source names a shop for this",directions:"Directions",howver:"How this was checked",ver2:"Two independent sources name it.",ver1:"One source only. Judge it yourself.",ver0:"Not verified. Listed for completeness.",opensrc:"Open source",nowk:"Live lookup for a new city needs the Worker from the v2 specification, and it is not deployed yet. The three researched packs below work offline.",greet:"Hi. Where are you?",say:"Share your location, or type any city name. Cities without a researched pack are looked up live.",loc:"Use my location",tph:"Type any city name",go:"Go",or:"Researched packs",lang:"Language",
   lnote:"Dish and place names stay in the local language so you can say them out loud.",items:"things to eat",
   excl:"Exclusively here",mustM:"Must try",doneM:"Completed",hMust:"Must try",hAll:"Overall",
   sMust:"Must try",sWorth:"Worth to try",sTrip:"Day trip",sAll:"Complete",
@@ -210,7 +210,7 @@ const T={
   noTrip:"No day-trip dishes for this city yet. A live lookup cannot judge what is worth travelling for.",
   lfail:"The live lookup could not reach the open internet from this page. It works when the file is hosted on your own domain, where the browser is allowed to call OpenStreetMap and Wikipedia.",
   lnone:"Nothing edible came back for that name. Check the spelling, or try the nearest larger town.",lback:"Back"},
- de:{ver:"Geprüft",one:"Eine Quelle",noshop:"Keine Quelle nennt dafür ein Lokal",directions:"Route",howver:"Wie das geprüft wurde",ver2:"Zwei unabhängige Quellen nennen es.",ver1:"Nur eine Quelle. Beurteile selbst.",ver0:"Ungeprüft. Der Vollständigkeit halber gelistet.",opensrc:"Quelle öffnen",nowk:"Die Live-Suche für eine neue Stadt braucht den Worker aus der v2-Spezifikation, und der läuft noch nicht. Die drei recherchierten Pakete unten funktionieren offline.",greet:"Hallo. Wo bist du?",say:"Teile deinen Standort oder gib eine Stadt ein. Städte ohne recherchiertes Paket werden live abgefragt.",loc:"Meinen Standort verwenden",tph:"Beliebige Stadt eingeben",go:"Los",or:"Recherchierte Pakete",lang:"Sprache",
+ de:{whyshop:"Nach Ladentyp zugeordnet:",whynotable:"bedeutend genug für einen eigenen Wikidata-Eintrag",whysince:"offen seit",warnlive:"Wikidata nennt keine Herkunft für dieses Gericht, daher gilt es als regional statt lokal.",liveGap:"Live aus offenen Daten erstellt. Wikidata entscheidet, was ein Gericht ist und woher es kommt, als erfasste Fakten statt als Stichwortraten. Lokale stammen aus OpenStreetMap und sind nach Bekanntheitssignalen sortiert, nicht nach Ruf, denn es wurde keine Küchenliteratur gelesen.",ver:"Geprüft",one:"Eine Quelle",noshop:"Keine Quelle nennt dafür ein Lokal",directions:"Route",howver:"Wie das geprüft wurde",ver2:"Zwei unabhängige Quellen nennen es.",ver1:"Nur eine Quelle. Beurteile selbst.",ver0:"Ungeprüft. Der Vollständigkeit halber gelistet.",opensrc:"Quelle öffnen",nowk:"Die Live-Suche für eine neue Stadt braucht den Worker aus der v2-Spezifikation, und der läuft noch nicht. Die drei recherchierten Pakete unten funktionieren offline.",greet:"Hallo. Wo bist du?",say:"Teile deinen Standort oder gib eine Stadt ein. Städte ohne recherchiertes Paket werden live abgefragt.",loc:"Meinen Standort verwenden",tph:"Beliebige Stadt eingeben",go:"Los",or:"Recherchierte Pakete",lang:"Sprache",
   lnote:"Gerichts- und Lokalnamen bleiben in der Landessprache, damit du sie aussprechen kannst.",items:"Dinge zum Essen",
   excl:"Nur hier",mustM:"Pflicht",doneM:"Erledigt",hMust:"Pflicht",hAll:"Gesamt",
   sMust:"Unbedingt probieren",sWorth:"Lohnt sich",sTrip:"Tagesausflug",sAll:"Vollständig",
@@ -223,7 +223,7 @@ const T={
   noTrip:"Noch keine Ausflugsgerichte für diese Stadt. Eine Live-Abfrage kann nicht beurteilen, wofür eine Reise lohnt.",
   lfail:"Die Live-Abfrage konnte von dieser Seite aus nicht ins offene Internet. Sie funktioniert, wenn die Datei auf deiner eigenen Domain liegt, wo der Browser OpenStreetMap und Wikipedia aufrufen darf.",
   lnone:"Zu diesem Namen kam nichts Essbares zurück. Prüfe die Schreibweise oder versuche die nächstgrößere Stadt.",lback:"Zurück"},
- fr:{ver:"Vérifié",one:"Source unique",noshop:"Aucune source ne nomme de lieu",directions:"Itinéraire",howver:"Comment cela a été vérifié",ver2:"Deux sources indépendantes le nomment.",ver1:"Une seule source. Jugez vous-même.",ver0:"Non vérifié. Listé par souci d'exhaustivité.",opensrc:"Ouvrir la source",nowk:"La recherche en direct exige le Worker de la spécification v2, qui n'est pas encore déployé. Les trois packs étudiés ci-dessous fonctionnent hors ligne.",greet:"Bonjour. Où êtes-vous ?",say:"Partagez votre position ou saisissez une ville. Les villes sans pack étudié sont cherchées en direct.",loc:"Utiliser ma position",tph:"Saisir une ville",go:"OK",or:"Packs étudiés",lang:"Langue",
+ fr:{whyshop:"Associé par type de commerce :",whynotable:"assez notable pour sa propre fiche Wikidata",whysince:"ouvert depuis",warnlive:"Wikidata n'indique aucune origine pour ce plat, il est donc classé régional plutôt que local.",liveGap:"Assemblé en direct à partir de données ouvertes. Wikidata décide de ce qu'est chaque plat et d'où il vient, en faits enregistrés plutôt qu'en devinettes. Les lieux viennent d'OpenStreetMap, classés par signaux de notoriété et non par réputation, car aucune presse culinaire n'a été lue.",ver:"Vérifié",one:"Source unique",noshop:"Aucune source ne nomme de lieu",directions:"Itinéraire",howver:"Comment cela a été vérifié",ver2:"Deux sources indépendantes le nomment.",ver1:"Une seule source. Jugez vous-même.",ver0:"Non vérifié. Listé par souci d'exhaustivité.",opensrc:"Ouvrir la source",nowk:"La recherche en direct exige le Worker de la spécification v2, qui n'est pas encore déployé. Les trois packs étudiés ci-dessous fonctionnent hors ligne.",greet:"Bonjour. Où êtes-vous ?",say:"Partagez votre position ou saisissez une ville. Les villes sans pack étudié sont cherchées en direct.",loc:"Utiliser ma position",tph:"Saisir une ville",go:"OK",or:"Packs étudiés",lang:"Langue",
   lnote:"Les noms de plats et de lieux restent dans la langue locale pour pouvoir les prononcer.",items:"choses à manger",
   excl:"Uniquement ici",mustM:"À goûter",doneM:"Terminé",hMust:"À goûter",hAll:"Total",
   sMust:"À goûter absolument",sWorth:"Ça vaut le coup",sTrip:"Excursion",sAll:"Complet",
@@ -236,7 +236,7 @@ const T={
   noTrip:"Aucun plat d'excursion pour cette ville. Une recherche en direct ne peut juger ce qui vaut le déplacement.",
   lfail:"La recherche en direct n'a pas pu atteindre l'internet depuis cette page. Elle fonctionne si le fichier est hébergé sur votre domaine, où le navigateur peut appeler OpenStreetMap et Wikipédia.",
   lnone:"Rien de comestible n'est revenu pour ce nom. Vérifiez l'orthographe ou essayez la ville voisine plus grande.",lback:"Retour"},
- es:{ver:"Verificado",one:"Una sola fuente",noshop:"Ninguna fuente nombra un local",directions:"Cómo llegar",howver:"Cómo se comprobó",ver2:"Dos fuentes independientes lo nombran.",ver1:"Una sola fuente. Júzgalo tú.",ver0:"Sin verificar. Listado por completitud.",opensrc:"Abrir fuente",nowk:"La consulta en vivo necesita el Worker de la especificación v2, que aún no está desplegado. Los tres packs investigados funcionan sin conexión.",greet:"Hola. ¿Dónde estás?",say:"Comparte tu ubicación o escribe cualquier ciudad. Las ciudades sin pack investigado se consultan en vivo.",loc:"Usar mi ubicación",tph:"Escribe una ciudad",go:"Ir",or:"Packs investigados",lang:"Idioma",
+ es:{whyshop:"Emparejado por tipo de local:",whynotable:"bastante notable para tener ficha propia en Wikidata",whysince:"abierto desde",warnlive:"Wikidata no registra origen para este plato, así que figura como regional y no local.",liveGap:"Montado en vivo con datos abiertos. Wikidata decide qué es cada plato y de dónde viene, como hechos registrados y no como conjeturas. Los locales vienen de OpenStreetMap, ordenados por señales de notoriedad y no por reputación, porque no se leyó prensa gastronómica.",ver:"Verificado",one:"Una sola fuente",noshop:"Ninguna fuente nombra un local",directions:"Cómo llegar",howver:"Cómo se comprobó",ver2:"Dos fuentes independientes lo nombran.",ver1:"Una sola fuente. Júzgalo tú.",ver0:"Sin verificar. Listado por completitud.",opensrc:"Abrir fuente",nowk:"La consulta en vivo necesita el Worker de la especificación v2, que aún no está desplegado. Los tres packs investigados funcionan sin conexión.",greet:"Hola. ¿Dónde estás?",say:"Comparte tu ubicación o escribe cualquier ciudad. Las ciudades sin pack investigado se consultan en vivo.",loc:"Usar mi ubicación",tph:"Escribe una ciudad",go:"Ir",or:"Packs investigados",lang:"Idioma",
   lnote:"Los nombres de platos y locales se mantienen en el idioma local para poder pronunciarlos.",items:"cosas que comer",
   excl:"Solo aquí",mustM:"Imprescindible",doneM:"Completado",hMust:"Imprescindible",hAll:"Total",
   sMust:"Imprescindibles",sWorth:"Vale la pena",sTrip:"Excursión",sAll:"Completo",
@@ -249,7 +249,7 @@ const T={
   noTrip:"Aún no hay platos de excursión para esta ciudad. Una consulta en vivo no puede juzgar qué merece un viaje.",
   lfail:"La consulta en vivo no pudo salir a internet desde esta página. Funciona si el archivo está en tu propio dominio, donde el navegador puede llamar a OpenStreetMap y Wikipedia.",
   lnone:"No volvió nada comestible con ese nombre. Revisa la ortografía o prueba la ciudad grande más cercana.",lback:"Volver"},
- it:{ver:"Verificato",one:"Fonte unica",noshop:"Nessuna fonte nomina un locale",directions:"Indicazioni",howver:"Come è stato verificato",ver2:"Due fonti indipendenti lo nominano.",ver1:"Una sola fonte. Giudica tu.",ver0:"Non verificato. Elencato per completezza.",opensrc:"Apri la fonte",nowk:"La ricerca in diretta richiede il Worker della specifica v2, non ancora attivo. I tre pacchetti studiati qui sotto funzionano offline.",greet:"Ciao. Dove sei?",say:"Condividi la posizione o scrivi una città. Le città senza pacchetto studiato vengono cercate in diretta.",loc:"Usa la mia posizione",tph:"Scrivi una città",go:"Vai",or:"Pacchetti studiati",lang:"Lingua",
+ it:{whyshop:"Abbinato per tipo di locale:",whynotable:"abbastanza noto da avere una scheda Wikidata",whysince:"aperto dal",warnlive:"Wikidata non registra un'origine per questo piatto, quindi risulta regionale e non locale.",liveGap:"Composto in diretta da dati aperti. Wikidata stabilisce cosa sia ogni piatto e da dove venga, come fatti registrati e non come ipotesi. I locali vengono da OpenStreetMap, ordinati per segnali di notorietà e non per reputazione, perché non è stata letta stampa gastronomica.",ver:"Verificato",one:"Fonte unica",noshop:"Nessuna fonte nomina un locale",directions:"Indicazioni",howver:"Come è stato verificato",ver2:"Due fonti indipendenti lo nominano.",ver1:"Una sola fonte. Giudica tu.",ver0:"Non verificato. Elencato per completezza.",opensrc:"Apri la fonte",nowk:"La ricerca in diretta richiede il Worker della specifica v2, non ancora attivo. I tre pacchetti studiati qui sotto funzionano offline.",greet:"Ciao. Dove sei?",say:"Condividi la posizione o scrivi una città. Le città senza pacchetto studiato vengono cercate in diretta.",loc:"Usa la mia posizione",tph:"Scrivi una città",go:"Vai",or:"Pacchetti studiati",lang:"Lingua",
   lnote:"I nomi dei piatti e dei locali restano nella lingua locale, così puoi pronunciarli.",items:"cose da mangiare",
   excl:"Solo qui",mustM:"Da provare",doneM:"Completato",hMust:"Da provare",hAll:"Totale",
   sMust:"Da provare",sWorth:"Ne vale la pena",sTrip:"Gita",sAll:"Completo",
@@ -262,7 +262,7 @@ const T={
   noTrip:"Nessun piatto da gita per questa città. Una ricerca in diretta non può giudicare cosa vale il viaggio.",
   lfail:"La ricerca in diretta non ha raggiunto internet da questa pagina. Funziona se il file è ospitato sul tuo dominio, dove il browser può chiamare OpenStreetMap e Wikipedia.",
   lnone:"Non è tornato nulla di commestibile per quel nome. Controlla l'ortografia o prova la città più grande vicina.",lback:"Indietro"},
- pt:{ver:"Verificado",one:"Fonte única",noshop:"Nenhuma fonte nomeia um local",directions:"Direções",howver:"Como foi verificado",ver2:"Duas fontes independentes nomeiam-no.",ver1:"Apenas uma fonte. Julgue você.",ver0:"Não verificado. Listado por completude.",opensrc:"Abrir fonte",nowk:"A consulta ao vivo precisa do Worker da especificação v2, que ainda não está no ar. Os três pacotes investigados funcionam offline.",greet:"Olá. Onde está?",say:"Partilhe a localização ou escreva qualquer cidade. Cidades sem pacote investigado são consultadas ao vivo.",loc:"Usar a minha localização",tph:"Escreva uma cidade",go:"Ir",or:"Pacotes investigados",lang:"Idioma",
+ pt:{whyshop:"Associado por tipo de estabelecimento:",whynotable:"notável o suficiente para ter ficha própria na Wikidata",whysince:"aberto desde",warnlive:"A Wikidata não regista origem para este prato, pelo que consta como regional e não local.",liveGap:"Montado ao vivo a partir de dados abertos. A Wikidata decide o que é cada prato e de onde vem, como factos registados e não suposições. Os locais vêm do OpenStreetMap, ordenados por sinais de notoriedade e não por reputação, porque não se leu imprensa gastronómica.",ver:"Verificado",one:"Fonte única",noshop:"Nenhuma fonte nomeia um local",directions:"Direções",howver:"Como foi verificado",ver2:"Duas fontes independentes nomeiam-no.",ver1:"Apenas uma fonte. Julgue você.",ver0:"Não verificado. Listado por completude.",opensrc:"Abrir fonte",nowk:"A consulta ao vivo precisa do Worker da especificação v2, que ainda não está no ar. Os três pacotes investigados funcionam offline.",greet:"Olá. Onde está?",say:"Partilhe a localização ou escreva qualquer cidade. Cidades sem pacote investigado são consultadas ao vivo.",loc:"Usar a minha localização",tph:"Escreva uma cidade",go:"Ir",or:"Pacotes investigados",lang:"Idioma",
   lnote:"Os nomes dos pratos e dos locais ficam na língua local para os poder pronunciar.",items:"coisas para comer",
   excl:"Só aqui",mustM:"A provar",doneM:"Concluído",hMust:"A provar",hAll:"Total",
   sMust:"A provar sem falta",sWorth:"Vale a pena",sTrip:"Passeio de um dia",sAll:"Completo",
@@ -275,7 +275,7 @@ const T={
   noTrip:"Ainda não há pratos de passeio para esta cidade. Uma consulta ao vivo não consegue julgar o que vale a viagem.",
   lfail:"A consulta ao vivo não conseguiu alcançar a internet desta página. Funciona se o ficheiro estiver no seu próprio domínio, onde o navegador pode chamar o OpenStreetMap e a Wikipédia.",
   lnone:"Não voltou nada comestível com esse nome. Verifique a ortografia ou tente a cidade maior mais próxima.",lback:"Voltar"},
- nl:{ver:"Geverifieerd",one:"Eén bron",noshop:"Geen bron noemt hier een zaak",directions:"Route",howver:"Hoe dit is gecontroleerd",ver2:"Twee onafhankelijke bronnen noemen het.",ver1:"Slechts één bron. Oordeel zelf.",ver0:"Niet gecontroleerd. Voor de volledigheid vermeld.",opensrc:"Bron openen",nowk:"Live opzoeken van een nieuwe stad vereist de Worker uit de v2-specificatie, en die draait nog niet. De drie onderzochte pakketten hieronder werken offline.",greet:"Hoi. Waar ben je?",say:"Deel je locatie of typ een stad. Steden zonder onderzocht pakket worden live opgezocht.",loc:"Mijn locatie gebruiken",tph:"Typ een stad",go:"Ga",or:"Onderzochte pakketten",lang:"Taal",
+ nl:{whyshop:"Gekoppeld op soort zaak:",whynotable:"bekend genoeg voor een eigen Wikidata-item",whysince:"open sinds",warnlive:"Wikidata noteert geen herkomst voor dit gerecht, dus het staat als regionaal in plaats van lokaal.",liveGap:"Live samengesteld uit open data. Wikidata bepaalt wat elk gerecht is en waar het vandaan komt, als vastgelegde feiten in plaats van gokwerk. Zaken komen uit OpenStreetMap, gerangschikt op bekendheidssignalen en niet op reputatie, want er is geen culinaire pers gelezen.",ver:"Geverifieerd",one:"Eén bron",noshop:"Geen bron noemt hier een zaak",directions:"Route",howver:"Hoe dit is gecontroleerd",ver2:"Twee onafhankelijke bronnen noemen het.",ver1:"Slechts één bron. Oordeel zelf.",ver0:"Niet gecontroleerd. Voor de volledigheid vermeld.",opensrc:"Bron openen",nowk:"Live opzoeken van een nieuwe stad vereist de Worker uit de v2-specificatie, en die draait nog niet. De drie onderzochte pakketten hieronder werken offline.",greet:"Hoi. Waar ben je?",say:"Deel je locatie of typ een stad. Steden zonder onderzocht pakket worden live opgezocht.",loc:"Mijn locatie gebruiken",tph:"Typ een stad",go:"Ga",or:"Onderzochte pakketten",lang:"Taal",
   lnote:"Namen van gerechten en zaken blijven in de plaatselijke taal, zodat je ze kunt uitspreken.",items:"dingen om te eten",
   excl:"Alleen hier",mustM:"Moet je proberen",doneM:"Afgerond",hMust:"Moet",hAll:"Totaal",
   sMust:"Moet je proberen",sWorth:"De moeite waard",sTrip:"Dagtrip",sAll:"Volledig",
@@ -288,7 +288,7 @@ const T={
   noTrip:"Nog geen dagtripgerechten voor deze stad. Live opzoeken kan niet beoordelen waarvoor reizen loont.",
   lfail:"Het live opzoeken kon van deze pagina niet bij het open internet. Het werkt wel als het bestand op je eigen domein staat, waar de browser OpenStreetMap en Wikipedia mag aanroepen.",
   lnone:"Er kwam niets eetbaars terug voor die naam. Controleer de spelling of probeer de dichtstbijzijnde grotere stad.",lback:"Terug"},
- pl:{ver:"Zweryfikowane",one:"Jedno źródło",noshop:"Żadne źródło nie wskazuje lokalu",directions:"Trasa",howver:"Jak to sprawdzono",ver2:"Nazywają je dwa niezależne źródła.",ver1:"Tylko jedno źródło. Oceń sam.",ver0:"Niezweryfikowane. Dla kompletności.",opensrc:"Otwórz źródło",nowk:"Sprawdzanie na żywo wymaga Workera ze specyfikacji v2, a ten jeszcze nie działa. Trzy opracowane paczki poniżej działają offline.",greet:"Cześć. Gdzie jesteś?",say:"Udostępnij lokalizację lub wpisz dowolne miasto. Miasta bez opracowanej paczki sprawdzane są na żywo.",loc:"Użyj mojej lokalizacji",tph:"Wpisz miasto",go:"Dalej",or:"Opracowane paczki",lang:"Język",
+ pl:{whyshop:"Dopasowane po typie lokalu:",whynotable:"na tyle znany, że ma własny wpis w Wikidanych",whysince:"otwarte od",warnlive:"Wikidane nie podają pochodzenia tej potrawy, więc figuruje jako regionalna, nie lokalna.",liveGap:"Złożone na żywo z otwartych danych. Wikidane rozstrzygają, czym jest każda potrawa i skąd pochodzi, jako zapisane fakty, a nie zgadywanie po słowach. Lokale pochodzą z OpenStreetMap, uszeregowane według sygnałów rozpoznawalności, a nie reputacji, bo nie czytano prasy kulinarnej.",ver:"Zweryfikowane",one:"Jedno źródło",noshop:"Żadne źródło nie wskazuje lokalu",directions:"Trasa",howver:"Jak to sprawdzono",ver2:"Nazywają je dwa niezależne źródła.",ver1:"Tylko jedno źródło. Oceń sam.",ver0:"Niezweryfikowane. Dla kompletności.",opensrc:"Otwórz źródło",nowk:"Sprawdzanie na żywo wymaga Workera ze specyfikacji v2, a ten jeszcze nie działa. Trzy opracowane paczki poniżej działają offline.",greet:"Cześć. Gdzie jesteś?",say:"Udostępnij lokalizację lub wpisz dowolne miasto. Miasta bez opracowanej paczki sprawdzane są na żywo.",loc:"Użyj mojej lokalizacji",tph:"Wpisz miasto",go:"Dalej",or:"Opracowane paczki",lang:"Język",
   lnote:"Nazwy potraw i lokali zostają w języku miejscowym, żeby dało się je wymówić.",items:"rzeczy do zjedzenia",
   excl:"Tylko tutaj",mustM:"Koniecznie",doneM:"Ukończone",hMust:"Koniecznie",hAll:"Ogółem",
   sMust:"Koniecznie spróbuj",sWorth:"Warto",sTrip:"Wycieczka",sAll:"Wszystko",
@@ -301,7 +301,7 @@ const T={
   noTrip:"Brak potraw na wycieczkę dla tego miasta. Sprawdzanie na żywo nie oceni, po co warto jechać.",
   lfail:"Sprawdzanie na żywo nie dotarło z tej strony do internetu. Działa, gdy plik stoi na twojej własnej domenie, gdzie przeglądarka może wołać OpenStreetMap i Wikipedię.",
   lnone:"Dla tej nazwy nie wróciło nic jadalnego. Sprawdź pisownię albo spróbuj najbliższego większego miasta.",lback:"Wróć"},
- hi:{ver:"सत्यापित",one:"एक ही स्रोत",noshop:"किसी स्रोत ने दुकान का नाम नहीं दिया",directions:"रास्ता",howver:"यह कैसे जाँचा गया",ver2:"दो स्वतंत्र स्रोत इसका नाम लेते हैं।",ver1:"केवल एक स्रोत। स्वयं परखें।",ver0:"असत्यापित। पूर्णता के लिए सूचीबद्ध।",opensrc:"स्रोत खोलें",nowk:"नए शहर की लाइव खोज के लिए v2 स्पेसिफिकेशन का Worker चाहिए, जो अभी तैनात नहीं है। नीचे के तीन शोधित पैक ऑफ़लाइन चलते हैं।",greet:"नमस्ते। आप कहाँ हैं?",say:"अपनी लोकेशन साझा करें, या कोई भी शहर लिखें। जिन शहरों का शोधित पैक नहीं है, उन्हें लाइव खोजा जाता है।",loc:"मेरी लोकेशन इस्तेमाल करें",tph:"कोई भी शहर लिखें",go:"चलें",or:"शोधित पैक",lang:"भाषा",
+ hi:{whyshop:"दुकान के प्रकार से मिलान:",whynotable:"अपनी Wikidata प्रविष्टि रखने लायक प्रसिद्ध",whysince:"खुला है",warnlive:"Wikidata इस व्यंजन का कोई मूल स्थान दर्ज नहीं करता, इसलिए यह स्थानीय नहीं बल्कि क्षेत्रीय माना गया है।",liveGap:"खुले डेटा से लाइव बनाया गया। Wikidata तय करता है कि हर व्यंजन क्या है और कहाँ से आया, दर्ज तथ्यों के रूप में, शब्द-अनुमान से नहीं। दुकानें OpenStreetMap से हैं, प्रसिद्धि के संकेतों से क्रमित, प्रतिष्ठा से नहीं, क्योंकि कोई खान-पान लेखन नहीं पढ़ा गया।",ver:"सत्यापित",one:"एक ही स्रोत",noshop:"किसी स्रोत ने दुकान का नाम नहीं दिया",directions:"रास्ता",howver:"यह कैसे जाँचा गया",ver2:"दो स्वतंत्र स्रोत इसका नाम लेते हैं।",ver1:"केवल एक स्रोत। स्वयं परखें।",ver0:"असत्यापित। पूर्णता के लिए सूचीबद्ध।",opensrc:"स्रोत खोलें",nowk:"नए शहर की लाइव खोज के लिए v2 स्पेसिफिकेशन का Worker चाहिए, जो अभी तैनात नहीं है। नीचे के तीन शोधित पैक ऑफ़लाइन चलते हैं।",greet:"नमस्ते। आप कहाँ हैं?",say:"अपनी लोकेशन साझा करें, या कोई भी शहर लिखें। जिन शहरों का शोधित पैक नहीं है, उन्हें लाइव खोजा जाता है।",loc:"मेरी लोकेशन इस्तेमाल करें",tph:"कोई भी शहर लिखें",go:"चलें",or:"शोधित पैक",lang:"भाषा",
   lnote:"व्यंजन और दुकान के नाम स्थानीय भाषा में ही रहते हैं, ताकि आप उन्हें बोल सकें।",items:"खाने की चीज़ें",
   excl:"केवल यहीं",mustM:"ज़रूर चखें",doneM:"पूरा हुआ",hMust:"ज़रूरी",hAll:"कुल",
   sMust:"ज़रूर चखें",sWorth:"चखने लायक",sTrip:"एक दिन की यात्रा",sAll:"संपूर्ण",
@@ -314,7 +314,7 @@ const T={
   noTrip:"इस शहर के लिए अभी यात्रा-योग्य व्यंजन नहीं हैं। लाइव खोज यह तय नहीं कर सकती कि किसके लिए सफ़र करना चाहिए।",
   lfail:"लाइव खोज इस पेज से इंटरनेट तक नहीं पहुँच सकी। यह तब काम करती है जब फ़ाइल आपके अपने डोमेन पर हो, जहाँ ब्राउज़र OpenStreetMap और Wikipedia को बुला सकता है।",
   lnone:"उस नाम के लिए कुछ खाने योग्य नहीं मिला। वर्तनी जाँचें, या निकटतम बड़े शहर को आज़माएँ।",lback:"वापस"},
- ta:{ver:"சரிபார்க்கப்பட்டது",one:"ஒரே ஆதாரம்",noshop:"எந்த ஆதாரமும் கடையைக் குறிப்பிடவில்லை",directions:"வழி",howver:"இது எப்படிச் சரிபார்க்கப்பட்டது",ver2:"இரு தனித்தனி ஆதாரங்கள் இதைக் குறிப்பிடுகின்றன.",ver1:"ஒரே ஆதாரம் மட்டும். நீங்களே முடிவு செய்யுங்கள்.",ver0:"சரிபார்க்கப்படவில்லை. முழுமைக்காக பட்டியலிடப்பட்டது.",opensrc:"ஆதாரத்தைத் திற",nowk:"புதிய நகரத்தின் நேரலைத் தேடலுக்கு v2 விவரக்குறிப்பின் Worker தேவை, அது இன்னும் இயங்கவில்லை. கீழுள்ள மூன்று தொகுப்புகள் ஆஃப்லைனில் வேலை செய்யும்.",greet:"வணக்கம். நீங்கள் எங்கே இருக்கிறீர்கள்?",say:"உங்கள் இருப்பிடத்தைப் பகிரவும், அல்லது எந்த நகரத்தின் பெயரையும் தட்டச்சு செய்யவும். ஆராய்ச்சி செய்யப்பட்ட தொகுப்பு இல்லாத நகரங்கள் நேரலையில் தேடப்படும்.",loc:"என் இருப்பிடத்தைப் பயன்படுத்து",tph:"எந்த நகரத்தின் பெயரும்",go:"செல்",or:"ஆராய்ச்சி செய்யப்பட்ட தொகுப்புகள்",lang:"மொழி",
+ ta:{whyshop:"கடை வகையால் பொருத்தப்பட்டது:",whynotable:"தனி Wikidata பதிவு வைக்கும் அளவு முக்கியமானது",whysince:"திறந்திருக்கிறது",warnlive:"இந்த உணவுக்கு Wikidata எந்த மூலத்தையும் பதிவு செய்யவில்லை, எனவே இது உள்ளூர் அல்ல, பிராந்தியமாகப் பட்டியலிடப்பட்டுள்ளது.",liveGap:"திறந்த தரவிலிருந்து நேரலையில் உருவாக்கப்பட்டது. ஒவ்வொரு உணவும் என்ன, எங்கிருந்து வந்தது என்பதை Wikidata பதிவு செய்யப்பட்ட உண்மைகளாகத் தீர்மானிக்கிறது, சொல் ஊகத்தால் அல்ல. கடைகள் OpenStreetMap-இலிருந்து, புகழ் அடையாளங்களால் வரிசைப்படுத்தப்பட்டவை, நற்பெயரால் அல்ல, ஏனெனில் எந்த உணவு எழுத்தும் படிக்கப்படவில்லை.",ver:"சரிபார்க்கப்பட்டது",one:"ஒரே ஆதாரம்",noshop:"எந்த ஆதாரமும் கடையைக் குறிப்பிடவில்லை",directions:"வழி",howver:"இது எப்படிச் சரிபார்க்கப்பட்டது",ver2:"இரு தனித்தனி ஆதாரங்கள் இதைக் குறிப்பிடுகின்றன.",ver1:"ஒரே ஆதாரம் மட்டும். நீங்களே முடிவு செய்யுங்கள்.",ver0:"சரிபார்க்கப்படவில்லை. முழுமைக்காக பட்டியலிடப்பட்டது.",opensrc:"ஆதாரத்தைத் திற",nowk:"புதிய நகரத்தின் நேரலைத் தேடலுக்கு v2 விவரக்குறிப்பின் Worker தேவை, அது இன்னும் இயங்கவில்லை. கீழுள்ள மூன்று தொகுப்புகள் ஆஃப்லைனில் வேலை செய்யும்.",greet:"வணக்கம். நீங்கள் எங்கே இருக்கிறீர்கள்?",say:"உங்கள் இருப்பிடத்தைப் பகிரவும், அல்லது எந்த நகரத்தின் பெயரையும் தட்டச்சு செய்யவும். ஆராய்ச்சி செய்யப்பட்ட தொகுப்பு இல்லாத நகரங்கள் நேரலையில் தேடப்படும்.",loc:"என் இருப்பிடத்தைப் பயன்படுத்து",tph:"எந்த நகரத்தின் பெயரும்",go:"செல்",or:"ஆராய்ச்சி செய்யப்பட்ட தொகுப்புகள்",lang:"மொழி",
   lnote:"உணவு மற்றும் கடைகளின் பெயர்கள் உள்ளூர் மொழியிலேயே இருக்கும், நீங்கள் அவற்றைச் சொல்ல வேண்டும்.",items:"சாப்பிட வேண்டியவை",
   excl:"இங்கே மட்டுமே",mustM:"கட்டாயம்",doneM:"முடிந்தது",hMust:"கட்டாயம்",hAll:"மொத்தம்",
   sMust:"கட்டாயம் சுவைக்க வேண்டியவை",sWorth:"சுவைக்கத் தகுந்தவை",sTrip:"ஒரு நாள் பயணம்",sAll:"முழுமை",
@@ -327,7 +327,7 @@ const T={
   noTrip:"இந்த நகரத்திற்கு இன்னும் பயண உணவுகள் இல்லை. பயணம் செய்ய எது தகுதியானது என்று நேரலைத் தேடல் தீர்மானிக்க முடியாது.",
   lfail:"இந்தப் பக்கத்திலிருந்து நேரலைத் தேடல் இணையத்தை அடைய முடியவில்லை. கோப்பு உங்கள் சொந்த டொமைனில் இருக்கும்போது இது வேலை செய்யும், அங்கு உலாவி OpenStreetMap மற்றும் Wikipedia-வை அழைக்க முடியும்.",
   lnone:"அந்தப் பெயருக்கு சாப்பிடக்கூடியது எதுவும் வரவில்லை. எழுத்துப்பிழையைச் சரிபார்க்கவும், அல்லது அருகிலுள்ள பெரிய நகரத்தை முயற்சிக்கவும்.",lback:"திரும்பு"},
- te:{ver:"ధృవీకరించబడింది",one:"ఒకే మూలం",noshop:"ఏ మూలమూ దుకాణం పేరు చెప్పలేదు",directions:"దారి",howver:"ఇది ఎలా పరిశీలించబడింది",ver2:"రెండు స్వతంత్ర మూలాలు దీన్ని పేర్కొంటాయి.",ver1:"ఒకే మూలం. మీరే అంచనా వేయండి.",ver0:"ధృవీకరించలేదు. సంపూర్ణత కోసం చేర్చాము.",opensrc:"మూలాన్ని తెరువు",nowk:"కొత్త నగరం ప్రత్యక్ష అన్వేషణకు v2 స్పెసిఫికేషన్ Worker అవసరం, అది ఇంకా అమలులో లేదు. కింది మూడు ప్యాక్‌లు ఆఫ్‌లైన్‌లో పనిచేస్తాయి.",greet:"నమస్కారం. మీరు ఎక్కడ ఉన్నారు?",say:"మీ లొకేషన్ షేర్ చేయండి, లేదా ఏ నగరం పేరైనా టైప్ చేయండి. పరిశోధించిన ప్యాక్ లేని నగరాలు ప్రత్యక్షంగా వెతకబడతాయి.",loc:"నా లొకేషన్ ఉపయోగించు",tph:"ఏ నగరం పేరైనా",go:"వెళ్లు",or:"పరిశోధించిన ప్యాక్‌లు",lang:"భాష",
+ te:{whyshop:"దుకాణం రకం ఆధారంగా జత:",whynotable:"సొంత Wikidata నమోదు ఉండేంత ప్రముఖం",whysince:"తెరిచి ఉంది",warnlive:"ఈ వంటకానికి Wikidata ఎలాంటి మూలాన్ని నమోదు చేయలేదు, కాబట్టి ఇది స్థానికం కాక ప్రాంతీయంగా చేర్చబడింది.",liveGap:"బహిరంగ డేటా నుండి ప్రత్యక్షంగా రూపొందించబడింది. ప్రతి వంటకం ఏమిటి, ఎక్కడి నుండి వచ్చింది అనేది Wikidata నమోదైన వాస్తవాలుగా నిర్ణయిస్తుంది, పదాల ఊహతో కాదు. దుకాణాలు OpenStreetMap నుండి, ప్రముఖత సంకేతాల ఆధారంగా వరుసలో, పేరు ప్రఖ్యాతుల ఆధారంగా కాదు.",ver:"ధృవీకరించబడింది",one:"ఒకే మూలం",noshop:"ఏ మూలమూ దుకాణం పేరు చెప్పలేదు",directions:"దారి",howver:"ఇది ఎలా పరిశీలించబడింది",ver2:"రెండు స్వతంత్ర మూలాలు దీన్ని పేర్కొంటాయి.",ver1:"ఒకే మూలం. మీరే అంచనా వేయండి.",ver0:"ధృవీకరించలేదు. సంపూర్ణత కోసం చేర్చాము.",opensrc:"మూలాన్ని తెరువు",nowk:"కొత్త నగరం ప్రత్యక్ష అన్వేషణకు v2 స్పెసిఫికేషన్ Worker అవసరం, అది ఇంకా అమలులో లేదు. కింది మూడు ప్యాక్‌లు ఆఫ్‌లైన్‌లో పనిచేస్తాయి.",greet:"నమస్కారం. మీరు ఎక్కడ ఉన్నారు?",say:"మీ లొకేషన్ షేర్ చేయండి, లేదా ఏ నగరం పేరైనా టైప్ చేయండి. పరిశోధించిన ప్యాక్ లేని నగరాలు ప్రత్యక్షంగా వెతకబడతాయి.",loc:"నా లొకేషన్ ఉపయోగించు",tph:"ఏ నగరం పేరైనా",go:"వెళ్లు",or:"పరిశోధించిన ప్యాక్‌లు",lang:"భాష",
   lnote:"వంటకాలు మరియు దుకాణాల పేర్లు స్థానిక భాషలోనే ఉంటాయి, మీరు వాటిని పలకాలి.",items:"తినాల్సిన వస్తువులు",
   excl:"ఇక్కడ మాత్రమే",mustM:"తప్పక తినాలి",doneM:"పూర్తయింది",hMust:"తప్పక",hAll:"మొత్తం",
   sMust:"తప్పక రుచి చూడాలి",sWorth:"రుచి చూడదగినవి",sTrip:"ఒక రోజు ప్రయాణం",sAll:"సంపూర్ణం",
@@ -340,7 +340,7 @@ const T={
   noTrip:"ఈ నగరానికి ఇంకా ప్రయాణ వంటకాలు లేవు. ప్రయాణించదగినది ఏదో ప్రత్యక్ష అన్వేషణ నిర్ణయించలేదు.",
   lfail:"ఈ పేజీ నుండి ప్రత్యక్ష అన్వేషణ ఇంటర్నెట్‌ను చేరుకోలేకపోయింది. ఫైల్ మీ సొంత డొమైన్‌లో ఉన్నప్పుడు ఇది పనిచేస్తుంది, అక్కడ బ్రౌజర్ OpenStreetMap మరియు Wikipedia ని పిలవగలదు.",
   lnone:"ఆ పేరుకు తినదగినది ఏదీ తిరిగి రాలేదు. స్పెల్లింగ్ చూడండి, లేదా దగ్గరి పెద్ద నగరం ప్రయత్నించండి.",lback:"వెనక్కి"},
- bn:{ver:"যাচাই করা",one:"একটিমাত্র সূত্র",noshop:"কোনো সূত্র দোকানের নাম দেয়নি",directions:"পথ",howver:"এটি কীভাবে যাচাই হয়েছে",ver2:"দুটি স্বাধীন সূত্র এটির নাম করে।",ver1:"একটিমাত্র সূত্র। নিজেই বিচার করুন।",ver0:"যাচাই করা হয়নি। পূর্ণতার জন্য রাখা।",opensrc:"সূত্র খুলুন",nowk:"নতুন শহরের সরাসরি খোঁজের জন্য v2 স্পেসিফিকেশনের Worker দরকার, যা এখনও চালু হয়নি। নিচের তিনটি প্যাক অফলাইনে চলে।",greet:"নমস্কার। আপনি কোথায়?",say:"আপনার লোকেশন শেয়ার করুন, বা যেকোনো শহরের নাম লিখুন। গবেষণা করা প্যাক না থাকলে শহর সরাসরি খোঁজা হয়।",loc:"আমার লোকেশন ব্যবহার করুন",tph:"যেকোনো শহরের নাম",go:"চলুন",or:"গবেষণা করা প্যাক",lang:"ভাষা",
+ bn:{whyshop:"দোকানের ধরন অনুযায়ী মিলেছে:",whynotable:"নিজস্ব Wikidata ভুক্তি রাখার মতো উল্লেখযোগ্য",whysince:"খোলা আছে",warnlive:"Wikidata এই খাবারের কোনো উৎস রাখেনি, তাই এটি স্থানীয় নয়, আঞ্চলিক হিসেবে দেখানো হয়েছে।",liveGap:"উন্মুক্ত তথ্য থেকে সরাসরি তৈরি। প্রতিটি খাবার কী এবং কোথা থেকে এসেছে তা Wikidata নথিভুক্ত তথ্য হিসেবে ঠিক করে, শব্দ অনুমানে নয়। দোকান OpenStreetMap থেকে, পরিচিতির সংকেত অনুযায়ী সাজানো, সুনাম অনুযায়ী নয়।",ver:"যাচাই করা",one:"একটিমাত্র সূত্র",noshop:"কোনো সূত্র দোকানের নাম দেয়নি",directions:"পথ",howver:"এটি কীভাবে যাচাই হয়েছে",ver2:"দুটি স্বাধীন সূত্র এটির নাম করে।",ver1:"একটিমাত্র সূত্র। নিজেই বিচার করুন।",ver0:"যাচাই করা হয়নি। পূর্ণতার জন্য রাখা।",opensrc:"সূত্র খুলুন",nowk:"নতুন শহরের সরাসরি খোঁজের জন্য v2 স্পেসিফিকেশনের Worker দরকার, যা এখনও চালু হয়নি। নিচের তিনটি প্যাক অফলাইনে চলে।",greet:"নমস্কার। আপনি কোথায়?",say:"আপনার লোকেশন শেয়ার করুন, বা যেকোনো শহরের নাম লিখুন। গবেষণা করা প্যাক না থাকলে শহর সরাসরি খোঁজা হয়।",loc:"আমার লোকেশন ব্যবহার করুন",tph:"যেকোনো শহরের নাম",go:"চলুন",or:"গবেষণা করা প্যাক",lang:"ভাষা",
   lnote:"খাবার ও দোকানের নাম স্থানীয় ভাষাতেই থাকে, যাতে আপনি সেগুলো বলতে পারেন।",items:"খাওয়ার জিনিস",
   excl:"কেবল এখানেই",mustM:"অবশ্যই চাখুন",doneM:"সম্পন্ন",hMust:"অবশ্যই",hAll:"মোট",
   sMust:"অবশ্যই চেখে দেখুন",sWorth:"চেখে দেখার মতো",sTrip:"একদিনের ভ্রমণ",sAll:"সম্পূর্ণ",
@@ -353,7 +353,7 @@ const T={
   noTrip:"এই শহরের জন্য এখনও ভ্রমণের খাবার নেই। সরাসরি খোঁজ বিচার করতে পারে না কোনটির জন্য যাওয়া উচিত।",
   lfail:"এই পেজ থেকে সরাসরি খোঁজ ইন্টারনেটে পৌঁছাতে পারেনি। ফাইলটি আপনার নিজের ডোমেইনে থাকলে এটি কাজ করে, যেখানে ব্রাউজার OpenStreetMap ও Wikipedia ডাকতে পারে।",
   lnone:"ওই নামে খাওয়ার মতো কিছু ফেরেনি। বানান দেখুন, বা নিকটবর্তী বড় শহর চেষ্টা করুন।",lback:"ফিরুন"},
- mr:{ver:"पडताळलेले",one:"एकच स्रोत",noshop:"कोणत्याही स्रोताने दुकान सांगितले नाही",directions:"मार्ग",howver:"हे कसे तपासले",ver2:"दोन स्वतंत्र स्रोत याचे नाव घेतात.",ver1:"फक्त एक स्रोत. स्वतः ठरवा.",ver0:"पडताळलेले नाही. पूर्णतेसाठी नोंदवले.",opensrc:"स्रोत उघडा",nowk:"नव्या शहराच्या थेट शोधासाठी v2 स्पेसिफिकेशनचा Worker लागतो, तो अजून चालू नाही. खालील तीन पॅक ऑफलाइन चालतात.",greet:"नमस्कार. तुम्ही कुठे आहात?",say:"तुमचे लोकेशन शेअर करा, किंवा कोणत्याही शहराचे नाव लिहा. संशोधित पॅक नसलेली शहरे थेट शोधली जातात.",loc:"माझे लोकेशन वापरा",tph:"कोणत्याही शहराचे नाव",go:"चला",or:"संशोधित पॅक",lang:"भाषा",
+ mr:{whyshop:"दुकानाच्या प्रकारानुसार जुळवले:",whynotable:"स्वतःची Wikidata नोंद असण्याइतके प्रसिद्ध",whysince:"उघडे आहे",warnlive:"Wikidata या पदार्थाचे कोणतेही मूळ नोंदवत नाही, म्हणून तो स्थानिक नव्हे तर प्रादेशिक म्हणून दाखवला आहे.",liveGap:"खुल्या डेटावरून थेट तयार केले. प्रत्येक पदार्थ काय आहे आणि कुठून आला हे Wikidata नोंदलेल्या तथ्यांनी ठरवते, शब्दांच्या अंदाजाने नाही. दुकाने OpenStreetMap मधून, प्रसिद्धीच्या संकेतांनुसार क्रमवारी, नावलौकिकानुसार नाही.",ver:"पडताळलेले",one:"एकच स्रोत",noshop:"कोणत्याही स्रोताने दुकान सांगितले नाही",directions:"मार्ग",howver:"हे कसे तपासले",ver2:"दोन स्वतंत्र स्रोत याचे नाव घेतात.",ver1:"फक्त एक स्रोत. स्वतः ठरवा.",ver0:"पडताळलेले नाही. पूर्णतेसाठी नोंदवले.",opensrc:"स्रोत उघडा",nowk:"नव्या शहराच्या थेट शोधासाठी v2 स्पेसिफिकेशनचा Worker लागतो, तो अजून चालू नाही. खालील तीन पॅक ऑफलाइन चालतात.",greet:"नमस्कार. तुम्ही कुठे आहात?",say:"तुमचे लोकेशन शेअर करा, किंवा कोणत्याही शहराचे नाव लिहा. संशोधित पॅक नसलेली शहरे थेट शोधली जातात.",loc:"माझे लोकेशन वापरा",tph:"कोणत्याही शहराचे नाव",go:"चला",or:"संशोधित पॅक",lang:"भाषा",
   lnote:"पदार्थ आणि दुकानांची नावे स्थानिक भाषेतच राहतात, जेणेकरून तुम्ही ती बोलू शकाल.",items:"खाण्याच्या गोष्टी",
   excl:"फक्त येथेच",mustM:"अवश्य चाखा",doneM:"पूर्ण",hMust:"अवश्य",hAll:"एकूण",
   sMust:"अवश्य चाखा",sWorth:"चाखण्यासारखे",sTrip:"एक दिवसाची सफर",sAll:"संपूर्ण",
@@ -366,7 +366,7 @@ const T={
   noTrip:"या शहरासाठी अजून सफरीचे पदार्थ नाहीत. कशासाठी प्रवास करावा हे थेट शोध ठरवू शकत नाही.",
   lfail:"या पानावरून थेट शोध इंटरनेटपर्यंत पोहोचू शकला नाही. फाईल तुमच्या स्वतःच्या डोमेनवर असेल तेव्हा हे चालते, जिथे ब्राउझर OpenStreetMap आणि Wikipedia ला बोलावू शकतो.",
   lnone:"त्या नावासाठी खाण्यासारखे काही आले नाही. शुद्धलेखन तपासा, किंवा जवळचे मोठे शहर पाहा.",lback:"मागे"},
- kn:{ver:"ಪರಿಶೀಲಿಸಲಾಗಿದೆ",one:"ಒಂದೇ ಮೂಲ",noshop:"ಯಾವ ಮೂಲವೂ ಅಂಗಡಿ ಹೆಸರಿಸಿಲ್ಲ",directions:"ದಾರಿ",howver:"ಇದನ್ನು ಹೇಗೆ ಪರಿಶೀಲಿಸಲಾಯಿತು",ver2:"ಎರಡು ಸ್ವತಂತ್ರ ಮೂಲಗಳು ಇದನ್ನು ಹೆಸರಿಸುತ್ತವೆ.",ver1:"ಒಂದೇ ಮೂಲ. ನೀವೇ ನಿರ್ಧರಿಸಿ.",ver0:"ಪರಿಶೀಲಿಸಿಲ್ಲ. ಸಂಪೂರ್ಣತೆಗಾಗಿ ಪಟ್ಟಿ ಮಾಡಲಾಗಿದೆ.",opensrc:"ಮೂಲ ತೆರೆಯಿರಿ",nowk:"ಹೊಸ ನಗರದ ನೇರ ಹುಡುಕಾಟಕ್ಕೆ v2 ಸ್ಪೆಸಿಫಿಕೇಶನ್‌ನ Worker ಬೇಕು, ಅದು ಇನ್ನೂ ಚಾಲನೆಯಲ್ಲಿಲ್ಲ. ಕೆಳಗಿನ ಮೂರು ಪ್ಯಾಕ್‌ಗಳು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತವೆ.",greet:"ನಮಸ್ಕಾರ. ನೀವು ಎಲ್ಲಿದ್ದೀರಿ?",say:"ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ, ಅಥವಾ ಯಾವುದೇ ನಗರದ ಹೆಸರು ಬರೆಯಿರಿ. ಸಂಶೋಧಿತ ಪ್ಯಾಕ್ ಇಲ್ಲದ ನಗರಗಳನ್ನು ನೇರವಾಗಿ ಹುಡುಕಲಾಗುತ್ತದೆ.",loc:"ನನ್ನ ಸ್ಥಳ ಬಳಸು",tph:"ಯಾವುದೇ ನಗರದ ಹೆಸರು",go:"ಹೋಗು",or:"ಸಂಶೋಧಿತ ಪ್ಯಾಕ್‌ಗಳು",lang:"ಭಾಷೆ",
+ kn:{whyshop:"ಅಂಗಡಿ ಪ್ರಕಾರದಿಂದ ಹೊಂದಿಸಲಾಗಿದೆ:",whynotable:"ಸ್ವಂತ Wikidata ನಮೂದು ಇರುವಷ್ಟು ಪ್ರಸಿದ್ಧ",whysince:"ತೆರೆದಿದೆ",warnlive:"ಈ ಖಾದ್ಯಕ್ಕೆ Wikidata ಯಾವುದೇ ಮೂಲವನ್ನು ದಾಖಲಿಸಿಲ್ಲ, ಆದ್ದರಿಂದ ಇದು ಸ್ಥಳೀಯವಲ್ಲ, ಪ್ರಾದೇಶಿಕ ಎಂದು ಪಟ್ಟಿ ಮಾಡಲಾಗಿದೆ.",liveGap:"ಮುಕ್ತ ದತ್ತಾಂಶದಿಂದ ನೇರವಾಗಿ ರಚಿಸಲಾಗಿದೆ. ಪ್ರತಿ ಖಾದ್ಯ ಏನು ಮತ್ತು ಎಲ್ಲಿಂದ ಬಂದಿದೆ ಎಂಬುದನ್ನು Wikidata ದಾಖಲಾದ ಸತ್ಯಗಳಾಗಿ ನಿರ್ಧರಿಸುತ್ತದೆ, ಪದಗಳ ಊಹೆಯಿಂದಲ್ಲ. ಅಂಗಡಿಗಳು OpenStreetMap ನಿಂದ, ಪ್ರಸಿದ್ಧಿ ಸಂಕೇತಗಳ ಆಧಾರದಲ್ಲಿ ಜೋಡಿಸಲಾಗಿದೆ.",ver:"ಪರಿಶೀಲಿಸಲಾಗಿದೆ",one:"ಒಂದೇ ಮೂಲ",noshop:"ಯಾವ ಮೂಲವೂ ಅಂಗಡಿ ಹೆಸರಿಸಿಲ್ಲ",directions:"ದಾರಿ",howver:"ಇದನ್ನು ಹೇಗೆ ಪರಿಶೀಲಿಸಲಾಯಿತು",ver2:"ಎರಡು ಸ್ವತಂತ್ರ ಮೂಲಗಳು ಇದನ್ನು ಹೆಸರಿಸುತ್ತವೆ.",ver1:"ಒಂದೇ ಮೂಲ. ನೀವೇ ನಿರ್ಧರಿಸಿ.",ver0:"ಪರಿಶೀಲಿಸಿಲ್ಲ. ಸಂಪೂರ್ಣತೆಗಾಗಿ ಪಟ್ಟಿ ಮಾಡಲಾಗಿದೆ.",opensrc:"ಮೂಲ ತೆರೆಯಿರಿ",nowk:"ಹೊಸ ನಗರದ ನೇರ ಹುಡುಕಾಟಕ್ಕೆ v2 ಸ್ಪೆಸಿಫಿಕೇಶನ್‌ನ Worker ಬೇಕು, ಅದು ಇನ್ನೂ ಚಾಲನೆಯಲ್ಲಿಲ್ಲ. ಕೆಳಗಿನ ಮೂರು ಪ್ಯಾಕ್‌ಗಳು ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತವೆ.",greet:"ನಮಸ್ಕಾರ. ನೀವು ಎಲ್ಲಿದ್ದೀರಿ?",say:"ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ, ಅಥವಾ ಯಾವುದೇ ನಗರದ ಹೆಸರು ಬರೆಯಿರಿ. ಸಂಶೋಧಿತ ಪ್ಯಾಕ್ ಇಲ್ಲದ ನಗರಗಳನ್ನು ನೇರವಾಗಿ ಹುಡುಕಲಾಗುತ್ತದೆ.",loc:"ನನ್ನ ಸ್ಥಳ ಬಳಸು",tph:"ಯಾವುದೇ ನಗರದ ಹೆಸರು",go:"ಹೋಗು",or:"ಸಂಶೋಧಿತ ಪ್ಯಾಕ್‌ಗಳು",lang:"ಭಾಷೆ",
   lnote:"ಖಾದ್ಯ ಮತ್ತು ಅಂಗಡಿಗಳ ಹೆಸರುಗಳು ಸ್ಥಳೀಯ ಭಾಷೆಯಲ್ಲೇ ಇರುತ್ತವೆ, ನೀವು ಅವನ್ನು ಹೇಳಬೇಕು.",items:"ತಿನ್ನಬೇಕಾದವು",
   excl:"ಇಲ್ಲಿ ಮಾತ್ರ",mustM:"ಖಂಡಿತ ತಿನ್ನಬೇಕು",doneM:"ಪೂರ್ಣ",hMust:"ಖಂಡಿತ",hAll:"ಒಟ್ಟು",
   sMust:"ಖಂಡಿತ ರುಚಿ ನೋಡಬೇಕು",sWorth:"ರುಚಿ ನೋಡಲು ಯೋಗ್ಯ",sTrip:"ಒಂದು ದಿನದ ಪ್ರವಾಸ",sAll:"ಸಂಪೂರ್ಣ",
@@ -380,7 +380,7 @@ const T={
   lfail:"ಈ ಪುಟದಿಂದ ನೇರ ಹುಡುಕಾಟ ಅಂತರಜಾಲವನ್ನು ತಲುಪಲಾಗಿಲ್ಲ. ಕಡತ ನಿಮ್ಮ ಸ್ವಂತ ಡೊಮೈನ್‌ನಲ್ಲಿದ್ದಾಗ ಇದು ಕೆಲಸ ಮಾಡುತ್ತದೆ, ಅಲ್ಲಿ ಬ್ರೌಸರ್ OpenStreetMap ಮತ್ತು Wikipedia ಅನ್ನು ಕರೆಯಬಹುದು.",
   lnone:"ಆ ಹೆಸರಿಗೆ ತಿನ್ನಬಹುದಾದ ಏನೂ ಬರಲಿಲ್ಲ. ಕಾಗುಣಿತ ಪರಿಶೀಲಿಸಿ, ಅಥವಾ ಹತ್ತಿರದ ದೊಡ್ಡ ನಗರ ಪ್ರಯತ್ನಿಸಿ.",lback:"ಹಿಂದೆ"}};
 
-/* ═══ RESEARCHED PACKS. Hand-checked, never overwritten by the Worker. ═══ */
+/* ═══ RESEARCHED PACKS. Hand-checked, never overwritten. ═══ */
 const PACKS={
  vienna:{name:"Vienna",aka:["vienna","wien","viena","wein"],lat:48.2082,lng:16.3738,
   sources:[
@@ -650,6 +650,290 @@ const PACKS={
 };
 
 /* ═══════════════════════════════════════════════════════════════════════
+   LIVE LOOKUP v3 — no key, no account, no server, no AI.
+
+   v1 guessed with keyword lists and called Idli a cake. v2 was going to
+   ask a model to read. v3 does neither: it asks WIKIDATA, where humans
+   have already recorded what kind of food a dish is and where it comes
+   from, as structured facts.
+
+     food type   <- P31  "instance of"        (was: 13 keyword lists)
+     exclusivity <- P495 "country of origin"
+                    P1071 "location of creation"
+                    P138  "named after"       (was: city name in the title)
+
+   Four public endpoints, all CORS-open and keyless:
+     nominatim.openstreetmap.org   place name  -> coordinates
+     <lang>.wikipedia.org/w/api.php  which dishes exist in this cuisine
+     query.wikidata.org/sparql     what each dish IS, and where it is from
+     overpass-api.de               shops near the coordinates
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const NOM="https://nominatim.openstreetmap.org/search";
+const WDQ="https://query.wikidata.org/sparql";
+const OVP=["https://overpass-api.de/api/interpreter","https://overpass.private.coffee/api/interpreter"];
+const wpApi=lang=>"https://"+lang+".wikipedia.org/w/api.php";
+
+async function jget(url,ms,hdr){
+  const c=new AbortController(), tm=setTimeout(()=>c.abort(),ms||12000);
+  try{const r=await fetch(url,{signal:c.signal,headers:hdr||{Accept:"application/json"}});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    return await r.json();}
+  finally{clearTimeout(tm);}
+}
+async function opost(body){
+  let last=null;
+  for(const ep of OVP){
+    const c=new AbortController(), tm=setTimeout(()=>c.abort(),40000);
+    try{const r=await fetch(ep,{method:"POST",signal:c.signal,body:"data="+enc(body),
+        headers:{"Content-Type":"application/x-www-form-urlencoded"}});
+      if(r.status===429||r.status===504){last=new Error("busy");continue;}
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      return await r.json();}
+    catch(e){last=e}finally{clearTimeout(tm)}
+  }
+  throw last||new Error("unreachable");
+}
+
+/* ── 1. place name -> a place record ── */
+async function geo(q){
+  const j=await jget(NOM+"?format=jsonv2&addressdetails=1&limit=1&accept-language=en&q="+enc(q),12000);
+  if(!j||!j.length)return null;
+  const a=j[0], ad=a.address||{};
+  return{name:a.name||q,lat:+a.lat,lon:+a.lon,display:a.display_name||q,
+    country:ad.country||"",cc:(ad.country_code||"").toLowerCase(),
+    state:ad.state||ad.region||"",district:ad.county||ad.state_district||""};
+}
+
+/* Which Wikipedia language edition knows this region best. */
+const LANG_BY_CC={at:"de",de:"de",ch:"de",fr:"fr",it:"it",es:"es",pt:"pt",nl:"nl",pl:"pl",
+  jp:"ja",cn:"zh",kr:"ko",ru:"ru",tr:"tr",gr:"el",se:"sv",no:"no",dk:"da",fi:"fi",cz:"cs",hu:"hu",ro:"ro"};
+const LANG_BY_STATE={"tamil nadu":"ta","andhra pradesh":"te","telangana":"te","kerala":"ml",
+  "karnataka":"kn","maharashtra":"mr","west bengal":"bn","gujarat":"gu","punjab":"pa","odisha":"or"};
+function wikiLangs(g){
+  const out=["en"];
+  const s=(g.state||"").toLowerCase();
+  if(LANG_BY_STATE[s])out.push(LANG_BY_STATE[s]);
+  else if(LANG_BY_CC[g.cc])out.push(LANG_BY_CC[g.cc]);
+  return out;
+}
+
+/* ── 2. which dishes belong to this region ── */
+async function findCategory(lang,probe){
+  try{
+    const cs=await jget(wpApi(lang)+"?action=query&list=search&srnamespace=14&srlimit=5&format=json&origin=*&srsearch="+enc(probe+" cuisine"),12000);
+    const hits=((cs.query||{}).search||[]).map(x=>x.title)
+      .filter(x=>/cuisine|dish|dessert|food|küche|料理|खाना|உணவு|వంటకాలు/i.test(x));
+    return hits[0]||null;
+  }catch(e){return null}
+}
+async function categoryMembers(lang,cat,depth,seen,out,subs){
+  const cm=await jget(wpApi(lang)+"?action=query&list=categorymembers&cmtype=page%7Csubcat&cmlimit=300&format=json&origin=*&cmtitle="+enc(cat),14000);
+  ((cm.query||{}).categorymembers||[]).forEach(m=>{
+    if(m.ns===14){ if(depth<1&&subs.length<6&&/cuisine|dish|dessert|bread|cake|sweet|pastr|soup|drink|snack/i.test(m.title)&&subs.indexOf(m.title)<0)subs.push(m.title); }
+    else if(!seen[m.title]){seen[m.title]=1;out.push(m.title);}
+  });
+}
+
+/* ── 3. THE PART THAT REPLACES EVERY KEYWORD LIST ──
+   One SPARQL query asks Wikidata what each dish IS and where it is FROM. */
+async function wikidataFacts(lang,titles){
+  const vals=titles.slice(0,160).map(t=>'"'+t.replace(/"/g,'').replace(/\\/g,'')+'"@'+lang).join(" ");
+  const q=`SELECT ?name ?typeLabel ?originLabel ?namedLabel ?desc WHERE {
+  VALUES ?name { ${vals} }
+  ?sitelink schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?name .
+  OPTIONAL { ?item wdt:P31 ?type }
+  OPTIONAL { ?item wdt:P1071 ?origin }
+  OPTIONAL { ?item wdt:P495 ?origin }
+  OPTIONAL { ?item wdt:P138 ?named }
+  OPTIONAL { ?item schema:description ?desc FILTER(LANG(?desc)="en") }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,${lang}". }
+}`;
+  const j=await jget(WDQ+"?format=json&query="+enc(q),30000,{Accept:"application/sparql-results+json"});
+  const by={};
+  ((j.results||{}).bindings||[]).forEach(b=>{
+    const n=b.name&&b.name.value; if(!n)return;
+    const e=by[n]||(by[n]={types:[],origins:[],named:[],desc:""});
+    const push=(arr,v)=>{if(v&&v.value&&arr.indexOf(v.value)<0&&!/^Q\d+$/.test(v.value))arr.push(v.value);};
+    push(e.types,b.typeLabel); push(e.origins,b.originLabel); push(e.named,b.namedLabel);
+    if(b.desc&&!e.desc)e.desc=b.desc.value;
+  });
+  return by;
+}
+
+/* Food type straight from Wikidata's "instance of", tidied for display.
+   No keyword list. If Wikidata is silent we say so rather than guess.   */
+const TYPE_TIDY=[
+  /* word boundaries matter: without them "steamed" contains "tea" and Idli
+     comes out as a Drink. Same class of bug as v1, caught by the test. */
+  [/\b(dessert|sweet|sweets|confection|candy|halwa|pudding)\b/i,"Sweet"],
+  /* rice is tested BEFORE cake: Wikidata calls Idli a "rice cake" and it is
+     a rice dish, not a cake. This line is the v1 bug, inverted. */
+  [/\b(rice|biryani|pulao|pilaf|risotto)\b/i,"Rice"],
+  [/\b(cake|torte|gateau|tart|pastry|pie)\b/i,"Cake"],
+  [/\b(bread|flatbread|roti|loaf|bun)\b/i,"Bread"],
+  [/\b(soup|stew|broth)\b/i,"Soup"],
+  [/\b(beverage|drink|beer|wine|juice|coffee|tea|cider)\b/i,"Drink"],
+  [/\b(dumpling|dumplings)\b/i,"Dumpling"],
+  [/\b(noodle|noodles|pasta)\b/i,"Noodles"],
+  [/\b(snack|fritter)\b/i,"Snack"],
+  [/\b(breakfast|tiffin|porridge)\b/i,"Breakfast"],
+  [/\b(sauce|chutney|pickle|condiment)\b/i,"Condiment"],
+  [/\b(salad)\b/i,"Salad"],
+  [/\b(cheese|dairy)\b/i,"Dairy"],
+  [/\b(meat|sausage|poultry|fish|seafood)\b/i,"Meat and fish"]];
+function typeFrom(facts){
+  if(!facts||!facts.types.length)return null;
+  /* prefer the most specific statement Wikidata makes, not the first */
+  const raw=facts.types.slice().sort((a,b)=>b.length-a.length);
+  for(const r of raw){ for(const [re,label] of TYPE_TIDY){ if(re.test(r))return label; } }
+  const w=raw[0];
+  return w.charAt(0).toUpperCase()+w.slice(1);
+}
+
+/* Exclusivity from Wikidata's origin statements, not from the dish's name. */
+function localityFrom(facts,g){
+  if(!facts)return{level:"",evidence:""};
+  const all=facts.origins.concat(facts.named);
+  const city=(g.name||"").toLowerCase(), dist=(g.district||"").toLowerCase(), st=(g.state||"").toLowerCase();
+  for(const o of all){
+    const lo=o.toLowerCase();
+    if(city.length>3&&lo.indexOf(city)>-1)return{level:"city",evidence:o};
+    if(dist.length>3&&lo.indexOf(dist)>-1)return{level:"district",evidence:o};
+  }
+  for(const o of all){
+    const lo=o.toLowerCase();
+    if(st.length>3&&lo.indexOf(st)>-1)return{level:"state",evidence:o};
+  }
+  return{level:all.length?"country":"",evidence:all[0]||""};
+}
+
+/* ── 4. shops, ranked by notability signals rather than taken at random ── */
+const WANT={Sweet:["confectionery","pastry","chocolate","bakery"],Cake:["pastry","confectionery","bakery","cafe"],
+  Bread:["bakery"],Soup:["restaurant"],Drink:["bar","pub","cafe"],Dumpling:["restaurant"],
+  Noodles:["restaurant"],Rice:["restaurant"],Snack:["fast_food","bakery","restaurant"],
+  Breakfast:["cafe","restaurant","fast_food"],Condiment:["deli","greengrocer"],Salad:["restaurant"],
+  Dairy:["deli","cheese"],"Meat and fish":["restaurant","butcher"]};
+function scoreShop(p,want,g){
+  let s=0;
+  if(want.indexOf(p.shop)>-1)s+=6;
+  if(p.cuis&&want.some(w=>p.cuis.indexOf(w)>-1))s+=3;
+  if(p.wd)s+=5;                    /* notable enough for its own Wikidata item */
+  if(p.since)s+=4;                 /* records when it opened */
+  if(p.site)s+=2;
+  if(p.brand)s-=6;                 /* a chain, not a local institution */
+  s+=Math.min(3,(p.tags||0)*0.15);
+  const d=Math.hypot((p.lat-g.lat),(p.lon-g.lon)*0.67);
+  s-=d*40;
+  return s;
+}
+
+async function liveLookup(raw,step){
+  /* stage 1 */
+  step(0,"run","openstreetmap");
+  const g=await geo(raw);
+  if(!g)throw{soft:t("lnone")};
+  const langs=wikiLangs(g);
+  step(0,"run",g.display.split(",").slice(0,3).join(", "));
+
+  let lang="en",cat=null;
+  for(const probe of [g.district,g.state,g.country].filter(Boolean)){
+    for(const lg of langs){ cat=await findCategory(lg,probe); if(cat){lang=lg;break;} }
+    if(cat)break;
+  }
+  if(!cat)throw{soft:t("lnone")};
+  const catLabel=cat.replace(/^[^:]*:/,"");
+  step(0,"ok",g.display.split(",").slice(0,3).join(", ")+" · "+catLabel);
+
+  /* stage 2 */
+  step(1,"run",catLabel);
+  const seen={},titles=[],subs=[];
+  await categoryMembers(lang,cat,0,seen,titles,subs);
+  for(const sc of subs.slice(0,5)){ try{await categoryMembers(lang,sc,1,seen,titles,subs)}catch(e){} }
+  let names=titles.filter(x=>!/^(List of|Category:|Cuisine of|Outline of|History of)/i.test(x)&&!/ cuisine$/i.test(x));
+  if(!names.length)throw{soft:t("lnone")};
+
+  step(1,"run","wikidata · "+names.length);
+  let facts={};
+  try{ facts=await wikidataFacts(lang,names); }catch(e){}
+  const known=Object.keys(facts).length;
+
+  step(1,"run","openstreetmap · "+g.name);
+  let places=[],placesErr="";
+  try{
+    const R=3000,parts=[];
+    ["restaurant","cafe","fast_food","ice_cream","pub","bar"].forEach(a=>
+      parts.push('nwr["amenity"="'+a+'"](around:'+R+','+g.lat+','+g.lon+');'));
+    ["bakery","confectionery","pastry","chocolate","deli","butcher","cheese","greengrocer"].forEach(s=>
+      parts.push('nwr["shop"="'+s+'"](around:'+R+','+g.lat+','+g.lon+');'));
+    const oj=await opost('[out:json][timeout:60];('+parts.join("")+');out tags center 300;');
+    places=(oj.elements||[]).map(e=>{const X=e.tags||{};return{
+      n:X.name,shop:X.shop||X.amenity||"",cuis:(X.cuisine||"").toLowerCase(),
+      wd:!!X.wikidata, since:X["start_date"]||X["opening_date"]||"", site:!!(X.website||X["contact:website"]),
+      brand:!!(X.brand||X["brand:wikidata"]), tags:Object.keys(X).length,
+      addr:[X["addr:street"],X["addr:housenumber"]].filter(Boolean).join(" ")||"",
+      lat:e.lat||(e.center&&e.center.lat),lon:e.lon||(e.center&&e.center.lon)};})
+      .filter(p=>p.n&&p.lat!=null);
+    if(!places.length)placesErr="OpenStreetMap holds no tagged food places here";
+  }catch(e){placesErr="could not reach OpenStreetMap";}
+  step(1,"ok",names.length+" · wikidata "+known+" · "+(placesErr||places.length+" places"));
+
+  /* stage 3 */
+  step(2,"run","");
+  const items=[];
+  names.forEach(nm=>{
+    const f=facts[nm];
+    const cat2=typeFrom(f);
+    if(!cat2)return;                         /* Wikidata silent -> not shown, not guessed */
+    const loc=localityFrom(f,g);
+    const want=WANT[cat2]||["restaurant"];
+    const pool=places.map(p=>({p,s:scoreShop(p,want,g)})).filter(x=>x.s>0).sort((a,b)=>b.s-a.s);
+    const pick=pool.length?pool[0].p:null;
+    const tier=(loc.level==="city"||loc.level==="district")?"must":(loc.level==="state"?"worth":"");
+    items.push({
+      d:nm, vn:"", cat:cat2, live:1,
+      tier:tier, only:(loc.level==="city"||loc.level==="district")?1:0,
+      reg:loc.level==="state"?loc.evidence:"",
+      veg:undefined,                          /* never guessed. spec 8 */
+      src:(f&&f.origins.length?2:1),
+      what:(f&&f.desc)||"",
+      place:pick?pick.n:null,
+      placeTxt:pick?null:t("noshop"),
+      addr:pick?pick.addr:"", lat:pick?pick.lat:null, lon:pick?pick.lon:null,
+      why:pick?(t("whyshop")+" "+pick.shop.replace(/_/g," ")
+                +(pick.wd?", "+t("whynotable"):"")+(pick.since?", "+t("whysince")+" "+pick.since:"")):"",
+      order:"",
+      warn:loc.evidence?"":t("warnlive"),
+      alts:pool.slice(1,4).map(x=>({n:x.p.n,d:[x.p.shop.replace(/_/g," "),x.p.addr].filter(Boolean).join(" · "),
+                                    lat:x.p.lat,lon:x.p.lon}))
+    });
+  });
+  /* distinguish "Wikidata unreachable" from "nothing qualified", so a network
+     failure never masquerades as an empty city. */
+  if(!items.length)throw{soft:(known===0?t("lfail"):t("lnone"))};
+  items.sort((a,b)=>(b.only?1:0)-(a.only?1:0));
+
+  return{
+    name:g.name, live:1, lat:g.lat, lng:g.lon, ts:Date.now(),
+    aka:[raw.toLowerCase(),g.name.toLowerCase()],
+    items:items,
+    sources:[
+      {n:"Wikidata",k:"Structured facts, human-curated",
+       b:"Wikidata states what each dish IS and where it came from, as properties rather than prose. "+known+" of "+names.length+" dishes had an entry.",
+       note:"This is what replaced the keyword lists. A dish Wikidata says nothing about is left out rather than guessed at.",u:"https://www.wikidata.org/"},
+      {n:"Wikipedia · "+catLabel,k:"Encyclopaedic, live",
+       b:"The dish list is the members of this category and its subcategories, read in the '"+lang+"' edition.",
+       note:"It knows which dishes exist. It knows nothing about where to eat them.",
+       u:"https://"+lang+".wikipedia.org/wiki/"+enc(cat.replace(/ /g,"_"))},
+      {n:"OpenStreetMap",k:"Open map data, live",
+       b:placesErr?("The places step failed: "+placesErr+". Dish names are real; the shops are missing because of this."):(places.length+" food businesses within 3 km, ranked by notability signals rather than taken in the order they arrived."),
+       note:"A shop with its own Wikidata entry, or a recorded opening date, scores above an unremarkable one. This is a signal, not a recommendation.",u:"https://www.openstreetmap.org/"}],
+    gap:t("liveGap")
+  };
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
    WORKER CONTRACT
 
    GET  <WORKER_URL>?q=<city name>&lang=<2-letter code>
@@ -785,24 +1069,22 @@ function start(packKey,label){
     return;
   }
 
-  /* Live city. Needs the Worker from spec v2. */
-  if(!WORKER_URL){
-    step(0,"ok","");
-    setTimeout(()=>stop(1,t("nowk")),420);
+  /* Live city: open data, no key, no account, no server.
+     WORKER_URL, if ever set, simply overrides this path. */
+  if(WORKER_URL){
+    fetch(WORKER_URL+"?q="+enc(label)+"&lang="+L,{headers:{Accept:"application/json"}})
+      .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+      .then(p=>{if(!p||!p.items||!p.items.length)throw{soft:t("lnone")};
+        step(0,"ok",p.name||label);step(1,"ok",p.items.length+" "+t("items"));step(2,"ok","");
+        S.pack=p;S.key=(p.name||label).toLowerCase();REG=p.items;setTimeout(render,300);})
+      .catch(err=>stop(err&&err.soft?1:0,(err&&err.soft)||t("lfail")));
     return;
   }
-  step(0,"run","…");
-  fetch(WORKER_URL+"?q="+enc(label)+"&lang="+L,{headers:{Accept:"application/json"}})
-    .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
-    .then(p=>{
-      if(!p||!p.items||!p.items.length)throw {soft:t("lnone")};
-      step(0,"ok",p.name||label);
-      step(1,"ok",p.items.length+" "+t("items"));
-      step(2,"ok","");
-      S.pack=p;S.key=(p.name||label).toLowerCase();REG=p.items;
-      setTimeout(render,300);
-    })
-    .catch(err=>stop(err&&err.soft?1:0,(err&&err.soft)||t("lfail")));
+  liveLookup(label,step).then(p=>{
+    step(2,"ok","");
+    S.pack=p;S.key=(p.name||label).toLowerCase();REG=p.items;
+    setTimeout(render,300);
+  }).catch(err=>stop(err&&err.soft?1:0,(err&&err.soft)||t("lfail")));
 }
 
 /* ── RENDER ── */
