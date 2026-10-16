@@ -681,7 +681,7 @@ async function jget(url,ms){
 async function opost(body){
   let last=null;
   for(const ep of OVP){
-    const c=new AbortController(), tm=setTimeout(()=>c.abort(),22000);
+    const c=new AbortController(), tm=setTimeout(()=>c.abort(),45000);
     try{const r=await fetch(ep,{method:"POST",signal:c.signal,body:"data="+enc(body),
         headers:{"Content-Type":"application/x-www-form-urlencoded"}});
       if(r.status===429||r.status===504){last=new Error("busy");continue;}
@@ -731,7 +731,13 @@ async function liveLookup(q,step){
   const pages=(lk.query||{}).pages||{};
   let titles=[];
   Object.keys(pages).forEach(k=>{(pages[k].links||[]).forEach(l=>titles.push(l.title))});
-  titles=titles.filter(x=>!/^(List of|Category:|Cuisine of|.* cuisine$)/i.test(x)).slice(0,60);
+  titles=titles.filter(x=>!/^(List of|Category:|Cuisine of|.* cuisine$)/i.test(x));
+  const cLC=g.name.toLowerCase(), sLC=(g.state||"").toLowerCase();
+  const hot=titles.filter(x=>{const l=x.toLowerCase();
+    return (cLC.length>3&&l.indexOf(cLC)>-1)||(sLC.length>3&&l.indexOf(sLC)>-1);});
+  const cold=titles.filter(x=>hot.indexOf(x)<0);
+  const stepN=Math.max(1,Math.ceil(cold.length/80));
+  titles=hot.concat(cold.filter((_,i)=>i%stepN===0)).slice(0,88);
   if(!titles.length)throw {soft:"nodish"};
   const ext={};
   for(let i=0;i<titles.length;i+=20){
@@ -747,12 +753,14 @@ async function liveLookup(q,step){
   if(!dishes.length)throw {soft:"nodish"};
 
   step(1,"run","openstreetmap · places near "+g.name);
-  let places=[];
+  let places=[],placesErr="";
   try{
-    const oq='[out:json][timeout:25];('
-      +'nwr["amenity"~"^(restaurant|cafe|fast_food|ice_cream)$"](around:2600,'+g.lat+','+g.lon+');'
-      +'nwr["shop"~"^(bakery|confectionery|pastry|chocolate|deli|butcher)$"](around:2600,'+g.lat+','+g.lon+');'
-      +');out tags center 160;';
+    const R=3000,parts=[];
+    ["restaurant","cafe","fast_food","ice_cream","pub","bar"].forEach(a=>
+      parts.push('nwr["amenity"="'+a+'"](around:'+R+','+g.lat+','+g.lon+');'));
+    ["bakery","confectionery","pastry","chocolate","deli","butcher"].forEach(s=>
+      parts.push('nwr["shop"="'+s+'"](around:'+R+','+g.lat+','+g.lon+');'));
+    const oq='[out:json][timeout:60];('+parts.join("")+');out tags center 250;';
     const oj=await opost(oq);
     places=(oj.elements||[]).map(e=>{const T2=e.tags||{};return{
       n:T2.name,shop:T2.shop||T2.amenity||"",cuis:(T2.cuisine||"").toLowerCase(),
@@ -760,8 +768,9 @@ async function liveLookup(q,step){
       addr:[T2["addr:street"],T2["addr:housenumber"]].filter(Boolean).join(" ")||"",
       lat:e.lat||(e.center&&e.center.lat),lon:e.lon||(e.center&&e.center.lon)};})
       .filter(p=>p.n);
-  }catch(e){}
-  step(1,"ok",dishes.length+" dishes · "+places.length+" places");
+    if(!places.length)placesErr="reached OpenStreetMap but it holds no tagged food places here";
+  }catch(e){placesErr="could not reach OpenStreetMap ("+((e&&e.message)||"blocked")+")";}
+  step(1,placesErr?"run":"ok",dishes.length+" dishes · "+(placesErr||places.length+" places"));
 
   /* ---- stage 3: assemble ---- */
   step(2,"run","matching and checking today");
@@ -769,7 +778,7 @@ async function liveLookup(q,step){
   const items=dishes.map(title=>{
     const txt=ext[title];
     const cat=catOf(title+" "+txt);
-    const named=cityLC.length>3&&title.toLowerCase().indexOf(cityLC)>-1;
+    const named=cityLC.length>3&&(title.toLowerCase().indexOf(cityLC)>-1||txt.toLowerCase().indexOf(cityLC)>-1);
     const regional=!named&&stateLC.length>3&&title.toLowerCase().indexOf(stateLC)>-1;
     const want=SHOPFOR[cat]||[];
     const pool=places.filter(p=>want.indexOf(p.shop)>-1||want.some(w=>p.cuis.indexOf(w)>-1));
@@ -802,7 +811,7 @@ async function liveLookup(q,step){
     items:items,
     sources:[
       {n:"OpenStreetMap, via Nominatim and Overpass",k:"Live, open data",
-       b:"Nominatim turned the name you typed into coordinates. Overpass then returned "+places.length+" food businesses within 2.6 km, with whatever opening hours local mappers have recorded.",
+       b:"Nominatim turned the name you typed into coordinates. "+(placesErr?("The places step FAILED: "+placesErr+". Dish names below are real; the shops are missing because of this, not because the city has none."):("Overpass then returned "+places.length+" food businesses within 3 km, with whatever opening hours local mappers have recorded.")),
        note:"Opening hours here are as live as OpenStreetMap is, which varies by city. "+extra.length+" of these places had hours recorded. Nominatim's usage policy forbids autocomplete, so lookup only runs when you press Go.",
        u:"https://operations.osmfoundation.org/policies/nominatim/"},
       {n:"Wikipedia, "+hits[0],k:"Live, encyclopaedic",
@@ -1006,6 +1015,9 @@ function render(){
   const dOf=a=>a.filter(i=>S.done[kk(i)]).length;
   const pM=must.length?Math.round(dOf(must)/must.length*100):0;
   const pA=items.length?Math.round(dOf(items)/items.length*100):0;
+  if(!listFor(S.tab,items).length){
+    const alt=TABS.map(x=>x[0]).find(k=>listFor(k,items).length);
+    if(alt)S.tab=alt;}
   const list=listFor(S.tab,items);
   const live=!!P.live;
   app.innerHTML=`
