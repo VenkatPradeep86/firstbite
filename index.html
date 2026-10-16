@@ -1,0 +1,1086 @@
+<title>First Bite</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+Kannada:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Telugu:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{
+  --bg:#F4F2EC;--panel:#FFF;--ink:#14160E;--mid:#4E5244;--soft:#7E8375;
+  --hair:#DEDCD1;--rule:#C9C7BA;
+  --tOnly:#4F6B22;--tLocal:#1C6079;--tSeas:#8A5A06;--tOff:#6B4C8A;--tShut:#A32B21;--tReg:#6E7364;--tLive:#1C6079;
+  --shadow:0 2px 4px rgba(20,22,14,.04),0 16px 40px -24px rgba(20,22,14,.3);
+  --d:"Archivo","Noto Sans Devanagari","Noto Sans Tamil","Noto Sans Telugu","Noto Sans Bengali","Noto Sans Kannada","Helvetica Neue",Arial,sans-serif;
+  --s:"Source Serif 4","Noto Sans Devanagari","Noto Sans Tamil","Noto Sans Telugu","Noto Sans Bengali","Noto Sans Kannada",Georgia,serif;
+  --m:"IBM Plex Mono",ui-monospace,Menlo,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1109;--panel:#171A10;--ink:#ECEBE0;--mid:#A9AD9D;--soft:#868B79;--hair:#262A1C;--rule:#333823;
+  --tOnly:#9DBA55;--tLocal:#5FB3D4;--tSeas:#DFA33C;--tOff:#B394D4;--tShut:#E4675A;--tReg:#9AA08C;--tLive:#5FB3D4;
+  --shadow:0 2px 4px rgba(0,0,0,.5),0 18px 44px -26px rgba(0,0,0,.95);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1109;--panel:#171A10;--ink:#ECEBE0;--mid:#A9AD9D;--soft:#868B79;--hair:#262A1C;--rule:#333823;
+  --tOnly:#9DBA55;--tLocal:#5FB3D4;--tSeas:#DFA33C;--tOff:#B394D4;--tShut:#E4675A;--tReg:#9AA08C;--tLive:#5FB3D4;
+  --shadow:0 2px 4px rgba(0,0,0,.5),0 18px 44px -26px rgba(0,0,0,.95);color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--s);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--d);margin:0;letter-spacing:-.018em;text-wrap:balance}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+a{color:inherit}
+#app{max-width:660px;margin:0 auto;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));
+  padding-block:20px 56px}
+.eb{font-family:var(--m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+
+.hello{min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding-bottom:40px}
+.brand{font-family:var(--m);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);margin-bottom:18px}
+.hello h1{font-size:clamp(30px,8.5vw,44px);font-weight:700;line-height:1.04}
+.say{font-size:17px;color:var(--mid);margin:14px 0 24px;max-width:40ch}
+.lang{position:relative;margin-bottom:8px}
+.lang select{appearance:none;width:100%;background:var(--panel);border:1px solid var(--rule);border-radius:9px;padding:14px 42px 14px 15px;font-family:var(--d);font-weight:500;font-size:16px}
+.lang::after{content:"";position:absolute;right:17px;top:50%;width:9px;height:9px;margin-top:-6px;pointer-events:none;border-right:2px solid var(--soft);border-bottom:2px solid var(--soft);transform:rotate(45deg)}
+.lnote{font-size:12px;color:var(--soft);margin:0 0 20px}
+.big{display:block;width:100%;background:var(--ink);color:var(--bg);border-radius:9px;padding:16px;font-family:var(--d);font-weight:600;font-size:17px;text-align:center;min-height:52px}
+.typer{display:flex;gap:8px;margin-top:10px}
+.typer input{flex:1 1 auto;min-width:0;background:var(--panel);border:1px solid var(--rule);border-radius:9px;padding:14px 15px;font-size:16px}
+.typer button{flex:none;background:var(--panel);border:1px solid var(--rule);border-radius:9px;padding:0 18px;font-family:var(--d);font-weight:600;min-height:52px}
+.orr{font-family:var(--m);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin:24px 0 6px}
+.pickbtn{display:flex;width:100%;justify-content:space-between;align-items:baseline;gap:12px;text-align:left;padding:15px 2px;border-bottom:1px solid var(--hair);min-height:52px}
+.pn{font-family:var(--d);font-weight:600;font-size:19px}
+.pd{font-family:var(--m);font-size:11px;color:var(--soft)}
+.hnote{font-size:13px;color:var(--soft);margin-top:20px;min-height:1.3em}
+
+.load{min-height:80vh;display:flex;flex-direction:column;justify-content:center}
+.load h2{font-size:clamp(24px,7vw,32px);font-weight:700;line-height:1.1}
+.load .lc{font-family:var(--m);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:14px}
+.steps{margin-top:30px}
+.step{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--hair)}
+.stit{flex:none;width:26px;height:26px;margin-top:1px;border-radius:50%;border:1.5px solid var(--rule);display:grid;place-items:center;color:transparent}
+.stit svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.step.run .stit{border-color:var(--ink);border-right-color:transparent;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.step.ok .stit{border-color:var(--tOnly);background:var(--tOnly);color:var(--panel);border-style:solid;animation:none}
+.step.err .stit{border-color:var(--tShut);border-style:solid;animation:none}
+.step.err .stit::after{content:"!";font-family:var(--d);font-weight:700;font-size:14px;color:var(--tShut)}
+.sbody{flex:1 1 auto;min-width:0}
+.slbl{font-family:var(--d);font-weight:500;font-size:15.5px;color:var(--soft)}
+.step.run .slbl,.step.ok .slbl{color:var(--ink)}
+.step.err .slbl{color:var(--tShut)}
+.ssub{font-family:var(--m);font-size:10.5px;color:var(--soft);margin-top:4px;line-height:1.5;overflow-wrap:anywhere}
+.lerr{font-size:14.5px;color:var(--mid);margin-top:24px}
+.lback{margin-top:16px;border:1px solid var(--rule);border-radius:9px;padding:13px 20px;font-family:var(--d);font-weight:600;min-height:48px}
+@media (prefers-reduced-motion:reduce){.step.run .stit{animation:none}}
+
+.mast{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.mast h1{font-size:clamp(23px,6.4vw,31px);font-weight:700;line-height:1.06}
+.chg{font-family:var(--m);font-size:10px;color:var(--soft);letter-spacing:.1em;text-transform:uppercase;flex:none;padding:8px 0 8px 8px}
+.prov{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px}
+.pvt{font-family:var(--m);font-size:9px;letter-spacing:.11em;text-transform:uppercase;border:1px solid;border-radius:3px;padding:2px 6px}
+.pvt.cur{color:var(--tOnly);border-color:var(--tOnly)}
+.pvt.lv{color:var(--tLive);border-color:var(--tLive)}
+.age{font-family:var(--m);font-size:10px;color:var(--soft)}
+.rf{font-family:var(--m);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--soft);border-bottom:1px solid var(--rule);padding-bottom:1px}
+
+.mx{display:flex;margin:16px 0 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.mxc{flex:1 1 0;min-width:0;padding:12px 0}
+.mxc+.mxc{border-left:1px solid var(--hair);padding-left:13px}
+.mxh{display:flex;align-items:center;gap:5px;font-family:var(--m);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--soft);line-height:1.3}
+.mxh .em{font-size:13px;line-height:1}
+.mxn{font-family:var(--d);font-size:26px;font-weight:700;line-height:1;margin-top:7px;font-variant-numeric:tabular-nums}
+.mxc.only .mxn{color:var(--tShut)}
+.halves{display:flex;gap:9px;margin-top:7px}
+.half{flex:1 1 0;min-width:0}
+.half .hn{font-family:var(--d);font-size:17px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.half .hk{font-family:var(--m);font-size:7.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--soft);margin-top:3px;line-height:1.2}
+.hbar{height:3px;background:var(--hair);border-radius:2px;margin-top:5px;overflow:hidden}
+.hbar i{display:block;height:100%;background:var(--tOnly);border-radius:2px}
+
+.tabs{display:flex;gap:6px;margin-top:16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex:none;font-family:var(--d);font-weight:600;font-size:13.5px;border:1px solid var(--rule);border-radius:999px;padding:9px 15px;color:var(--mid);min-height:40px;white-space:nowrap}
+.tb b{font-family:var(--m);font-weight:400;font-size:10.5px;margin-left:5px;opacity:.65}
+.tb[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tools{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.tool{font-family:var(--d);font-weight:500;font-size:13px;border:1px solid var(--rule);border-radius:999px;padding:8px 14px;color:var(--mid);min-height:38px}
+.tool[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.sec{margin-top:26px}
+.type{font-family:var(--d);font-size:17px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin:24px 0 2px}
+.empty{font-size:14.5px;color:var(--soft);margin-top:24px;font-style:italic}
+
+.row{border-bottom:1px solid var(--hair)}
+.rmain{display:flex;align-items:flex-start;gap:10px;padding:13px 0}
+.rtext{flex:1 1 auto;min-width:0}
+.dish{font-family:var(--d);font-weight:600;font-size:17px;line-height:1.22}
+.vn{font-family:var(--m);font-size:10.5px;color:var(--soft);margin-top:3px}
+.place{font-size:13.5px;color:var(--mid);margin-top:4px;overflow-wrap:anywhere}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.tg{font-family:var(--m);font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:3px;padding:2px 6px;line-height:1.35}
+.tg.only{color:var(--tOnly);border-color:var(--tOnly)}
+.tg.local{color:var(--tLocal);border-color:var(--tLocal)}
+.tg.seas{color:var(--tSeas);border-color:var(--tSeas)}
+.tg.off{color:var(--tOff);border-color:var(--tOff)}
+.tg.shut{color:var(--tShut);border-color:var(--tShut)}
+.tg.reg{color:var(--tReg);border-color:var(--tReg)}
+.tg.lv{color:var(--tLive);border-color:var(--tLive)}
+.acts{display:flex;gap:2px;flex:none}
+.act{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;color:var(--soft);text-decoration:none}
+.act:active,.act.on{background:var(--ink);color:var(--bg)}
+.act svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.act.on .chev{transform:rotate(180deg)}
+.tick{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;flex:none}
+.tick i{width:23px;height:23px;border-radius:50%;border:1.5px dashed var(--rule);display:grid;place-items:center;color:transparent}
+.row.done .tick i{border:1.5px solid var(--tOnly);background:var(--tOnly);color:var(--panel)}
+.row.done .dish{color:var(--soft);text-decoration:line-through}
+.tick svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.alts{padding-bottom:10px}
+.alt{display:flex;align-items:flex-start;gap:8px;padding:8px 0 8px 14px;border-left:2px solid var(--hair)}
+.alt .at{flex:1 1 auto;min-width:0}
+.alt .an{font-family:var(--d);font-weight:600;font-size:14.5px}
+.alt .ad{font-size:12.5px;color:var(--soft);margin-top:2px}
+.none{font-size:13px;color:var(--soft);font-style:italic;padding:8px 0 8px 14px;border-left:2px solid var(--hair)}
+
+.scrim{position:fixed;inset:0;background:rgba(8,10,5,.6);display:grid;place-items:end center;z-index:90}
+.sheet{background:var(--panel);width:100%;max-width:660px;max-height:88vh;overflow-y:auto;border-radius:14px 14px 0 0;box-shadow:var(--shadow);
+  padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));
+  padding-top:18px;padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))}
+.shd{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.sheet h3{font-size:22px;font-weight:700;line-height:1.14}
+.sx{border:1px solid var(--rule);border-radius:8px;width:40px;height:40px;flex:none;color:var(--soft);font-family:var(--m);font-size:18px}
+.fld{margin-top:16px}
+.fld .eb{display:block;margin-bottom:4px}
+.fld p{margin:0;font-size:15.5px}
+.fld.mono p{font-family:var(--m);font-size:13px;line-height:1.6}
+.fld p.red{color:var(--tShut)}
+.photos{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;border:1px solid var(--rule);border-radius:9px;padding:13px;font-family:var(--d);font-weight:600;font-size:15px;text-decoration:none;min-height:48px}
+.photos svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9}
+
+.srcs{margin-top:40px;padding-top:18px;border-top:2px solid var(--ink)}
+.srcs h2{font-family:var(--d);font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.sitem{padding:16px 0;border-bottom:1px solid var(--hair)}
+.sitem .sn{font-family:var(--d);font-weight:600;font-size:15.5px;line-height:1.25}
+.sitem .sk{font-family:var(--m);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-top:4px}
+.sitem .sb{font-size:14px;color:var(--mid);margin-top:7px}
+.sitem .sl{font-size:13px;margin-top:7px;display:inline-block;text-decoration:underline;text-underline-offset:3px;color:var(--mid)}
+.cav{font-size:13px;color:var(--soft);margin-top:18px;line-height:1.6}
+</style>
+
+<div id="app"></div>
+
+<script>
+"use strict";
+(function(){
+const DAY=new Date().getDay(), MON=new Date().getMonth();
+const DAYN=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const OSMD=["Su","Mo","Tu","We","Th","Fr","Sa"];
+const G=(q,id)=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q)+(id?"&query_place_id="+id:"");
+const IMG=q=>"https://www.google.com/search?tbm=isch&q="+encodeURIComponent(q);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const SV={
+ pin:'<svg viewBox="0 0 24 24"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>',
+ info:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.1"/></svg>',
+ chev:'<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>',
+ cam:'<svg viewBox="0 0 24 24"><path d="M3 8.5h4L8.5 6h7L17 8.5h4v11H3z"/><circle cx="12" cy="13.5" r="3.4"/></svg>',
+ tick:'<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>'};
+
+const LANGS=[["en","English"],["de","Deutsch"],["fr","Français"],["es","Español"],["it","Italiano"],["pt","Português"],["nl","Nederlands"],["pl","Polski"],["hi","हिन्दी"],["ta","தமிழ்"],["te","తెలుగు"],["bn","বাংলা"],["mr","मराठी"],["kn","ಕನ್ನಡ"]];
+const T={
+ en:{greet:"Hi. Where are you?",say:"Share your location, or type any city name. Cities without a researched pack are looked up live.",loc:"Use my location",tph:"Type any city name",go:"Go",or:"Researched packs",lang:"Language",
+  lnote:"Dish and place names stay in the local language so you can say them out loud.",items:"things to eat",
+  excl:"Exclusively here",mustM:"Must try",doneM:"Completed",hMust:"Must try",hAll:"Overall",
+  sMust:"Must try",sWorth:"Worth to try",sTrip:"Day trip",sAll:"Complete",
+  veg:"Vegetarian only",open:"Open today",chg:"Change",title:"First Bite in",
+  what:"What it is",order:"What to order",where:"Where",why:"Why this place",hours:"Hours",warn:"Watch out",photo:"See what it looks like",
+  alts:"No verified alternative",closed:"Closed today",only:"Found here only",local:"Locals' pick",inseas:"In season now",livet:"Live, unreviewed",
+  curated:"Researched",livep:"Live lookup",refresh:"Refresh",updated:"updated",justnow:"just now",minago:"min ago",hrago:"h ago",dayago:"d ago",
+  srcH:"About these sources",cav:"Nothing is ranked by star ratings or review counts. Opening hours come from OpenStreetMap and from lookups made after each choice, and they move. Ring ahead for anything that matters.",
+  st1:"Gathering local food sources",st2:"Fetching dishes and places",st3:"Preparing output",
+  noTrip:"No day-trip dishes for this city yet. A live lookup cannot judge what is worth travelling for.",
+  lfail:"The live lookup could not reach the open internet from this page. It works when the file is hosted on your own domain, where the browser is allowed to call OpenStreetMap and Wikipedia.",
+  lnone:"Nothing edible came back for that name. Check the spelling, or try the nearest larger town.",lback:"Back"},
+ de:{greet:"Hallo. Wo bist du?",say:"Teile deinen Standort oder gib eine Stadt ein. Städte ohne recherchiertes Paket werden live abgefragt.",loc:"Meinen Standort verwenden",tph:"Beliebige Stadt eingeben",go:"Los",or:"Recherchierte Pakete",lang:"Sprache",
+  lnote:"Gerichts- und Lokalnamen bleiben in der Landessprache, damit du sie aussprechen kannst.",items:"Dinge zum Essen",
+  excl:"Nur hier",mustM:"Pflicht",doneM:"Erledigt",hMust:"Pflicht",hAll:"Gesamt",
+  sMust:"Unbedingt probieren",sWorth:"Lohnt sich",sTrip:"Tagesausflug",sAll:"Vollständig",
+  veg:"Nur vegetarisch",open:"Heute offen",chg:"Wechseln",title:"First Bite in",
+  what:"Was es ist",order:"Was man bestellt",where:"Wo",why:"Warum dieses Lokal",hours:"Öffnungszeiten",warn:"Achtung",photo:"Ansehen, wie es aussieht",
+  alts:"Keine geprüfte Alternative",closed:"Heute geschlossen",only:"Nur hier zu finden",local:"Tipp der Einheimischen",inseas:"Jetzt Saison",livet:"Live, ungeprüft",
+  curated:"Recherchiert",livep:"Live-Abfrage",refresh:"Aktualisieren",updated:"aktualisiert",justnow:"gerade jetzt",minago:"Min.",hrago:"Std.",dayago:"Tage",
+  srcH:"Über diese Quellen",cav:"Nichts ist nach Sternen sortiert. Öffnungszeiten stammen aus OpenStreetMap und aus Abfragen nach der Auswahl, und sie ändern sich. Ruf vorher an.",
+  st1:"Lokale Küchenquellen sammeln",st2:"Gerichte und Lokale abrufen",st3:"Ausgabe vorbereiten",
+  noTrip:"Noch keine Ausflugsgerichte für diese Stadt. Eine Live-Abfrage kann nicht beurteilen, wofür eine Reise lohnt.",
+  lfail:"Die Live-Abfrage konnte von dieser Seite aus nicht ins offene Internet. Sie funktioniert, wenn die Datei auf deiner eigenen Domain liegt, wo der Browser OpenStreetMap und Wikipedia aufrufen darf.",
+  lnone:"Zu diesem Namen kam nichts Essbares zurück. Prüfe die Schreibweise oder versuche die nächstgrößere Stadt.",lback:"Zurück"},
+ fr:{greet:"Bonjour. Où êtes-vous ?",say:"Partagez votre position ou saisissez une ville. Les villes sans pack étudié sont cherchées en direct.",loc:"Utiliser ma position",tph:"Saisir une ville",go:"OK",or:"Packs étudiés",lang:"Langue",
+  lnote:"Les noms de plats et de lieux restent dans la langue locale pour pouvoir les prononcer.",items:"choses à manger",
+  excl:"Uniquement ici",mustM:"À goûter",doneM:"Terminé",hMust:"À goûter",hAll:"Total",
+  sMust:"À goûter absolument",sWorth:"Ça vaut le coup",sTrip:"Excursion",sAll:"Complet",
+  veg:"Végétarien seulement",open:"Ouvert aujourd'hui",chg:"Changer",title:"First Bite à",
+  what:"Ce que c'est",order:"Quoi commander",where:"Où",why:"Pourquoi ici",hours:"Horaires",warn:"Attention",photo:"Voir à quoi ça ressemble",
+  alts:"Aucune alternative vérifiée",closed:"Fermé aujourd'hui",only:"Introuvable ailleurs",local:"Choix des habitants",inseas:"En saison",livet:"En direct, non vérifié",
+  curated:"Étudié",livep:"Recherche en direct",refresh:"Actualiser",updated:"mis à jour",justnow:"à l'instant",minago:"min",hrago:"h",dayago:"j",
+  srcH:"À propos des sources",cav:"Rien n'est classé par étoiles. Les horaires viennent d'OpenStreetMap et de recherches faites après les choix, et ils changent. Appelez avant.",
+  st1:"Collecte des sources culinaires locales",st2:"Récupération des plats et des lieux",st3:"Préparation du résultat",
+  noTrip:"Aucun plat d'excursion pour cette ville. Une recherche en direct ne peut juger ce qui vaut le déplacement.",
+  lfail:"La recherche en direct n'a pas pu atteindre l'internet depuis cette page. Elle fonctionne si le fichier est hébergé sur votre domaine, où le navigateur peut appeler OpenStreetMap et Wikipédia.",
+  lnone:"Rien de comestible n'est revenu pour ce nom. Vérifiez l'orthographe ou essayez la ville voisine plus grande.",lback:"Retour"},
+ es:{greet:"Hola. ¿Dónde estás?",say:"Comparte tu ubicación o escribe cualquier ciudad. Las ciudades sin pack investigado se consultan en vivo.",loc:"Usar mi ubicación",tph:"Escribe una ciudad",go:"Ir",or:"Packs investigados",lang:"Idioma",
+  lnote:"Los nombres de platos y locales se mantienen en el idioma local para poder pronunciarlos.",items:"cosas que comer",
+  excl:"Solo aquí",mustM:"Imprescindible",doneM:"Completado",hMust:"Imprescindible",hAll:"Total",
+  sMust:"Imprescindibles",sWorth:"Vale la pena",sTrip:"Excursión",sAll:"Completo",
+  veg:"Solo vegetariano",open:"Abierto hoy",chg:"Cambiar",title:"First Bite en",
+  what:"Qué es",order:"Qué pedir",where:"Dónde",why:"Por qué aquí",hours:"Horario",warn:"Atención",photo:"Ver cómo es",
+  alts:"Sin alternativa verificada",closed:"Cerrado hoy",only:"Solo se encuentra aquí",local:"Elección local",inseas:"De temporada",livet:"En vivo, sin revisar",
+  curated:"Investigado",livep:"Consulta en vivo",refresh:"Actualizar",updated:"actualizado",justnow:"ahora mismo",minago:"min",hrago:"h",dayago:"d",
+  srcH:"Sobre estas fuentes",cav:"Nada se ordena por estrellas. Los horarios vienen de OpenStreetMap y de consultas hechas tras elegir, y cambian. Llama antes.",
+  st1:"Reuniendo fuentes gastronómicas locales",st2:"Obteniendo platos y locales",st3:"Preparando el resultado",
+  noTrip:"Aún no hay platos de excursión para esta ciudad. Una consulta en vivo no puede juzgar qué merece un viaje.",
+  lfail:"La consulta en vivo no pudo salir a internet desde esta página. Funciona si el archivo está en tu propio dominio, donde el navegador puede llamar a OpenStreetMap y Wikipedia.",
+  lnone:"No volvió nada comestible con ese nombre. Revisa la ortografía o prueba la ciudad grande más cercana.",lback:"Volver"},
+ it:{greet:"Ciao. Dove sei?",say:"Condividi la posizione o scrivi una città. Le città senza pacchetto studiato vengono cercate in diretta.",loc:"Usa la mia posizione",tph:"Scrivi una città",go:"Vai",or:"Pacchetti studiati",lang:"Lingua",
+  lnote:"I nomi dei piatti e dei locali restano nella lingua locale, così puoi pronunciarli.",items:"cose da mangiare",
+  excl:"Solo qui",mustM:"Da provare",doneM:"Completato",hMust:"Da provare",hAll:"Totale",
+  sMust:"Da provare",sWorth:"Ne vale la pena",sTrip:"Gita",sAll:"Completo",
+  veg:"Solo vegetariano",open:"Aperto oggi",chg:"Cambia",title:"First Bite a",
+  what:"Che cos'è",order:"Cosa ordinare",where:"Dove",why:"Perché qui",hours:"Orari",warn:"Attenzione",photo:"Guarda com'è",
+  alts:"Nessuna alternativa verificata",closed:"Chiuso oggi",only:"Solo qui",local:"Scelta dei locali",inseas:"Di stagione",livet:"In diretta, non verificato",
+  curated:"Studiato",livep:"Ricerca in diretta",refresh:"Aggiorna",updated:"aggiornato",justnow:"proprio ora",minago:"min",hrago:"h",dayago:"g",
+  srcH:"Su queste fonti",cav:"Niente è ordinato per stelle. Gli orari vengono da OpenStreetMap e da ricerche fatte dopo le scelte, e cambiano. Telefona prima.",
+  st1:"Raccolta delle fonti gastronomiche locali",st2:"Recupero di piatti e locali",st3:"Preparazione del risultato",
+  noTrip:"Nessun piatto da gita per questa città. Una ricerca in diretta non può giudicare cosa vale il viaggio.",
+  lfail:"La ricerca in diretta non ha raggiunto internet da questa pagina. Funziona se il file è ospitato sul tuo dominio, dove il browser può chiamare OpenStreetMap e Wikipedia.",
+  lnone:"Non è tornato nulla di commestibile per quel nome. Controlla l'ortografia o prova la città più grande vicina.",lback:"Indietro"},
+ pt:{greet:"Olá. Onde está?",say:"Partilhe a localização ou escreva qualquer cidade. Cidades sem pacote investigado são consultadas ao vivo.",loc:"Usar a minha localização",tph:"Escreva uma cidade",go:"Ir",or:"Pacotes investigados",lang:"Idioma",
+  lnote:"Os nomes dos pratos e dos locais ficam na língua local para os poder pronunciar.",items:"coisas para comer",
+  excl:"Só aqui",mustM:"A provar",doneM:"Concluído",hMust:"A provar",hAll:"Total",
+  sMust:"A provar sem falta",sWorth:"Vale a pena",sTrip:"Passeio de um dia",sAll:"Completo",
+  veg:"Só vegetariano",open:"Aberto hoje",chg:"Mudar",title:"First Bite em",
+  what:"O que é",order:"O que pedir",where:"Onde",why:"Porque aqui",hours:"Horário",warn:"Atenção",photo:"Ver como é",
+  alts:"Sem alternativa verificada",closed:"Fechado hoje",only:"Só se encontra aqui",local:"Escolha dos locais",inseas:"Da época",livet:"Ao vivo, não revisto",
+  curated:"Investigado",livep:"Consulta ao vivo",refresh:"Atualizar",updated:"atualizado",justnow:"agora mesmo",minago:"min",hrago:"h",dayago:"d",
+  srcH:"Sobre estas fontes",cav:"Nada é ordenado por estrelas. Os horários vêm do OpenStreetMap e de consultas feitas após as escolhas, e mudam. Ligue antes.",
+  st1:"A reunir fontes gastronómicas locais",st2:"A obter pratos e locais",st3:"A preparar o resultado",
+  noTrip:"Ainda não há pratos de passeio para esta cidade. Uma consulta ao vivo não consegue julgar o que vale a viagem.",
+  lfail:"A consulta ao vivo não conseguiu alcançar a internet desta página. Funciona se o ficheiro estiver no seu próprio domínio, onde o navegador pode chamar o OpenStreetMap e a Wikipédia.",
+  lnone:"Não voltou nada comestível com esse nome. Verifique a ortografia ou tente a cidade maior mais próxima.",lback:"Voltar"},
+ nl:{greet:"Hoi. Waar ben je?",say:"Deel je locatie of typ een stad. Steden zonder onderzocht pakket worden live opgezocht.",loc:"Mijn locatie gebruiken",tph:"Typ een stad",go:"Ga",or:"Onderzochte pakketten",lang:"Taal",
+  lnote:"Namen van gerechten en zaken blijven in de plaatselijke taal, zodat je ze kunt uitspreken.",items:"dingen om te eten",
+  excl:"Alleen hier",mustM:"Moet je proberen",doneM:"Afgerond",hMust:"Moet",hAll:"Totaal",
+  sMust:"Moet je proberen",sWorth:"De moeite waard",sTrip:"Dagtrip",sAll:"Volledig",
+  veg:"Alleen vegetarisch",open:"Vandaag open",chg:"Wijzigen",title:"First Bite in",
+  what:"Wat het is",order:"Wat te bestellen",where:"Waar",why:"Waarom hier",hours:"Openingstijden",warn:"Let op",photo:"Bekijk hoe het eruitziet",
+  alts:"Geen gecontroleerd alternatief",closed:"Vandaag gesloten",only:"Alleen hier te vinden",local:"Keuze van locals",inseas:"Nu in het seizoen",livet:"Live, ongecontroleerd",
+  curated:"Onderzocht",livep:"Live opzoeken",refresh:"Verversen",updated:"bijgewerkt",justnow:"net nu",minago:"min",hrago:"u",dayago:"d",
+  srcH:"Over deze bronnen",cav:"Niets is gerangschikt op sterren. Openingstijden komen van OpenStreetMap en van opzoekingen na de keuzes, en ze veranderen. Bel vooruit.",
+  st1:"Plaatselijke culinaire bronnen verzamelen",st2:"Gerechten en zaken ophalen",st3:"Uitvoer voorbereiden",
+  noTrip:"Nog geen dagtripgerechten voor deze stad. Live opzoeken kan niet beoordelen waarvoor reizen loont.",
+  lfail:"Het live opzoeken kon van deze pagina niet bij het open internet. Het werkt wel als het bestand op je eigen domein staat, waar de browser OpenStreetMap en Wikipedia mag aanroepen.",
+  lnone:"Er kwam niets eetbaars terug voor die naam. Controleer de spelling of probeer de dichtstbijzijnde grotere stad.",lback:"Terug"},
+ pl:{greet:"Cześć. Gdzie jesteś?",say:"Udostępnij lokalizację lub wpisz dowolne miasto. Miasta bez opracowanej paczki sprawdzane są na żywo.",loc:"Użyj mojej lokalizacji",tph:"Wpisz miasto",go:"Dalej",or:"Opracowane paczki",lang:"Język",
+  lnote:"Nazwy potraw i lokali zostają w języku miejscowym, żeby dało się je wymówić.",items:"rzeczy do zjedzenia",
+  excl:"Tylko tutaj",mustM:"Koniecznie",doneM:"Ukończone",hMust:"Koniecznie",hAll:"Ogółem",
+  sMust:"Koniecznie spróbuj",sWorth:"Warto",sTrip:"Wycieczka",sAll:"Wszystko",
+  veg:"Tylko wegetariańskie",open:"Dziś otwarte",chg:"Zmień",title:"First Bite w",
+  what:"Co to jest",order:"Co zamówić",where:"Gdzie",why:"Dlaczego tutaj",hours:"Godziny",warn:"Uwaga",photo:"Zobacz, jak wygląda",
+  alts:"Brak sprawdzonej alternatywy",closed:"Dziś zamknięte",only:"Tylko tutaj",local:"Wybór miejscowych",inseas:"Teraz sezon",livet:"Na żywo, niesprawdzone",
+  curated:"Opracowane",livep:"Sprawdzanie na żywo",refresh:"Odśwież",updated:"zaktualizowano",justnow:"właśnie teraz",minago:"min",hrago:"godz.",dayago:"dni",
+  srcH:"O tych źródłach",cav:"Nic nie jest sortowane po gwiazdkach. Godziny pochodzą z OpenStreetMap i ze sprawdzeń po wyborze, i one się zmieniają. Zadzwoń wcześniej.",
+  st1:"Zbieranie lokalnych źródeł kulinarnych",st2:"Pobieranie potraw i lokali",st3:"Przygotowanie wyniku",
+  noTrip:"Brak potraw na wycieczkę dla tego miasta. Sprawdzanie na żywo nie oceni, po co warto jechać.",
+  lfail:"Sprawdzanie na żywo nie dotarło z tej strony do internetu. Działa, gdy plik stoi na twojej własnej domenie, gdzie przeglądarka może wołać OpenStreetMap i Wikipedię.",
+  lnone:"Dla tej nazwy nie wróciło nic jadalnego. Sprawdź pisownię albo spróbuj najbliższego większego miasta.",lback:"Wróć"},
+ hi:{greet:"नमस्ते। आप कहाँ हैं?",say:"अपनी लोकेशन साझा करें, या कोई भी शहर लिखें। जिन शहरों का शोधित पैक नहीं है, उन्हें लाइव खोजा जाता है।",loc:"मेरी लोकेशन इस्तेमाल करें",tph:"कोई भी शहर लिखें",go:"चलें",or:"शोधित पैक",lang:"भाषा",
+  lnote:"व्यंजन और दुकान के नाम स्थानीय भाषा में ही रहते हैं, ताकि आप उन्हें बोल सकें।",items:"खाने की चीज़ें",
+  excl:"केवल यहीं",mustM:"ज़रूर चखें",doneM:"पूरा हुआ",hMust:"ज़रूरी",hAll:"कुल",
+  sMust:"ज़रूर चखें",sWorth:"चखने लायक",sTrip:"एक दिन की यात्रा",sAll:"संपूर्ण",
+  veg:"केवल शाकाहारी",open:"आज खुला",chg:"बदलें",title:"First Bite",
+  what:"यह क्या है",order:"क्या मंगवाएँ",where:"कहाँ",why:"यही जगह क्यों",hours:"समय",warn:"ध्यान दें",photo:"देखें यह कैसा दिखता है",
+  alts:"कोई पुष्ट विकल्प नहीं",closed:"आज बंद है",only:"केवल यहीं मिलता है",local:"स्थानीय लोगों की पसंद",inseas:"अभी मौसम है",livet:"लाइव, अपरीक्षित",
+  curated:"शोधित",livep:"लाइव खोज",refresh:"ताज़ा करें",updated:"अद्यतन",justnow:"अभी",minago:"मिनट पहले",hrago:"घंटे पहले",dayago:"दिन पहले",
+  srcH:"इन स्रोतों के बारे में",cav:"कुछ भी सितारा रेटिंग से क्रमबद्ध नहीं है। समय OpenStreetMap से और चुनाव के बाद की खोज से आते हैं, और वे बदलते हैं। पहले फ़ोन कर लें।",
+  st1:"स्थानीय खान-पान स्रोत जुटा रहे हैं",st2:"व्यंजन और दुकानें ला रहे हैं",st3:"परिणाम तैयार कर रहे हैं",
+  noTrip:"इस शहर के लिए अभी यात्रा-योग्य व्यंजन नहीं हैं। लाइव खोज यह तय नहीं कर सकती कि किसके लिए सफ़र करना चाहिए।",
+  lfail:"लाइव खोज इस पेज से इंटरनेट तक नहीं पहुँच सकी। यह तब काम करती है जब फ़ाइल आपके अपने डोमेन पर हो, जहाँ ब्राउज़र OpenStreetMap और Wikipedia को बुला सकता है।",
+  lnone:"उस नाम के लिए कुछ खाने योग्य नहीं मिला। वर्तनी जाँचें, या निकटतम बड़े शहर को आज़माएँ।",lback:"वापस"},
+ ta:{greet:"வணக்கம். நீங்கள் எங்கே இருக்கிறீர்கள்?",say:"உங்கள் இருப்பிடத்தைப் பகிரவும், அல்லது எந்த நகரத்தின் பெயரையும் தட்டச்சு செய்யவும். ஆராய்ச்சி செய்யப்பட்ட தொகுப்பு இல்லாத நகரங்கள் நேரலையில் தேடப்படும்.",loc:"என் இருப்பிடத்தைப் பயன்படுத்து",tph:"எந்த நகரத்தின் பெயரும்",go:"செல்",or:"ஆராய்ச்சி செய்யப்பட்ட தொகுப்புகள்",lang:"மொழி",
+  lnote:"உணவு மற்றும் கடைகளின் பெயர்கள் உள்ளூர் மொழியிலேயே இருக்கும், நீங்கள் அவற்றைச் சொல்ல வேண்டும்.",items:"சாப்பிட வேண்டியவை",
+  excl:"இங்கே மட்டுமே",mustM:"கட்டாயம்",doneM:"முடிந்தது",hMust:"கட்டாயம்",hAll:"மொத்தம்",
+  sMust:"கட்டாயம் சுவைக்க வேண்டியவை",sWorth:"சுவைக்கத் தகுந்தவை",sTrip:"ஒரு நாள் பயணம்",sAll:"முழுமை",
+  veg:"சைவம் மட்டும்",open:"இன்று திறந்திருக்கும்",chg:"மாற்று",title:"First Bite",
+  what:"இது என்ன",order:"என்ன ஆர்டர் செய்வது",where:"எங்கே",why:"இந்த இடம் ஏன்",hours:"நேரம்",warn:"கவனம்",photo:"இது எப்படி இருக்கும் என்று பார்",
+  alts:"சரிபார்க்கப்பட்ட மாற்று இல்லை",closed:"இன்று மூடப்பட்டுள்ளது",only:"இங்கே மட்டுமே கிடைக்கும்",local:"உள்ளூர் மக்களின் தேர்வு",inseas:"இப்போது பருவம்",livet:"நேரலை, சரிபார்க்கப்படவில்லை",
+  curated:"ஆராய்ச்சி செய்யப்பட்டது",livep:"நேரலைத் தேடல்",refresh:"புதுப்பி",updated:"புதுப்பிக்கப்பட்டது",justnow:"இப்போதே",minago:"நிமிடம் முன்",hrago:"மணி முன்",dayago:"நாள் முன்",
+  srcH:"இந்த ஆதாரங்கள் பற்றி",cav:"எதுவும் நட்சத்திர மதிப்பீட்டின் அடிப்படையில் வரிசைப்படுத்தப்படவில்லை. நேரங்கள் OpenStreetMap-இலிருந்தும், தேர்வுக்குப் பிறகு செய்த தேடலிலிருந்தும் வருகின்றன, அவை மாறும். முன்பே அழைக்கவும்.",
+  st1:"உள்ளூர் உணவு ஆதாரங்களைச் சேகரிக்கிறோம்",st2:"உணவுகளையும் கடைகளையும் பெறுகிறோம்",st3:"முடிவைத் தயாரிக்கிறோம்",
+  noTrip:"இந்த நகரத்திற்கு இன்னும் பயண உணவுகள் இல்லை. பயணம் செய்ய எது தகுதியானது என்று நேரலைத் தேடல் தீர்மானிக்க முடியாது.",
+  lfail:"இந்தப் பக்கத்திலிருந்து நேரலைத் தேடல் இணையத்தை அடைய முடியவில்லை. கோப்பு உங்கள் சொந்த டொமைனில் இருக்கும்போது இது வேலை செய்யும், அங்கு உலாவி OpenStreetMap மற்றும் Wikipedia-வை அழைக்க முடியும்.",
+  lnone:"அந்தப் பெயருக்கு சாப்பிடக்கூடியது எதுவும் வரவில்லை. எழுத்துப்பிழையைச் சரிபார்க்கவும், அல்லது அருகிலுள்ள பெரிய நகரத்தை முயற்சிக்கவும்.",lback:"திரும்பு"},
+ te:{greet:"నమస్కారం. మీరు ఎక్కడ ఉన్నారు?",say:"మీ లొకేషన్ షేర్ చేయండి, లేదా ఏ నగరం పేరైనా టైప్ చేయండి. పరిశోధించిన ప్యాక్ లేని నగరాలు ప్రత్యక్షంగా వెతకబడతాయి.",loc:"నా లొకేషన్ ఉపయోగించు",tph:"ఏ నగరం పేరైనా",go:"వెళ్లు",or:"పరిశోధించిన ప్యాక్‌లు",lang:"భాష",
+  lnote:"వంటకాలు మరియు దుకాణాల పేర్లు స్థానిక భాషలోనే ఉంటాయి, మీరు వాటిని పలకాలి.",items:"తినాల్సిన వస్తువులు",
+  excl:"ఇక్కడ మాత్రమే",mustM:"తప్పక తినాలి",doneM:"పూర్తయింది",hMust:"తప్పక",hAll:"మొత్తం",
+  sMust:"తప్పక రుచి చూడాలి",sWorth:"రుచి చూడదగినవి",sTrip:"ఒక రోజు ప్రయాణం",sAll:"సంపూర్ణం",
+  veg:"శాకాహారం మాత్రమే",open:"ఈరోజు తెరిచి ఉంది",chg:"మార్చు",title:"First Bite",
+  what:"ఇది ఏమిటి",order:"ఏమి ఆర్డర్ చేయాలి",where:"ఎక్కడ",why:"ఈ ప్రదేశం ఎందుకు",hours:"సమయాలు",warn:"జాగ్రత్త",photo:"ఇది ఎలా ఉంటుందో చూడు",
+  alts:"ధృవీకరించిన ప్రత్యామ్నాయం లేదు",closed:"ఈరోజు మూసి ఉంది",only:"ఇక్కడ మాత్రమే దొరుకుతుంది",local:"స్థానికుల ఎంపిక",inseas:"ఇప్పుడు సీజన్",livet:"ప్రత్యక్షం, పరిశీలించలేదు",
+  curated:"పరిశోధించినది",livep:"ప్రత్యక్ష అన్వేషణ",refresh:"రిఫ్రెష్",updated:"నవీకరించబడింది",justnow:"ఇప్పుడే",minago:"నిమి. క్రితం",hrago:"గం. క్రితం",dayago:"రోజుల క్రితం",
+  srcH:"ఈ మూలాల గురించి",cav:"ఏదీ స్టార్ రేటింగ్‌ల ఆధారంగా వరుసలో పెట్టలేదు. సమయాలు OpenStreetMap నుండి మరియు ఎంపిక తర్వాత చేసిన అన్వేషణల నుండి వస్తాయి, అవి మారుతాయి. ముందే ఫోన్ చేయండి.",
+  st1:"స్థానిక ఆహార మూలాలను సేకరిస్తున్నాము",st2:"వంటకాలు మరియు దుకాణాలు తెస్తున్నాము",st3:"ఫలితం సిద్ధం చేస్తున్నాము",
+  noTrip:"ఈ నగరానికి ఇంకా ప్రయాణ వంటకాలు లేవు. ప్రయాణించదగినది ఏదో ప్రత్యక్ష అన్వేషణ నిర్ణయించలేదు.",
+  lfail:"ఈ పేజీ నుండి ప్రత్యక్ష అన్వేషణ ఇంటర్నెట్‌ను చేరుకోలేకపోయింది. ఫైల్ మీ సొంత డొమైన్‌లో ఉన్నప్పుడు ఇది పనిచేస్తుంది, అక్కడ బ్రౌజర్ OpenStreetMap మరియు Wikipedia ని పిలవగలదు.",
+  lnone:"ఆ పేరుకు తినదగినది ఏదీ తిరిగి రాలేదు. స్పెల్లింగ్ చూడండి, లేదా దగ్గరి పెద్ద నగరం ప్రయత్నించండి.",lback:"వెనక్కి"},
+ bn:{greet:"নমস্কার। আপনি কোথায়?",say:"আপনার লোকেশন শেয়ার করুন, বা যেকোনো শহরের নাম লিখুন। গবেষণা করা প্যাক না থাকলে শহর সরাসরি খোঁজা হয়।",loc:"আমার লোকেশন ব্যবহার করুন",tph:"যেকোনো শহরের নাম",go:"চলুন",or:"গবেষণা করা প্যাক",lang:"ভাষা",
+  lnote:"খাবার ও দোকানের নাম স্থানীয় ভাষাতেই থাকে, যাতে আপনি সেগুলো বলতে পারেন।",items:"খাওয়ার জিনিস",
+  excl:"কেবল এখানেই",mustM:"অবশ্যই চাখুন",doneM:"সম্পন্ন",hMust:"অবশ্যই",hAll:"মোট",
+  sMust:"অবশ্যই চেখে দেখুন",sWorth:"চেখে দেখার মতো",sTrip:"একদিনের ভ্রমণ",sAll:"সম্পূর্ণ",
+  veg:"কেবল নিরামিষ",open:"আজ খোলা",chg:"বদলান",title:"First Bite",
+  what:"এটি কী",order:"কী অর্ডার করবেন",where:"কোথায়",why:"এই জায়গাটি কেন",hours:"সময়",warn:"খেয়াল রাখুন",photo:"দেখুন এটি কেমন দেখতে",
+  alts:"যাচাই করা বিকল্প নেই",closed:"আজ বন্ধ",only:"কেবল এখানেই পাওয়া যায়",local:"স্থানীয়দের পছন্দ",inseas:"এখন মৌসুম",livet:"সরাসরি, অযাচাই",
+  curated:"গবেষণা করা",livep:"সরাসরি খোঁজ",refresh:"নতুন করে",updated:"হালনাগাদ",justnow:"এইমাত্র",minago:"মিনিট আগে",hrago:"ঘণ্টা আগে",dayago:"দিন আগে",
+  srcH:"এই সূত্রগুলি সম্পর্কে",cav:"কিছুই তারা রেটিং দিয়ে সাজানো হয়নি। সময় OpenStreetMap থেকে এবং বাছাইয়ের পরের খোঁজ থেকে আসে, আর তা বদলায়। আগে ফোন করুন।",
+  st1:"স্থানীয় খাদ্যসূত্র জোগাড় করা হচ্ছে",st2:"খাবার ও দোকান আনা হচ্ছে",st3:"ফলাফল তৈরি হচ্ছে",
+  noTrip:"এই শহরের জন্য এখনও ভ্রমণের খাবার নেই। সরাসরি খোঁজ বিচার করতে পারে না কোনটির জন্য যাওয়া উচিত।",
+  lfail:"এই পেজ থেকে সরাসরি খোঁজ ইন্টারনেটে পৌঁছাতে পারেনি। ফাইলটি আপনার নিজের ডোমেইনে থাকলে এটি কাজ করে, যেখানে ব্রাউজার OpenStreetMap ও Wikipedia ডাকতে পারে।",
+  lnone:"ওই নামে খাওয়ার মতো কিছু ফেরেনি। বানান দেখুন, বা নিকটবর্তী বড় শহর চেষ্টা করুন।",lback:"ফিরুন"},
+ mr:{greet:"नमस्कार. तुम्ही कुठे आहात?",say:"तुमचे लोकेशन शेअर करा, किंवा कोणत्याही शहराचे नाव लिहा. संशोधित पॅक नसलेली शहरे थेट शोधली जातात.",loc:"माझे लोकेशन वापरा",tph:"कोणत्याही शहराचे नाव",go:"चला",or:"संशोधित पॅक",lang:"भाषा",
+  lnote:"पदार्थ आणि दुकानांची नावे स्थानिक भाषेतच राहतात, जेणेकरून तुम्ही ती बोलू शकाल.",items:"खाण्याच्या गोष्टी",
+  excl:"फक्त येथेच",mustM:"अवश्य चाखा",doneM:"पूर्ण",hMust:"अवश्य",hAll:"एकूण",
+  sMust:"अवश्य चाखा",sWorth:"चाखण्यासारखे",sTrip:"एक दिवसाची सफर",sAll:"संपूर्ण",
+  veg:"फक्त शाकाहारी",open:"आज उघडे",chg:"बदला",title:"First Bite",
+  what:"हे काय आहे",order:"काय मागवायचे",where:"कुठे",why:"हीच जागा का",hours:"वेळ",warn:"लक्ष द्या",photo:"हे कसे दिसते ते पहा",
+  alts:"तपासलेला पर्याय नाही",closed:"आज बंद आहे",only:"फक्त येथेच मिळते",local:"स्थानिकांची पसंत",inseas:"आता मौसम",livet:"थेट, अपरीक्षित",
+  curated:"संशोधित",livep:"थेट शोध",refresh:"ताजे करा",updated:"अद्ययावत",justnow:"आत्ताच",minago:"मिनिटे आधी",hrago:"तास आधी",dayago:"दिवस आधी",
+  srcH:"या स्रोतांबद्दल",cav:"काहीही तारांकित मानांकनाने क्रमवारी लावलेले नाही. वेळा OpenStreetMap मधून आणि निवडीनंतरच्या शोधातून येतात, आणि त्या बदलतात. आधी फोन करा.",
+  st1:"स्थानिक खाद्यस्रोत जमवत आहे",st2:"पदार्थ आणि दुकाने आणत आहे",st3:"निकाल तयार करत आहे",
+  noTrip:"या शहरासाठी अजून सफरीचे पदार्थ नाहीत. कशासाठी प्रवास करावा हे थेट शोध ठरवू शकत नाही.",
+  lfail:"या पानावरून थेट शोध इंटरनेटपर्यंत पोहोचू शकला नाही. फाईल तुमच्या स्वतःच्या डोमेनवर असेल तेव्हा हे चालते, जिथे ब्राउझर OpenStreetMap आणि Wikipedia ला बोलावू शकतो.",
+  lnone:"त्या नावासाठी खाण्यासारखे काही आले नाही. शुद्धलेखन तपासा, किंवा जवळचे मोठे शहर पाहा.",lback:"मागे"},
+ kn:{greet:"ನಮಸ್ಕಾರ. ನೀವು ಎಲ್ಲಿದ್ದೀರಿ?",say:"ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ, ಅಥವಾ ಯಾವುದೇ ನಗರದ ಹೆಸರು ಬರೆಯಿರಿ. ಸಂಶೋಧಿತ ಪ್ಯಾಕ್ ಇಲ್ಲದ ನಗರಗಳನ್ನು ನೇರವಾಗಿ ಹುಡುಕಲಾಗುತ್ತದೆ.",loc:"ನನ್ನ ಸ್ಥಳ ಬಳಸು",tph:"ಯಾವುದೇ ನಗರದ ಹೆಸರು",go:"ಹೋಗು",or:"ಸಂಶೋಧಿತ ಪ್ಯಾಕ್‌ಗಳು",lang:"ಭಾಷೆ",
+  lnote:"ಖಾದ್ಯ ಮತ್ತು ಅಂಗಡಿಗಳ ಹೆಸರುಗಳು ಸ್ಥಳೀಯ ಭಾಷೆಯಲ್ಲೇ ಇರುತ್ತವೆ, ನೀವು ಅವನ್ನು ಹೇಳಬೇಕು.",items:"ತಿನ್ನಬೇಕಾದವು",
+  excl:"ಇಲ್ಲಿ ಮಾತ್ರ",mustM:"ಖಂಡಿತ ತಿನ್ನಬೇಕು",doneM:"ಪೂರ್ಣ",hMust:"ಖಂಡಿತ",hAll:"ಒಟ್ಟು",
+  sMust:"ಖಂಡಿತ ರುಚಿ ನೋಡಬೇಕು",sWorth:"ರುಚಿ ನೋಡಲು ಯೋಗ್ಯ",sTrip:"ಒಂದು ದಿನದ ಪ್ರವಾಸ",sAll:"ಸಂಪೂರ್ಣ",
+  veg:"ಸಸ್ಯಾಹಾರ ಮಾತ್ರ",open:"ಇಂದು ತೆರೆದಿದೆ",chg:"ಬದಲಿಸು",title:"First Bite",
+  what:"ಇದು ಏನು",order:"ಏನು ಆರ್ಡರ್ ಮಾಡಬೇಕು",where:"ಎಲ್ಲಿ",why:"ಈ ಸ್ಥಳ ಏಕೆ",hours:"ಸಮಯ",warn:"ಎಚ್ಚರ",photo:"ಇದು ಹೇಗೆ ಕಾಣುತ್ತದೆ ನೋಡಿ",
+  alts:"ಪರಿಶೀಲಿಸಿದ ಪರ್ಯಾಯವಿಲ್ಲ",closed:"ಇಂದು ಮುಚ್ಚಿದೆ",only:"ಇಲ್ಲಿ ಮಾತ್ರ ಸಿಗುತ್ತದೆ",local:"ಸ್ಥಳೀಯರ ಆಯ್ಕೆ",inseas:"ಈಗ ಋತು",livet:"ನೇರ, ಪರಿಶೀಲಿಸಿಲ್ಲ",
+  curated:"ಸಂಶೋಧಿತ",livep:"ನೇರ ಹುಡುಕಾಟ",refresh:"ರಿಫ್ರೆಶ್",updated:"ನವೀಕರಿಸಲಾಗಿದೆ",justnow:"ಈಗಷ್ಟೇ",minago:"ನಿಮಿ. ಹಿಂದೆ",hrago:"ಗಂ. ಹಿಂದೆ",dayago:"ದಿನ ಹಿಂದೆ",
+  srcH:"ಈ ಮೂಲಗಳ ಬಗ್ಗೆ",cav:"ಯಾವುದೂ ನಕ್ಷತ್ರ ರೇಟಿಂಗ್‌ನಿಂದ ಜೋಡಿಸಿಲ್ಲ. ಸಮಯಗಳು OpenStreetMap ನಿಂದ ಮತ್ತು ಆಯ್ಕೆಯ ನಂತರದ ಹುಡುಕಾಟದಿಂದ ಬರುತ್ತವೆ, ಅವು ಬದಲಾಗುತ್ತವೆ. ಮೊದಲೇ ಕರೆ ಮಾಡಿ.",
+  st1:"ಸ್ಥಳೀಯ ಆಹಾರ ಮೂಲಗಳನ್ನು ಸಂಗ್ರಹಿಸುತ್ತಿದೆ",st2:"ಖಾದ್ಯ ಮತ್ತು ಅಂಗಡಿಗಳನ್ನು ತರುತ್ತಿದೆ",st3:"ಫಲಿತಾಂಶ ಸಿದ್ಧಪಡಿಸುತ್ತಿದೆ",
+  noTrip:"ಈ ನಗರಕ್ಕೆ ಇನ್ನೂ ಪ್ರವಾಸ ಖಾದ್ಯಗಳಿಲ್ಲ. ಯಾವುದಕ್ಕೆ ಪ್ರಯಾಣ ಯೋಗ್ಯ ಎಂದು ನೇರ ಹುಡುಕಾಟ ತೀರ್ಮಾನಿಸಲಾರದು.",
+  lfail:"ಈ ಪುಟದಿಂದ ನೇರ ಹುಡುಕಾಟ ಅಂತರಜಾಲವನ್ನು ತಲುಪಲಾಗಿಲ್ಲ. ಕಡತ ನಿಮ್ಮ ಸ್ವಂತ ಡೊಮೈನ್‌ನಲ್ಲಿದ್ದಾಗ ಇದು ಕೆಲಸ ಮಾಡುತ್ತದೆ, ಅಲ್ಲಿ ಬ್ರೌಸರ್ OpenStreetMap ಮತ್ತು Wikipedia ಅನ್ನು ಕರೆಯಬಹುದು.",
+  lnone:"ಆ ಹೆಸರಿಗೆ ತಿನ್ನಬಹುದಾದ ಏನೂ ಬರಲಿಲ್ಲ. ಕಾಗುಣಿತ ಪರಿಶೀಲಿಸಿ, ಅಥವಾ ಹತ್ತಿರದ ದೊಡ್ಡ ನಗರ ಪ್ರಯತ್ನಿಸಿ.",lback:"ಹಿಂದೆ"}};
+let L="en"; const t=k=>(T[L]&&T[L][k])||T.en[k];
+
+/* ===================== RESEARCHED PACKS ===================== */
+const PACKS={
+ vienna:{name:"Vienna",aka:["vienna","wien","viena","wein"],lat:48.2082,lng:16.3738,
+  sources:[
+   {n:"Falstaff, Top 10 Wiener Schnitzel in Vienna",k:"Curated restaurant guide",
+    b:"Austria's main food and wine title, with a panel of critics plus a reader vote. Its schnitzel list is the closest thing to a professional consensus in the city.",
+    note:"It is also the source that flags Figlmüller as mainly a tourist name, which is why Figlmüller sits in the alternatives here rather than at the top.",
+    u:"https://www.falstaff.com/en/news/top-10-best-of-wiener-schnitzel-in-vienna"},
+   {n:"1000things Magazin",k:"Local city magazine, German, updated Oct 2026",
+    b:"A Vienna magazine written for people who live there, covering Gasthäuser and Konditoreien by name rather than by rating.",
+    note:"Most of the Beisl and pastry entries here come from it. It is strong on neighbourhood places and weak on fine dining.",
+    u:"https://www.1000thingsmagazine.com/de/a/14229/oesterreichische-restaurants-wien/"}],
+  gap:"Falter's Lokalführer is the third source this pack wants and the best one for Vienna Beisl. Its site refuses automated reading, so two sources carry this list. Treat the order as provisional.",
+  items:[
+   {d:"Kaiserschmarrn",vn:"Kaiserschmarrn",cat:"Sweet",tier:"must",veg:1,place:"Demel",pid:"ChIJiY3_UpgHbUcRWCIbHu4EWXY",addr:"Kohlmarkt 14, 1010 Wien",hours:"Daily 10:00 to 19:00",
+    what:"Shredded caramelised pancake with raisins and plum compote. A full meal, not a side.",order:"Made in the open kitchen here, so you can watch. Also sold to take away.",
+    why:"Imperial confectioner, on Kohlmarkt since the 18th century. A tourist fixture that still makes the dish properly.",src:1,
+    alts:[{n:"Plachutta Wollzeile",d:"Wollzeile 38, 1010. Also named for Kaiserschmarrn.",pid:"ChIJ8aGpZXUHbUcR7RhDMQpSArs"}]},
+   {d:"Wiener Schnitzel vom Kalb",vn:"Kalbsschnitzel",cat:"Main",tier:"must",veg:0,place:"Meissl & Schadn",pid:"ChIJvygGgJ0HbUcRUOU9epLpWyc",addr:"Schubertring 10-12, 1010 Wien",hours:"Daily 12:00 to 23:30, no closing day",
+    what:"The real one is veal, not pork. Hammered thin, breaded with Kaisersemmel crumbs, fried so the coating lifts away from the meat.",order:"You choose the fat: lard, clarified butter or oil. Lard is the traditional answer.",
+    why:"The only place named by both sources in this pack. Takes its name from a restaurant destroyed in 1945.",src:2,
+    alts:[{n:"Zum Schwarzen Kameel",d:"Bognergasse 5, 1010. An inn for over 400 years."},{n:"Gmoakeller",d:"Am Heumarkt 25, 1030. Falstaff readers' most popular Beisl."}]},
+   {d:"Tafelspitz",vn:"Tafelspitz",cat:"Main",tier:"must",veg:0,place:"Plachutta Wollzeile",pid:"ChIJ8aGpZXUHbUcR7RhDMQpSArs",addr:"Wollzeile 38, 1010 Wien",hours:"Daily 11:30 to 23:30",
+    what:"Beef simmered in broth, carried to the table in a copper pot with marrow bone, root vegetables, chive sauce and apple horseradish. The broth is its own course.",
+    order:"Do not order soup separately and do not add sides. The pot is already the meal.",why:"Named as the Tafelspitz address, in the copper pots the dish is known by.",
+    warn:"Reviewers report hard upselling. Decline extras and check the bill.",src:1,
+    alts:[{n:"Meissl & Schadn",d:"Schubertring 10-12, 1010. Also named for Tafelspitz.",pid:"ChIJvygGgJ0HbUcRUOU9epLpWyc"},{n:"Zur Herknerin",d:"Wiedner Hauptstraße 36, 1040. Thursday and Friday evenings only.",pid:"ChIJYz1kd4EHbUcR1pRBSwM86aE"}]},
+   {d:"Schweinsschnitzel",vn:"Schweinsschnitzel",cat:"Main",tier:"must",veg:0,place:"Café Anzengruber",pid:"ChIJk8AdcYQHbUcRCED7KB6Lv7k",addr:"Schleifmühlgasse 19, 1040 Wien",closed:[0,1],hours:"Tue to Sat 16:00 to 01:00",
+    what:"The pork version, cut wide and thin so it overhangs the plate. Cheaper, less reverent, and what most Viennese actually eat.",order:"Take the lingonberry jam. Go early, it fills with locals.",
+    why:"Named by both sources. Falstaff calls it legendary. A Beisl by the Naschmarkt, not a dining room.",
+    warn:"Cash only. Opens 16:00. Closed Monday and Sunday. Expect to be pressed to order a drink.",src:2,
+    alts:[{n:"Automat-Welt",d:"Volkertplatz, 1020. Praised by trade experts for pork schnitzel."},{n:"Figlmüller",d:"The famous one. Falstaff notes it is known mainly to tourists."}]},
+   {d:"Apfelstrudel",vn:"Apfelstrudel",cat:"Dessert",tier:"must",veg:1,place:"Demel",pid:"ChIJiY3_UpgHbUcRWCIbHu4EWXY",addr:"Kohlmarkt 14, 1010 Wien",hours:"Daily 10:00 to 19:00",
+    what:"Apple, raisin and cinnamon in pastry stretched until you could read through it.",order:"Warm, mit Vanillesauce.",why:"Named beside its Sachertorte and Buchteln.",src:1,
+    alts:[{n:"Wiener Stadtbräu",d:"Graben 29a, 1010. Open 365 days a year."}]},
+   {d:"Sachertorte",vn:"Sachertorte",cat:"Cake",tier:"must",veg:1,place:"Demel",pid:"ChIJiY3_UpgHbUcRWCIbHu4EWXY",addr:"Kohlmarkt 14, 1010 Wien",hours:"Daily 10:00 to 19:00",
+    what:"Dense chocolate cake with apricot jam under a hard glaze. Demel and Hotel Sacher fought a long court battle over whose is original; the difference is where the jam layer sits.",
+    order:"Mit Schlag, unsweetened whipped cream, is not optional locally.",why:"Eating it here rather than at Sacher is the contested half of the story.",src:1,
+    alts:[{n:"Hotel Sacher",d:"Philharmoniker Straße 4, 1010. The other claimant. Not named by this pack's sources."}]},
+   {d:"Sturm",vn:"Sturm",cat:"Drink",tier:"worth",veg:1,seas:"Sept to late Oct",months:[8,9],placeTxt:"Any Heuriger in Grinzing, Nussdorf or Neustift",
+    what:"Partly fermented young wine, cloudy and still working. Sweet, deceptively strong, and by law only sellable during its short season.",order:"Ask for weisser or roter Sturm, by the Viertel.",
+    why:"Seasonal by statute rather than fashion. Gone by November.",warn:"No source here named a specific Heuriger. Unverified.",alts:[]},
+   {d:"Maroni",vn:"Maroni",cat:"Snack",tier:"worth",veg:1,seas:"Oct to Dec",months:[9,10,11],placeTxt:"Roasting stands on Graben, Kärntner Straße and most U-Bahn exits",
+    what:"Chestnuts roasted in a drum and sold by the decagram in a paper cone. The stands appear with the first cold week and vanish after Christmas.",
+    order:"10 dag is a normal portion. Sweet Kipferl come from the same cart.",why:"The one food that tells you the season turned.",warn:"Stands are mobile. A pin would be a street, not a shop.",alts:[]},
+   {d:"Martinigansl",vn:"Martinigansl",cat:"Main",tier:"worth",veg:0,seas:"Late Oct to mid Nov",months:[9,10],place:"Café Restaurant Markt58",addr:"Marktgasse 58, 1090 Wien",
+    what:"Roast goose with red cabbage and dumplings, eaten around St Martin's day on 11 November. Kitchens run a Gansl menu for about three weeks, then stop.",
+    order:"Book. Gansl menus fill.",why:"Its seasonal Gansl menu is named specifically.",src:1,alts:[]},
+   {d:"Spinatknödel",vn:"Spinatknödel",cat:"Dumpling",tier:"worth",veg:1,place:"Zur Herknerin",pid:"ChIJYz1kd4EHbUcR1pRBSwM86aE",addr:"Wiedner Hauptstraße 36, 1040 Wien",closed:[0,1,2,3,6],hours:"Thu and Fri 18:00 to 23:00",
+    what:"Spinach dumplings in brown butter. The kitchen is built on dumplings and the menu is handwritten, changing weekly.",order:"Dumplings as starter, main and dessert is a normal order here.",
+    why:"Run by Stefanie Herkner, who grew up in her parents' Gasthaus.",warn:"Thursday and Friday evenings only. Cash only. Book ahead.",src:1,alts:[]},
+   {d:"Backhendl",vn:"Backhendl",cat:"Main",tier:"worth",veg:0,place:"Gasthaus Woracziczky",pid:"ChIJ-1KKJyaobUcRwE_3K3vf7so",addr:"Spengergasse 52, 1050 Wien",closed:[0,6],hours:"Mon to Fri 11:30 to 14:00 and 18:00 to 23:00",
+    what:"Breaded fried chicken, schnitzel's poultry sibling, traditionally with cold potato salad.",order:"Menu is handwritten and changes. Ask what the soup is.",
+    why:"Michelin-recommended and still a plain Beisl rather than a dining room.",warn:"Cash only. Closed Saturday and Sunday.",src:1,
+    alts:[{n:"Zum Renner",d:"Nussdorfer Platz 4, 1190. Over a century old."}]},
+   {d:"Schweinsbraten",vn:"Schweinsbraten",cat:"Main",tier:"worth",veg:0,place:"Zum Renner",addr:"Nussdorfer Platz 4, 1190 Wien",
+    what:"Roast pork with crackling, dumpling and caraway. The Sunday plate of Austrian home cooking.",order:"Comes with Semmelknödel and kraut.",why:"Has run for more than a century.",src:1,
+    alts:[{n:"Medl Bräu",d:"Linzer Straße 275, 1140. Also named, and brews its own beer."}]},
+   {d:"Rindsgulasch",vn:"Rindsgulasch",cat:"Main",tier:"worth",veg:0,place:"Medl Bräu",addr:"Linzer Straße 275, 1140 Wien",
+    what:"Beef stewed with far more onion than meat, until the onion dissolves into sauce. Viennese, not Hungarian: no vegetables, no sour cream.",
+    order:"With a Semmel to wipe the plate. As Fiakergulasch it arrives with a fried egg and a sausage on top.",why:"Named for its Gulasch, Rauchspeckbrot and fried Emmentaler. Brews its own beer.",src:1,
+    alts:[{n:"Café Restaurant Markt58",d:"Marktgasse 58, 1090. Hungarian-leaning Gulaschsuppe."}]},
+   {d:"Eiernockerl",vn:"Eiernockerl",cat:"Main",tier:"worth",veg:1,place:"Restaurant Fromme Helene",addr:"Josefstädter Straße 15, 1080 Wien",
+    what:"Small flour dumplings tossed through scrambled egg. Cheap, filling, and one of the few Viennese classics that is genuinely vegetarian.",order:"Comes with green salad. Ask for it.",
+    why:"Named here, and the value is called good.",src:1,alts:[]},
+   {d:"Krautfleckerl",vn:"Krautfleckerl",cat:"Main",tier:"worth",veg:1,place:"Restaurant Fromme Helene",addr:"Josefstädter Straße 15, 1080 Wien",
+    what:"Square pasta flecks with caramelised cabbage and a lot of black pepper. Peasant food that stayed on menus.",order:"Usually a main, sometimes a side.",why:"Named by the city magazine.",src:1,
+    alts:[{n:"Wiener Stadtbräu",d:"Graben 29a, 1010. Also named for Krautfleckerl."}]},
+   {d:"Buchteln",vn:"Buchteln",cat:"Dessert",tier:"worth",veg:1,place:"Demel",pid:"ChIJiY3_UpgHbUcRWCIbHu4EWXY",addr:"Kohlmarkt 14, 1010 Wien",hours:"Daily 10:00 to 19:00",
+    what:"Sweet yeast buns baked touching so they tear apart, filled with plum jam, served warm with vanilla sauce.",order:"Warm or not at all. A Bohemian import that became Viennese.",why:"Named in the Konditorei survey.",src:1,
+    alts:[{n:"Konditorei Bienchen",d:"Sonnenallee 122, 1220. Also named, plus vegan Krapfen."}]},
+   {d:"Esterházyschnitte",vn:"Esterházy-Schnitte",cat:"Cake",tier:"worth",veg:1,place:"Konditorei Oberlaa",addr:"Kurbadstraße 12, 1100 Wien",
+    what:"Almond meringue and buttercream under white fondant, combed into the stripe pattern that identifies it on sight.",order:"One slice. Very sweet.",why:"Named for this specifically.",src:1,alts:[]},
+   {d:"Punschkrapfen",vn:"Punschkrapfen",cat:"Pastry",tier:"worth",veg:1,place:"Konditorei Oberdöbling",addr:"Döblinger Hauptstraße 63-65, 1190 Wien",
+    what:"A pink cube of cake offcuts soaked in rum and jam, glazed shocking pink. Deliberately made from leftovers, and loved anyway.",order:"One. Stronger than it looks.",why:"Named in the Konditorei survey.",src:1,
+    alts:[{n:"Konditorei Hüftgold",d:"Meidlinger Marktstand 35-36, 1120. Also named. Open daily."}]},
+   {d:"Topfentorte",vn:"Topfentorte",cat:"Cake",tier:"worth",veg:1,place:"Crème de la Crème",addr:"Lange Gasse 76, 1080 Wien",
+    what:"Baked quark cheesecake. Topfen is drier and more sour than cream cheese, so it eats lighter than it sounds.",order:"The baked one is the one named.",why:"Named in the Konditorei survey.",src:1,
+    alts:[{n:"Crème de la Crème – La petite",d:"4th district, by U4 Kettenbrückengasse. Same house."}]},
+   {d:"Frittatensuppe",vn:"Frittatensuppe",cat:"Soup",tier:"worth",veg:0,place:"Gasthaus Woracziczky",pid:"ChIJ-1KKJyaobUcRwE_3K3vf7so",addr:"Spengergasse 52, 1050 Wien",closed:[0,6],
+    what:"Clear beef broth with pancakes sliced into ribbons. The standard Austrian starter.",order:"Comes before almost anything else.",why:"Named at two houses.",warn:"Cash only. Closed Sat and Sun.",src:1,
+    alts:[{n:"Restaurant Fromme Helene",d:"Josefstädter Straße 15, 1080. Also named."}]},
+   {d:"Palatschinken",vn:"Palatschinken",cat:"Dessert",tier:"worth",veg:1,place:"Gasthaus Woracziczky",pid:"ChIJ-1KKJyaobUcRwE_3K3vf7so",addr:"Spengergasse 52, 1050 Wien",closed:[0,6],
+    what:"Thin pancakes rolled round apricot jam or quark. Thicker than a crêpe, thinner than an American pancake.",order:"Mit Marillenmarmelade is the default.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Zwiebelrostbraten",vn:"Zwiebelrostbraten",cat:"Main",tier:"worth",veg:0,place:"Plachutta Wollzeile",pid:"ChIJ8aGpZXUHbUcR7RhDMQpSArs",addr:"Wollzeile 38, 1010 Wien",
+    what:"Sirloin under a heap of crisp fried onions, with roast potatoes.",order:"Say how you want it cooked. Well done is often the default.",why:"Named beside the Tafelspitz.",src:1,
+    alts:[{n:"Café Restaurant Markt58",d:"Marktgasse 58, 1090. Also named."}]},
+   {d:"Grammelknöderl",vn:"Grammelknöderl",cat:"Dumpling",tier:"worth",veg:0,place:"DAST Restaurant",addr:"Schulgasse 85, 1180 Wien",
+    what:"Dumplings filled with pork crackling, served here tapas-sized rather than plate-filling.",order:"The kitchen does Austrian dishes as small plates. Order several.",why:"Run by Stephanie Pache and Daniel Fischer.",src:1,alts:[]},
+   {d:"Mohnnudeln",vn:"Mohnnudeln",cat:"Sweet",tier:"worth",veg:1,place:"DAST Restaurant",addr:"Schulgasse 85, 1180 Wien",
+    what:"Finger-shaped potato noodles rolled in ground poppy seed and sugar. Sweet, eaten as a main.",order:"Topfenknödel sit beside them.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Kärntner Kasnudeln",vn:"Kärntner Kasnudeln",cat:"Dumpling",tier:"worth",veg:1,place:"Figls",addr:"Grinzinger Straße 55, 1190 Wien",reg:"Carinthian",
+    what:"Large pasta pockets of quark, potato and mint, crimped by hand along one edge. From Carinthia, far south of here.",order:"Figls also does a vegan Wiener Schnitzel.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Salzburger Nockerl",vn:"Salzburger Nockerl",cat:"Dessert",tier:"worth",veg:1,place:"Meissl & Schadn",pid:"ChIJvygGgJ0HbUcRUOU9epLpWyc",addr:"Schubertring 10-12, 1010 Wien",reg:"Salzburg",hours:"Daily 12:00 to 23:30",
+    what:"Three baked peaks of sweet soufflé dusted with sugar, shaped after the mountains outside Salzburg. Collapses within minutes.",order:"Takes 20 minutes. Order it with the main.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Linzer Torte",vn:"Linzer Torte",cat:"Cake",tier:"worth",veg:1,place:"Konditorei Oberlaa",addr:"Kurbadstraße 12, 1100 Wien",reg:"Linz",
+    what:"Redcurrant jam under a lattice of nut and spice shortcrust. Claimed as the oldest cake with a surviving written recipe.",order:"Keeps for days, so it travels.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Sarma",vn:"Sarma",cat:"Main",tier:"",veg:0,local:1,place:"Zur Herknerin",pid:"ChIJYz1kd4EHbUcR1pRBSwM86aE",addr:"Wiedner Hauptstraße 36, 1040 Wien",closed:[0,1,2,3,6],reg:"Balkan",
+    what:"Stuffed sour cabbage rolls. Not Austrian, but Vienna's large Balkan population has made it a city dish, and it turns up on Austrian menus without comment.",
+    order:"Ask whether it is on this week. The menu changes.",why:"Shown in the Herknerin entry, which is an Austrian kitchen serving it as a matter of course.",warn:"Thursday and Friday evenings only. Cash only.",src:1,alts:[]},
+   {d:"Käsespätzle",vn:"Käsespätzle",cat:"Main",tier:"",veg:1,place:"Café Restaurant Markt58",addr:"Marktgasse 58, 1090 Wien",reg:"Vorarlberg and Tyrol",what:"Egg noodles layered with mountain cheese and fried onion.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Gebackener Emmentaler",vn:"gebackener Emmentaler",cat:"Snack",tier:"",veg:1,place:"Medl Bräu",addr:"Linzer Straße 275, 1140 Wien",what:"Deep-fried cheese with tartare sauce. The default vegetarian option in any Austrian Gasthaus.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Rauchspeckbrot",vn:"Rauchspeckbrot",cat:"Snack",tier:"",veg:0,place:"Medl Bräu",addr:"Linzer Straße 275, 1140 Wien",what:"Smoked bacon on dark bread, eaten with the house beer.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Leberknödelsuppe",vn:"Leberknödelsuppe",cat:"Soup",tier:"",veg:0,place:"Restaurant Fromme Helene",addr:"Josefstädter Straße 15, 1080 Wien",what:"Beef broth with a liver dumpling in it.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Kalbsrahmgulasch",vn:"Kalbsrahmgulasch",cat:"Main",tier:"",veg:0,place:"Plachutta Wollzeile",pid:"ChIJ8aGpZXUHbUcR7RhDMQpSArs",addr:"Wollzeile 38, 1010 Wien",what:"Veal in paprika cream, milder than the beef version.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Butterschnitzel",vn:"Butterschnitzel",cat:"Main",tier:"",veg:0,place:"Plachutta Wollzeile",pid:"ChIJ8aGpZXUHbUcR7RhDMQpSArs",addr:"Wollzeile 38, 1010 Wien",what:"Minced veal patty, soft and unbreaded. Nursery food for adults.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Paprikahendl",vn:"Paprikahendl",cat:"Main",tier:"",veg:0,place:"Meissl & Schadn",pid:"ChIJvygGgJ0HbUcRUOU9epLpWyc",addr:"Schubertring 10-12, 1010 Wien",what:"Chicken in paprika cream, Hungarian by origin and long since absorbed.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Wiener Schnitzel, vegan",vn:"veganes Wiener Schnitzel",cat:"Main",tier:"",veg:1,place:"Figls",addr:"Grinzinger Straße 55, 1190 Wien",what:"The breaded treatment applied to something other than veal.",why:"Named by the city magazine.",src:1,alts:[]},
+   {d:"Hausstrudel",vn:"Hausstrudel",cat:"Dessert",tier:"",veg:1,place:"Zur Herknerin",pid:"ChIJYz1kd4EHbUcR1pRBSwM86aE",addr:"Wiedner Hauptstraße 36, 1040 Wien",closed:[0,1,2,3,6],what:"The house strudel. The filling moves with the weekly menu.",why:"Named beside the Spinatknödel.",warn:"Thursday and Friday evenings only.",src:1,alts:[]},
+   {d:"Marmorgugelhupf",vn:"Marmorgugelhupf",cat:"Cake",tier:"",veg:1,place:"Konditorei Oberlaa",addr:"Kurbadstraße 12, 1100 Wien",what:"Marbled ring cake, the standard Austrian afternoon cake.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Apfel-Streusel-Kuchen",vn:"Apfel-Streusel-Kuchen",cat:"Cake",tier:"",veg:1,place:"Konditorei Oberlaa",addr:"Kurbadstraße 12, 1100 Wien",what:"Apple cake under crumble.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Trüffeltorte",vn:"Trüffeltorte",cat:"Cake",tier:"",veg:1,place:"Demel",pid:"ChIJiY3_UpgHbUcRWCIbHu4EWXY",addr:"Kohlmarkt 14, 1010 Wien",what:"Chocolate truffle torte, with a passionfruit one beside it.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Maronischnitte",vn:"Maronischnitte",cat:"Cake",tier:"",veg:1,seas:"Autumn",months:[8,9,10],place:"Ella's Twins",addr:"Vorgartenmarkt Stand 13, 1020 Wien",what:"Chestnut slice from a market stall run by twin brothers and their mother, Ella.",why:"Named in the Konditorei survey.",src:1,
+    alts:[{n:"Konditorei Bienchen",d:"Sonnenallee 122, 1220. Also named."}]},
+   {d:"Bienenstich",vn:"Bienenstich",cat:"Cake",tier:"",veg:1,place:"Konditorei Hüftgold",addr:"Meidlinger Marktstand 35-36, 1120 Wien",what:"Yeast cake with caramelised almonds and custard. Run by Mark Ruiz Hellín, open daily.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Mandelhörnchen",vn:"Mandelhörnchen",cat:"Pastry",tier:"",veg:1,place:"Konditorei Hüftgold",addr:"Meidlinger Marktstand 35-36, 1120 Wien",what:"Almond crescent dipped in chocolate at both ends.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Marzipankartoffeln",vn:"Marzipankartoffeln",cat:"Sweet",tier:"",veg:1,place:"Konditorei Oberdöbling",addr:"Döblinger Hauptstraße 63-65, 1190 Wien",what:"Marzipan balls rolled in cocoa so they resemble small potatoes.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Krapfen",vn:"vegane Krapfen",cat:"Pastry",tier:"",veg:1,place:"Konditorei Bienchen",addr:"Sonnenallee 122, 1220 Wien",what:"Jam doughnut, vegan here. Krapfen proper belong to Fasching, the pre-Lent carnival.",why:"Named in the Konditorei survey.",src:1,alts:[]},
+   {d:"Linzer Augen",vn:"Linzer Augen",cat:"Pastry",tier:"",veg:1,seas:"Christmas",months:[10,11],place:"Konditorei Bienchen",addr:"Sonnenallee 122, 1220 Wien",what:"Jam sandwich biscuits with holes cut through the lid. A Christmas-tin fixture.",why:"Named by both sources.",src:1,alts:[]},
+   {d:"Zimtschnecken",vn:"Zimtschnecken",cat:"Pastry",tier:"",veg:1,place:"Omas Café",addr:"Obere Augartenstraße 70, 1020 Wien",what:"Cinnamon buns baked with organic spelt. Vegan and gluten-free options.",why:"Named in the Konditorei survey.",src:1,alts:[]}]},
+
+ steyr:{name:"Steyr",aka:["steyr","stayr","steier"],lat:48.0405,lng:14.4212,
+  sources:[
+   {n:"Schwarz auf Weiss, Steyr Mehlspeisenrundgang",k:"German travel journalism",
+    b:"A long-form pastry walk through Steyr that names each shop, its owner and the building it sits in, rather than listing addresses.",
+    note:"It is the only source found that documents the Steyrer Torte, the Froschel and the Schnalle at all. Everything city-exclusive in this pack comes from it.",
+    u:"https://www.schwarzaufweiss.de/oesterreich/steyr-kulinarisch.htm"},
+   {n:"Oberösterreich Tourismus",k:"Official regional tourism board",
+    b:"The province's own kitchen pages, where each regional recipe is credited to a specific named restaurant rather than written anonymously.",
+    note:"That crediting is why Knapp am Eck appears here: the board picked one kitchen in the whole province as its Grammelknödel source.",
+    u:"https://www.oberoesterreich.at/kulinarik/rezepte/spezialitaeten-aus-oesterreich-typische-rezepte-aus-oberoesterreich.html"},
+   {n:"Local word of mouth",k:"Unverified, included on request",
+    b:"One entry here comes from local recommendation rather than published food writing, and is marked Locals' pick.",
+    note:"It is not an Austrian speciality and does not belong in the canon, but people in Steyr rate it, which is its own kind of useful.",
+    u:""}],
+  gap:"Two published sources, which is what a city of 38,000 yields. MeinBezirk's local Geheimtipps column was identified as a third but not read. The sweet side is far better covered than the savoury side, and that imbalance sits in the sources, not in the ranking.",
+  items:[
+   {d:"Steyrer Torte",vn:"Steyrer Torte",cat:"Cake",tier:"must",veg:1,only:1,place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],hours:"Tue to Fri 09:00 to 18:00, Sat 09:00 to 17:30",
+    what:"Chocolate torte with nuts and redcurrant jam on shortcrust, at 70 percent cocoa. Sold in a box printed with the confluence of the Steyr and the Enns.",
+    order:"A slice in the café, or the whole torte boxed to carry.",
+    why:"Invented by the current owner about fifteen years ago. The Schmidt family has held the house 85 years and is in its third generation. The name is unprotected, so any confectioner may make one, but this is where it started.",
+    warn:"Closed Monday and Sunday.",src:1,alts:[]},
+   {d:"Froschel",vn:"Froschel / Froscherl",cat:"Cake",tier:"must",veg:1,only:1,place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],hours:"Tue to Fri 09:00 to 18:00, Sat 09:00 to 17:30",
+    what:"A violently green sand-cake with cherry buttercream under sugar fondant. The colour is the point and it is not subtle.",
+    order:"Ask by name. It is a local word, not a menu category.",why:"The current owner's grandfather brought the idea back from Wiesbaden and France. Found nowhere outside Steyr.",
+    warn:"Closed Monday and Sunday.",src:1,alts:[]},
+   {d:"Steyrer Schnalle",vn:"Steyrer Schnalle",cat:"Sweet",tier:"must",veg:1,only:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],hours:"Mon to Fri 06:30 to 18:00, Sat 07:00 to 12:00",
+    what:"A chocolate taler of marzipan, dark chocolate and Dirndl jam, made from cornelian cherries. Named for the toll once charged at the Schnallentor.",
+    order:"Ask at the counter by name.",
+    why:"Made by master baker Rainer Fröhlich in the Lebzelterhaus, a building going back to the 16th century where wax candles were drawn and Lebkuchen baked. A city exclusive named after a city gate.",
+    warn:"The map pin may land on the Stadtplatz 28 branch. The Lebzelterhaus is Kirchengasse 20. Check before walking.",src:1,alts:[]},
+   {d:"Essbare Dachschindeln",vn:"essbare Dachschindeln",cat:"Snack",tier:"must",veg:1,only:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],hours:"Mon to Fri 06:30 to 18:00, Sat 07:00 to 12:00",
+    what:"Edible roof shingles. A savoury oval crispbread, long and curved like the shingles on the old town roofs.",
+    order:"Savoury, not sweet. Better with beer than coffee.",why:"Rainer Fröhlich's own invention, sold nowhere else.",
+    warn:"The pin may show the Stadtplatz branch rather than the Lebzelterhaus.",src:1,alts:[]},
+   {d:"Grammelknödel",vn:"Grammelknödel",cat:"Dumpling",tier:"must",veg:0,place:"Wirtshaus Knapp am Eck",pid:"ChIJ1YyynPnFc0cRzUhd1EYZ3nA",addr:"Wehrgrabengasse 15, 4400 Steyr",closed:[0,1],hours:"Tue to Sat 11:00 to 14:00 and 18:00 to 23:00",
+    what:"Potato-dough dumplings filled with Grammeln, the crisp scratchings left after rendering lard. Usually with sauerkraut.",
+    order:"The menu runs to one page, which makes choosing fast.",
+    why:"The provincial tourism board credits its Grammelknödel recipe to this kitchen specifically, which is a whole province singling out one house.",
+    warn:"Closed Monday and Sunday, and shut between 14:00 and 18:00.",src:1,alts:[]},
+   {d:"Schweinsbratl mit Knödel und Stöcklkraut",vn:"Schweinsbratl",cat:"Main",tier:"must",veg:0,place:"Schwechaterhof",pid:"ChIJG9FBX_bFc0cRsm_jcLA2snk",addr:"Leopold-Werndl-Straße 1, 4400 Steyr",closed:[1],reg:"Upper Austrian",hours:"Tue to Sat 10:00 to 24:00, Sun 10:00 to 14:00",
+    what:"Roast pork with dumplings and Stöcklkraut, cabbage cut into blocks rather than shredded. The regional Sunday plate.",
+    order:"The house leans on its beer list as hard as its kitchen.",why:"Named by the provincial board as a regional signature, and this is the Wirtshaus the Steyr source attaches to it.",
+    warn:"Closed Monday. Sunday only until 14:00.",src:2,
+    alts:[{n:"Wirtshaus Knapp am Eck",d:"Wehrgrabengasse 15. Closed Mon and Sun.",pid:"ChIJ1YyynPnFc0cRzUhd1EYZ3nA"}]},
+   {d:"Döner Kebab",vn:"Döner",cat:"Snack",tier:"must",veg:0,local:1,place:"Pizza & Imbiss Colosseo",pid:"ChIJW5nVw1fPc0cRyt2YMGEYznU",addr:"Bahnhofstraße 2, 4400 Steyr",hours:"Mon to Sat 11:00 to 23:00, Sun 11:00 to 22:00",
+    what:"A five euro döner on bread baked in house, in portions reviewers describe as two meals. Turkish, not Austrian, and nothing to do with the local canon.",
+    order:"Cash only. Eat in or take away, inside and outside seating.",
+    why:"Included because people in Steyr rate it, not because any food writer does. It is also the practical answer to the real Steyr problem: on a Sunday evening, when both Konditoreien and both Wirtshäuser are shut, this is open until 22:00.",
+    warn:"Cash only. Word of mouth, not published food writing, so treat the claim as unverified. Several reviewers find the service brusque.",alts:[]},
+   {d:"Trappistenbier Gregorius",vn:"Gregorius, Stift Engelszell",cat:"Drink",tier:"worth",veg:1,place:"Schwechaterhof",pid:"ChIJG9FBX_bFc0cRsm_jcLA2snk",addr:"Leopold-Werndl-Straße 1, 4400 Steyr",closed:[1],reg:"Upper Austrian",hours:"Tue to Sat 10:00 to 24:00, Sun 10:00 to 14:00",
+    what:"Trappist beer at 9.7 percent from Stift Engelszell, the only Trappist brewery in Austria. Benno, at 9 percent, sits beside it.",
+    order:"One is a commitment. The house also pours Hofstetten's Granitbier and unfiltered Aurora Dolde.",
+    why:"The Steyr source singles this house out for its beer rather than its food.",warn:"Closed Monday.",src:1,alts:[]},
+   {d:"Mandelkipferl",vn:"Mandelkipferl",cat:"Pastry",tier:"worth",veg:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],hours:"Mon to Fri 06:30 to 18:00, Sat 07:00 to 12:00",
+    what:"Almond crescents, eaten standing with coffee. The counter also runs to Ischler Plätzchen and Topfentorte.",
+    order:"You can watch the baker work from the café.",why:"Named among the Fröhlich range.",warn:"Saturday closes at noon. Closed Sunday.",src:1,alts:[]},
+   {d:"Punschkrapferl",vn:"Punschkrapferl",cat:"Pastry",tier:"worth",veg:1,place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],what:"Sponge, jam, rum and chocolate. The local spelling takes the diminutive.",why:"Named by the Steyr source.",warn:"Closed Mon and Sun.",src:1,alts:[]},
+   {d:"Granitbier",vn:"Granitbier",cat:"Drink",tier:"worth",veg:1,place:"Schwechaterhof",pid:"ChIJG9FBX_bFc0cRsm_jcLA2snk",addr:"Leopold-Werndl-Straße 1, 4400 Steyr",closed:[1],reg:"Upper Austrian",what:"Brewed by Hofstetten and fermented in granite vats, which is the whole conceit.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Lebkuchen",vn:"Lebkuchen",cat:"Sweet",tier:"worth",veg:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],what:"Spiced honey cake. The Lebzelterhaus is named for the trade: Lebzelter made the gingerbread and the wax.",why:"The building's own history.",src:1,alts:[]},
+   {d:"Ischler Plätzchen",vn:"Ischler Plätzchen",cat:"Pastry",tier:"",veg:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],reg:"Bad Ischl",what:"Two shortcrust discs with jam between, coated in chocolate. From Bad Ischl, across the province.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Topfentorte",vn:"Topfentorte",cat:"Cake",tier:"",veg:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],what:"Baked quark torte.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Maroni-Kirschtorte",vn:"Maroni-Kirschtorte",cat:"Cake",tier:"",veg:1,seas:"Autumn",months:[8,9,10],place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],what:"Chestnut and cherry torte.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Marzipankartofferl",vn:"Marzipankartofferl",cat:"Sweet",tier:"",veg:1,place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],what:"Cocoa-dusted marzipan, in the local diminutive spelling.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Callebaut-Trüffel",vn:"Trüffel",cat:"Sweet",tier:"",veg:1,place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],what:"Chocolate truffles made on Callebaut couverture.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Sachertorte",vn:"Sachertorte",cat:"Cake",tier:"",veg:1,place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],reg:"Viennese",what:"The Vienna cake, made locally.",why:"Named at both Steyr houses.",src:1,
+    alts:[{n:"Café Konditorei Schmidt",d:"Stadtplatz 1. Also makes one.",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg"}]},
+   {d:"Mozarttorte",vn:"Mozarttorte",cat:"Cake",tier:"",veg:1,place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],reg:"Salzburg",what:"Marzipan, pistachio and nougat, after the Salzburg sweet.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Adventsschnitte",vn:"Adventsschnitte",cat:"Cake",tier:"",veg:1,seas:"December only",months:[11],place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],what:"Lebkuchen base with Powidl, the thick unsweetened plum butter. Christmas only.",why:"Named as a seasonal line.",src:1,alts:[]},
+   {d:"Osterpinze",vn:"Osterpinze",cat:"Bread",tier:"",veg:1,seas:"Easter only",months:[2,3],place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],what:"Sweet yeast bread snipped into three peaks, eaten at Easter.",why:"Named among the Easter range.",src:1,alts:[]},
+   {d:"Dinkelroulade",vn:"Dinkelroulade",cat:"Cake",tier:"",veg:1,seas:"Seasonal",place:"Bäckerei Fröhlich, Lebzelterhaus",pid:"ChIJfaez4_jFc0cRzgrXFFyFzgI",addr:"Kirchengasse 20, Steyrdorf",closed:[0],what:"Spelt roulade.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Erdbeerkaramelltorte",vn:"Erdbeerkaramelltorte",cat:"Cake",tier:"",veg:1,seas:"Summer",months:[4,5,6],place:"Café Konditorei Schmidt",pid:"ChIJNQNDAvjFc0cR0tM1d3vPoMg",addr:"Stadtplatz 1, 4400 Steyr",closed:[0,1],what:"Strawberry and caramel torte.",why:"Named by the Steyr source.",src:1,alts:[]},
+   {d:"Linzer Torte",vn:"Linzer Torte",cat:"Cake",tier:"trip",veg:1,placeTxt:"Linz, about 40 km. 25 minutes by train.",
+    what:"Redcurrant jam under a nut-shortcrust lattice, from the provincial capital. Claimed as the oldest cake with a surviving written recipe.",
+    order:"Every Linz Konditorei makes one. Compare two.",warn:"No source here named a specific Linz shop. Unverified.",why:"Regional classic named by the board.",src:1,alts:[]},
+   {d:"Schwarzbeernocken",vn:"Schwarzbeernocken",cat:"Dessert",tier:"trip",veg:1,seas:"Bilberry season",months:[6,7,8],place:"Konditorei Zauner",addr:"Bad Ischl, about 90 km",
+    what:"Sweet dumplings full of wild bilberries, from an old recipe of the Zauner house.",order:"Zauner is also named for iced Kaiserschmarrn and fried apple rings.",why:"The board credits the recipe to Zauner.",src:1,alts:[]},
+   {d:"Bratl in der Rein",vn:"Bratl in der Rein",cat:"Main",tier:"trip",veg:0,place:"Steegwirt",addr:"Bad Goisern, about 95 km",what:"Roast brought to the table in the pan it was cooked in.",why:"The board shows the dish at Steegwirt.",src:1,alts:[]},
+   {d:"Mühlviertler Rahmsuppe",vn:"Mühlviertler Rahmsuppe",cat:"Soup",tier:"trip",veg:1,place:"Schmankerlwirt",addr:"Vorderweißenbach, about 110 km",what:"Cream soup from the Mühlviertel, the granite upland north of the Danube.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Leinölerdäpfel",vn:"Leinölerdäpfel",cat:"Side",tier:"trip",veg:1,place:"Kulinarium Vonwiller",addr:"Haslach, about 120 km",what:"Potatoes with linseed oil and curd. Mühlviertel linseed oil is the regional signature.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Mohnflesserl",vn:"Mohnflesserl",cat:"Bread",tier:"trip",veg:1,place:"Bäckerei Brandl",addr:"Upper Austria",what:"Plaited poppy-seed roll. The board publishes the original recipe with the braiding method.",why:"Credited by the board to Brandl.",src:1,alts:[]},
+   {d:"Eierschwammerlgulasch",vn:"Eierschwammerlgulasch",cat:"Main",tier:"trip",veg:1,seas:"Summer to early autumn",months:[6,7,8,9],place:"Restaurant Waldschänke",addr:"Grieskirchen, about 90 km",what:"Chanterelle goulash with bread dumplings.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Leberschädel",vn:"Leberschädel",cat:"Main",tier:"trip",veg:0,place:"Gasthof Haudum",addr:"Helfenberg, about 125 km",what:"A liver speciality with parsley potatoes and bacon-cabbage salad.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Überbackene Speckknödel",vn:"überbackene Speckknödel",cat:"Dumpling",tier:"trip",veg:0,place:"Hoftaverne Atzmüller",addr:"Waxenberg, about 115 km",what:"Bacon dumplings, gratinated.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Knusprige Weidegans",vn:"Weidegans",cat:"Main",tier:"trip",veg:0,seas:"Late Oct to Nov",months:[9,10],place:"Keplingerwirt",addr:"St Johann im Mühlkreis, about 110 km",what:"Pasture-raised roast goose with dumplings, the Martini season dish.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Batzlguglhupf",vn:"Batzlguglhupf",cat:"Cake",tier:"trip",veg:1,place:"Konditorei Schörgi",addr:"Grein, about 65 km",what:"A Gugelhupf variant from the Danube town of Grein.",why:"Recipe credited by the board.",src:1,alts:[]},
+   {d:"Holzknechtnocken",vn:"Holzknechtnocken",cat:"Dessert",tier:"trip",veg:1,placeTxt:"Salzkammergut, no shop named",what:"An old dish of the Holzknechte, the forest woodsmen.",warn:"No shop named by any source here.",why:"Named by the board with a home recipe only.",src:1,alts:[]}]},
+
+ tirunelveli:{name:"Tirunelveli",aka:["tirunelveli","thirunelveli","nellai","tinnevelly","திருநெல்வேலி"],lat:8.7139,lng:77.7567,
+  sources:[
+   {n:"Wikipedia, Iruttu Kadai",k:"Encyclopaedia, provenance only",
+    b:"Confirms the hard facts behind the city's one genuine exclusive: the shop opened in 1900, has never expanded, and sells a wheat, sugar and ghee halwa.",
+    note:"It is thin. It does not give hours, the current owner, or the method, so the practical detail here comes from a maps lookup instead.",
+    u:"https://en.wikipedia.org/wiki/Iruttu_Kadai"},
+   {n:"Chennai Orbit, Top 10 Foods in Tirunelveli",k:"Regional listicle, weak",
+    b:"A city food list that names shops for each dish, which is more than most English-language writing on Tirunelveli manages.",
+    note:"Its quality is well below the Austrian sources. Half its entries are pan-Tamil staples like dosai and sambar that are not specific to Tirunelveli at all, and those sit in Overall here rather than Must try.",
+    u:"https://chennaiorbit.com/blog/top-10-foods-to-try-in-tirunelveli/"}],
+  gap:"This pack is noticeably weaker than Vienna's or Steyr's and should be treated as a first draft. The halwa is solid and well documented. Everything else rests on one listicle plus hours from a maps lookup. Tamil-language food writing, which exists in Dinamalar and Vikatan, would change this list and has not been read.",
+  items:[
+   {d:"Tirunelveli Halwa",vn:"திருநெல்வேலி அல்வா",cat:"Sweet",tier:"must",veg:1,only:1,place:"Iruttukadai Halwa Shop",pid:"ChIJxRuGp3wRBDsRF1P7_UlG8sg",addr:"13A Kizhakku Ratha Street, Tirunelveli Junction",hours:"Daily 17:00 to 22:00 only",
+    what:"Wheat halwa cooked down with sugar and ghee until it is translucent and holds a spoon mark. Locally credited to the water of the Thamirabarani, which is why the version made elsewhere is never quite the same.",
+    order:"Sold by weight, served on a leaf. Cash only at the main counter.",
+    why:"Iruttu Kadai means dark shop. It opened in 1900 and has never expanded or opened a second branch, which is the whole claim.",
+    warn:"Open five hours a day, 17:00 to 22:00. The queue at 17:00 is long and reviewers say it clears by 19:00. Cash only here, though the neighbouring Visakam counter takes GPay.",src:2,
+    alts:[{n:"Chandra Sweets",d:"167 Swami Nellaiappar High Rd, below the double-decker bridge. Locals rate it above Iruttukadai and it opens 10:15 to 22:30.",pid:"ChIJnWuDCgkRBDsR3LzQOZKWnZw"},
+          {n:"Lakshmi Vilas",d:"27 Madurai Rd. Open 24 hours, and does a paal halwa as well.",pid:"ChIJQ3-BnIURBDsR9ArfN7xPwUM"}]},
+   {d:"Palaya Soru",vn:"பழைய சோறு",cat:"Rice",tier:"must",veg:0,place:"D Parottaz",pid:"ChIJfSDV7TUTBDsRklIwGN2MzIg",addr:"17/2 First Cross Street, NGO Colony",hours:"Daily 12:00 to 23:00",
+    what:"Rice left overnight in water to ferment, eaten cold with onion, chilli and curd. Farm food that almost never appears on a restaurant menu.",
+    order:"Reviewers pair it with prawn or mutton. Ask whether it is on today.",
+    why:"A reviewer calls this the only place in Tirunelveli serving it, which is the kind of claim worth going to check.",
+    warn:"Single-review claim, not published food writing. Unverified.",src:1,alts:[]},
+   {d:"Nool Parotta",vn:"நூல் பரோட்டா",cat:"Bread",tier:"must",veg:0,place:"D Parottaz",pid:"ChIJfSDV7TUTBDsRklIwGN2MzIg",addr:"17/2 First Cross Street, NGO Colony",hours:"Daily 12:00 to 23:00",
+    what:"Parotta pulled into threads rather than layers, so it shreds instead of flaking. Eaten with dry spiced gravies.",
+    order:"This kitchen refuses to serve salna at all and is proud of it, so do not ask for the usual gravy.",
+    why:"Named for the nool parotta specifically, and the no-salna rule makes it a deliberate house style rather than a default.",src:1,
+    alts:[{n:"Udhaya Vilas",d:"NH 44, KTC Nagar roundabout. Parotta with salna, the conventional way.",pid:"ChIJEdzmaS8NBDsRPQM10SGtRyc"}]},
+   {d:"Idiyappam",vn:"இடியாப்பம்",cat:"Tiffin",tier:"must",veg:1,placeTxt:"Srinivasa Idiyappam, or Hotel Ashok",
+    what:"Rice flour pressed into fine strands and steamed in nests. Eaten with sweetened coconut milk in the morning or with a spiced curry.",
+    order:"Ask for coconut milk if you want it the sweet way.",why:"Both shops are named for it, though neither source gives a street address.",
+    warn:"No address or hours found for either shop. Unverified.",src:1,alts:[]},
+   {d:"Kadalai Sundal",vn:"கடலை சுண்டல்",cat:"Snack",tier:"worth",veg:1,placeTxt:"Stalls around Nellaiappar Temple and Tirunelveli Junction",
+    what:"Chickpeas or peanuts boiled and tossed with grated coconut, mustard seed and curry leaf. Served in a paper cone for a few rupees.",
+    order:"Temple stalls, late afternoon onward. Eaten walking.",why:"Named as temple-adjacent street food rather than restaurant food.",
+    warn:"Street stalls move. A pin would be the temple, not a shop.",src:1,alts:[]},
+   {d:"Paal Halwa",vn:"பால் அல்வா",cat:"Sweet",tier:"worth",veg:1,place:"Lakshmi Vilas",pid:"ChIJQ3-BnIURBDsR9ArfN7xPwUM",addr:"27 Madurai Rd, near the railway station",hours:"Open 24 hours",
+    what:"The milk version of the halwa, paler and softer than the wheat one, and usually about half again the price.",
+    order:"Reviewers single out the paal halwa here specifically.",why:"One of the older halwa houses, on the road to the station, and the only one open around the clock.",src:1,alts:[]},
+   {d:"Paal Ice Cream",vn:"பால் ஐஸ்",cat:"Dessert",tier:"worth",veg:1,placeTxt:"Sold alongside halwa at most Tirunelveli halwa shops",
+    what:"Milk ice, barely flavoured, sold beside the halwa counters as the thing you eat while the halwa is wrapped.",order:"Ask at the halwa counter rather than looking for a separate shop.",
+    why:"Named as a halwa-shop fixture rather than a dessert parlour item.",warn:"No single shop named. Unverified.",src:1,alts:[]},
+   {d:"Vatha Kuzhambu",vn:"வத்த குழம்பு",cat:"Main",tier:"worth",veg:1,place:"Hotel Ponnusamy",addr:"Tirunelveli",
+    what:"Tamarind gravy darkened with sun-dried vegetables and a lot of pepper, poured over rice. Sour, hot and built to keep.",order:"Eaten with plain rice and sesame oil.",why:"Named for home-style cooking.",src:1,alts:[]},
+   {d:"Murukku",vn:"முறுக்கு",cat:"Snack",tier:"",veg:1,placeTxt:"Sri Murukku House and street shops",
+    what:"Rice and urad flour piped into coils and deep fried, seasoned with sesame or ajwain.",why:"Named as a local snack shop item.",warn:"No address found. Unverified.",src:1,alts:[]},
+   {d:"Dosai",vn:"தோசை",cat:"Tiffin",tier:"",veg:1,placeTxt:"Sree Krishna Bhavan, Hotel Saravana Bhavan",reg:"Pan-Tamil, not local",
+    what:"Fermented rice and urad batter on a griddle. Everywhere in Tamil Nadu, included only because the source names it.",why:"Listed by the source. Not specific to Tirunelveli.",src:1,
+    alts:[{n:"Hotel Nellai Saravana Bhava",d:"NH 44, KTC Nagar roundabout. Named for ghee roast and mini tiffin.",pid:"ChIJ7SzxegANBDsRCxVZykpEeaQ"}]},
+   {d:"Sambar and Rasam with Rice",vn:"சாம்பார், ரசம்",cat:"Main",tier:"",veg:1,placeTxt:"Almost any local mess or eatery",reg:"Pan-Tamil, not local",
+    what:"Lentil and vegetable stew, then a thin peppery tamarind broth, both over rice. The daily meal across the state.",why:"Listed by the source with no shop named. Not specific to Tirunelveli.",src:1,alts:[]},
+   {d:"Parotta with Chicken Curry",vn:"பரோட்டா, கோழி குழம்பு",cat:"Bread",tier:"",veg:0,place:"Udhaya Vilas",pid:"ChIJEdzmaS8NBDsRPQM10SGtRyc",addr:"NH 44, KTC Nagar roundabout",hours:"Daily 11:30 to 23:00",
+    what:"Layered flatbread slapped out on an oiled griddle, with a spiced chicken gravy.",order:"Reviewers single out the parotta and salna here, with onion raita.",why:"Named for parotta, and the salna is specifically praised.",src:1,alts:[]},
+   {d:"Continental and Chinese plates",vn:"",cat:"Main",tier:"",veg:0,local:1,place:"Udhaya Vilas",pid:"ChIJEdzmaS8NBDsRPQM10SGtRyc",addr:"NH 44, KTC Nagar roundabout",hours:"Daily 11:30 to 23:00",
+    what:"Nasi goreng, chilli chicken, prawn har gao and sticky toffee pudding, on the same menu as the parotta.",
+    order:"Locals order these as readily as the Tamil dishes.",
+    why:"Included because people in Tirunelveli rate this kitchen for food that has nothing to do with Tirunelveli. It is not local cuisine and makes no claim to be.",
+    warn:"Word of mouth from reviews, not food writing. Unverified.",alts:[]}]}
+};
+
+/* ===================== opening_hours -> today ===================== */
+function dayMatches(spec,ti){
+  return spec.split(",").some(p=>{
+    p=p.trim();
+    const r=p.match(/^([A-Z][a-z])\s*-\s*([A-Z][a-z])$/);
+    if(r){const a=OSMD.indexOf(r[1]),b=OSMD.indexOf(r[2]);
+      if(a<0||b<0)return false;
+      return a<=b ? (ti>=a&&ti<=b) : (ti>=a||ti<=b);}
+    return OSMD.indexOf(p)===ti;});
+}
+function ohToday(s){
+  if(!s)return null;
+  s=String(s).trim();
+  if(/^24\s*\/\s*7$/.test(s))return{open:true,txt:"24/7"};
+  const ti=DAY; let found=null;
+  s.split(";").forEach(r=>{
+    r=r.trim(); if(!r)return;
+    const m=r.match(/^((?:[A-Z][a-z](?:\s*-\s*[A-Z][a-z])?)(?:\s*,\s*[A-Z][a-z](?:\s*-\s*[A-Z][a-z])?)*)\s+(.+)$/);
+    let times=r, spec=null;
+    if(m){spec=m[1];times=m[2];}
+    if(spec&&!dayMatches(spec,ti))return;
+    if(/^(off|closed)$/i.test(times.trim())){found={open:false,txt:"closed"};return;}
+    const tm=times.match(/\d{1,2}:\d{2}\s*-\s*\d{1,2}:\d{2}/g);
+    if(tm)found={open:true,txt:tm.join(", ")};
+  });
+  return found;
+}
+
+/* ===================== live lookup ===================== */
+const NOM="https://nominatim.openstreetmap.org/search";
+const WP="https://en.wikipedia.org/w/api.php";
+const OVP=["https://overpass-api.de/api/interpreter","https://overpass.private.coffee/api/interpreter"];
+const enc=encodeURIComponent;
+async function jget(url,ms){
+  const c=new AbortController(), tm=setTimeout(()=>c.abort(),ms||10000);
+  try{const r=await fetch(url,{signal:c.signal,headers:{Accept:"application/json"}});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    return await r.json();}
+  finally{clearTimeout(tm);}
+}
+async function opost(body){
+  let last=null;
+  for(const ep of OVP){
+    const c=new AbortController(), tm=setTimeout(()=>c.abort(),22000);
+    try{const r=await fetch(ep,{method:"POST",signal:c.signal,body:"data="+enc(body),
+        headers:{"Content-Type":"application/x-www-form-urlencoded"}});
+      if(r.status===429||r.status===504){last=new Error("busy");continue;}
+      if(!r.ok)throw new Error("HTTP "+r.status);
+      return await r.json();}
+    catch(e){last=e}
+    finally{clearTimeout(tm)}
+  }
+  throw last||new Error("overpass unreachable");
+}
+const FOODRE=/(dish|food|snack|sweet|dessert|cuisine|cake|bread|soup|stew|curry|rice|noodle|pastr|confection|beverage|drink|sausage|cheese|dumpling|pancake|fried|baked|steamed|roasted|savou?ry|pudding|biscuit|halwa|sweetmeat|batter|flatbread|parotta|paratha|roti|dosa|porridge|broth|pickle|chutney|ferment)/i;
+function catOf(s){
+  s=(s||"").toLowerCase();
+  if(/\b(halwa|barfi|laddu|laddoo|kheer|payasam|jaggery|sweetmeat|candy|toffee|fudge|marzipan)\b/.test(s))return "Sweet";
+  if(/\b(cake|torte|gateau|tart|strudel|pie|cheesecake)\b/.test(s))return "Cake";
+  if(/\b(pastry|biscuit|cookie|doughnut|donut|bun|croissant|scone)\b/.test(s))return "Pastry";
+  if(/\b(bread|roti|parotta|paratha|naan|flatbread|loaf|chapati|dosa|dosai)\b/.test(s))return "Bread";
+  if(/\b(soup|broth|consomm|rasam|shorba)\b/.test(s))return "Soup";
+  if(/\b(beer|wine|coffee|tea|juice|beverage|liquor|cocktail|spirit|cider|lassi)\b/.test(s))return "Drink";
+  if(/\b(ice cream|sorbet|gelato|pudding|custard|dessert)\b/.test(s))return "Dessert";
+  if(/\b(dumpling|knödel|knodel|momo|pierogi|gnocchi)\b/.test(s))return "Dumpling";
+  if(/\b(noodle|pasta|spätzle|spaetzle|vermicelli)\b/.test(s))return "Noodles";
+  if(/\b(rice|biryani|pulao|pilaf|risotto)\b/.test(s))return "Rice";
+  if(/\b(snack|fritter|chaat|crisp|street food|savoury snack)\b/.test(s))return "Snack";
+  if(/\b(sausage|ham|bacon|charcuterie|cured)\b/.test(s))return "Charcuterie";
+  return "Main";
+}
+const SHOPFOR={Sweet:["confectionery","chocolate","pastry","sweets"],Cake:["pastry","confectionery","bakery"],
+ Pastry:["bakery","pastry","confectionery"],Bread:["bakery"],Dessert:["ice_cream","pastry","cafe"],
+ Drink:["bar","pub","cafe","beverages"],Snack:["fast_food","bakery","deli"],Charcuterie:["butcher","deli"]};
+
+async function liveLookup(q,step){
+  /* ---- stage 1: sources ---- */
+  step(0,"run","nominatim.openstreetmap.org");
+  const g=await geo(q);
+  if(!g)throw {soft:"nocity"};
+  step(0,"run",g.display.split(",").slice(0,3).join(", "));
+  const topic=g.state||g.country||g.name;
+  const sr=await jget(WP+"?action=query&list=search&format=json&origin=*&srlimit=4&srsearch="+enc(topic+" cuisine"),10000);
+  const hits=((sr.query||{}).search||[]).map(x=>x.title).filter(x=>/cuisine|food/i.test(x));
+  if(!hits.length)throw {soft:"nodish"};
+  step(0,"ok",g.display.split(",").slice(0,3).join(", ")+" · "+hits[0]);
+
+  /* ---- stage 2: dishes + places ---- */
+  step(1,"run",hits[0]);
+  const lk=await jget(WP+"?action=query&prop=links&plnamespace=0&pllimit=400&format=json&origin=*&titles="+enc(hits[0]),12000);
+  const pages=(lk.query||{}).pages||{};
+  let titles=[];
+  Object.keys(pages).forEach(k=>{(pages[k].links||[]).forEach(l=>titles.push(l.title))});
+  titles=titles.filter(x=>!/^(List of|Category:|Cuisine of|.* cuisine$)/i.test(x)).slice(0,60);
+  if(!titles.length)throw {soft:"nodish"};
+  const ext={};
+  for(let i=0;i<titles.length;i+=20){
+    const chunk=titles.slice(i,i+20);
+    step(1,"run","wikipedia · "+Math.min(i+20,titles.length)+"/"+titles.length);
+    try{
+      const ex=await jget(WP+"?action=query&prop=extracts&exintro=1&explaintext=1&exsentences=2&format=json&origin=*&titles="+enc(chunk.join("|")),12000);
+      const pp=(ex.query||{}).pages||{};
+      Object.keys(pp).forEach(k=>{if(pp[k].extract)ext[pp[k].title]=pp[k].extract.replace(/\s+/g," ").trim()});
+    }catch(e){}
+  }
+  const dishes=Object.keys(ext).filter(k=>FOODRE.test(ext[k])).slice(0,34);
+  if(!dishes.length)throw {soft:"nodish"};
+
+  step(1,"run","openstreetmap · places near "+g.name);
+  let places=[];
+  try{
+    const oq='[out:json][timeout:25];('
+      +'nwr["amenity"~"^(restaurant|cafe|fast_food|ice_cream)$"](around:2600,'+g.lat+','+g.lon+');'
+      +'nwr["shop"~"^(bakery|confectionery|pastry|chocolate|deli|butcher)$"](around:2600,'+g.lat+','+g.lon+');'
+      +');out tags center 160;';
+    const oj=await opost(oq);
+    places=(oj.elements||[]).map(e=>{const T2=e.tags||{};return{
+      n:T2.name,shop:T2.shop||T2.amenity||"",cuis:(T2.cuisine||"").toLowerCase(),
+      oh:T2.opening_hours||"",
+      addr:[T2["addr:street"],T2["addr:housenumber"]].filter(Boolean).join(" ")||"",
+      lat:e.lat||(e.center&&e.center.lat),lon:e.lon||(e.center&&e.center.lon)};})
+      .filter(p=>p.n);
+  }catch(e){}
+  step(1,"ok",dishes.length+" dishes · "+places.length+" places");
+
+  /* ---- stage 3: assemble ---- */
+  step(2,"run","matching and checking today");
+  const cityLC=g.name.toLowerCase(), stateLC=(g.state||"").toLowerCase();
+  const items=dishes.map(title=>{
+    const txt=ext[title];
+    const cat=catOf(title+" "+txt);
+    const named=cityLC.length>3&&title.toLowerCase().indexOf(cityLC)>-1;
+    const regional=!named&&stateLC.length>3&&title.toLowerCase().indexOf(stateLC)>-1;
+    const want=SHOPFOR[cat]||[];
+    const pool=places.filter(p=>want.indexOf(p.shop)>-1||want.some(w=>p.cuis.indexOf(w)>-1));
+    const pick=pool[0]||null;
+    const oh=pick?ohToday(pick.oh):null;
+    return{
+      d:title,vn:"",cat:cat,live:1,
+      tier:named?"must":(regional?"must":"worth"),
+      only:named?1:0,reg:regional?(g.state||""):"",
+      veg:/\bvegetarian|vegan\b/i.test(txt)?1:(/\b(meat|pork|beef|chicken|mutton|fish|lamb|sausage|prawn)\b/i.test(txt)?0:1),
+      what:txt,
+      place:pick?pick.n:null,
+      placeTxt:pick?null:"No shop matched. Ask for it by name locally.",
+      addr:pick?(pick.addr||""):"",
+      hours:oh?oh.txt:(pick&&pick.oh?pick.oh:""),
+      closedToday:oh?!oh.open:null,
+      why:pick?("Matched by shop type ("+pick.shop.replace(/_/g," ")+") from OpenStreetMap, not by reputation. A researched pack would name the best one instead."):
+                "The live lookup found the dish but no shop of the right type nearby.",
+      order:named?"The dish carries this city's name, which is the strongest signal a live lookup can read.":"",
+      warn:named?"":"Live result, not reviewed by any food writer.",
+      alts:pool.slice(1,4).map(p=>({n:p.n,d:[p.shop.replace(/_/g," "),p.addr,(ohToday(p.oh)||{}).txt].filter(Boolean).join(" · ")}))
+    };
+  });
+  // put named-after-the-city dishes first inside must
+  items.sort((a,b)=>(b.only?1:0)-(a.only?1:0));
+  const extra=places.filter(p=>p.oh).slice(0,10);
+  return{
+    name:g.name,live:1,lat:g.lat,lng:g.lon,ts:Date.now(),
+    aka:[q.toLowerCase(),g.name.toLowerCase()],
+    items:items,
+    sources:[
+      {n:"OpenStreetMap, via Nominatim and Overpass",k:"Live, open data",
+       b:"Nominatim turned the name you typed into coordinates. Overpass then returned "+places.length+" food businesses within 2.6 km, with whatever opening hours local mappers have recorded.",
+       note:"Opening hours here are as live as OpenStreetMap is, which varies by city. "+extra.length+" of these places had hours recorded. Nominatim's usage policy forbids autocomplete, so lookup only runs when you press Go.",
+       u:"https://operations.osmfoundation.org/policies/nominatim/"},
+      {n:"Wikipedia, "+hits[0],k:"Live, encyclopaedic",
+       b:"The dish list comes from the articles linked out of this one, filtered to those whose own opening lines describe food.",
+       note:"It knows what the dishes are and nothing about where to eat them. That gap is the whole reason researched packs exist.",
+       u:"https://en.wikipedia.org/wiki/"+enc(hits[0].replace(/ /g,"_"))}],
+    gap:"This pack was assembled live and nobody has reviewed it. It can tell you a dish exists in this region and find a shop of the right type nearby, but it cannot tell you which shop is good, which dish is exclusive to this city rather than the wider region, or what is worth a day trip. Dishes carrying the city's own name are promoted to Must try because that is the one exclusivity signal readable without a human."
+  };
+}
+async function geo(q){
+  const j=await jget(NOM+"?format=jsonv2&addressdetails=1&limit=1&accept-language=en&q="+enc(q),11000);
+  if(!j||!j.length)return null;
+  const a=j[0], ad=a.address||{};
+  return{name:a.name||q,lat:+a.lat,lon:+a.lon,display:a.display_name||q,
+    country:ad.country||"",state:ad.state||ad.region||ad.county||""};
+}
+
+/* refresh a researched pack's opening hours from OpenStreetMap, without blocking the page */
+async function refreshHours(pack,after){
+  if(!pack.lat)return;
+  try{
+    const oq='[out:json][timeout:20];('
+      +'nwr["amenity"~"^(restaurant|cafe|fast_food|pub|bar|ice_cream)$"](around:3000,'+pack.lat+','+pack.lng+');'
+      +'nwr["shop"~"^(bakery|confectionery|pastry|chocolate)$"](around:3000,'+pack.lat+','+pack.lng+');'
+      +');out tags 200;';
+    const oj=await opost(oq);
+    const by={};
+    (oj.elements||[]).forEach(e=>{const T2=e.tags||{};
+      if(T2.name&&T2.opening_hours)by[norm(T2.name)]=T2.opening_hours;});
+    let n=0;
+    pack.items.forEach(it=>{
+      if(!it.place)return;
+      const k=norm(it.place), hit=by[k]||Object.keys(by).find(x=>x.indexOf(k)>-1||k.indexOf(x)>-1);
+      const oh=hit?ohToday(by[k]||by[hit]):null;
+      if(oh){it.hours=oh.txt;it._liveH=1;it.closedToday=!oh.open;n++;}
+    });
+    if(n&&after)after(n);
+  }catch(e){}
+}
+const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"").slice(0,18);
+
+/* ===================== state ===================== */
+const S={city:null,pack:null,tab:"must",veg:false,openOnly:false,done:{},note:""};
+try{
+  const l=localStorage.getItem("fb.lang"); if(l&&T[l])L=l;
+  S.done=JSON.parse(localStorage.getItem("fb.done")||"{}")||{};
+  const tb=localStorage.getItem("fb.tab"); if(tb)S.tab=tb;
+}catch(e){}
+const save=(k,v)=>{try{localStorage.setItem("fb."+k,v)}catch(e){}};
+const cacheGet=s=>{try{const j=JSON.parse(localStorage.getItem("fb.c."+s)||"null");
+  return j&&Date.now()-j.ts<86400000?j:null;}catch(e){return null}};
+const cacheSet=(s,p)=>{try{localStorage.setItem("fb.c."+s,JSON.stringify(p))}catch(e){}};
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+
+const shut=it=>it.closedToday===true||(Array.isArray(it.closed)&&it.closed.indexOf(DAY)>-1);
+const inSeas=it=>!!it.months&&it.months.indexOf(MON)>-1;
+const kk=it=>it.d+"|"+(it.place||it.placeTxt||"");
+const app=document.getElementById("app");
+let REG=[];
+const vis=()=>(S.pack?S.pack.items:[]).filter(it=>{
+  if(S.veg&&!it.veg)return false;
+  if(S.openOnly&&shut(it))return false;
+  return true;});
+function ago(ts){
+  const m=Math.round((Date.now()-ts)/60000);
+  if(m<2)return t("justnow");
+  if(m<60)return m+" "+t("minago");
+  if(m<1440)return Math.round(m/60)+" "+t("hrago");
+  return Math.round(m/1440)+" "+t("dayago");
+}
+
+/* ===================== welcome ===================== */
+function hello(){
+  app.innerHTML=`<div class="hello">
+    <div class="brand">First Bite</div>
+    <h1>${esc(t("greet"))}</h1>
+    <p class="say">${esc(t("say"))}</p>
+    <div class="lang"><select id="lsel" aria-label="${esc(t("lang"))}">
+      ${LANGS.map(([k,n])=>`<option value="${k}"${k===L?" selected":""}>${esc(n)}</option>`).join("")}</select></div>
+    <p class="lnote">${esc(t("lnote"))}</p>
+    <button class="big" id="geo">${esc(t("loc"))}</button>
+    <div class="typer"><input id="cin" placeholder="${esc(t("tph"))}" autocomplete="off" autocapitalize="words">
+      <button id="cgo">${esc(t("go"))}</button></div>
+    <div class="orr">${esc(t("or"))}</div>
+    ${Object.keys(PACKS).map(k=>{const n=PACKS[k].items.length,o=PACKS[k].items.filter(i=>i.only).length;
+      return `<button class="pickbtn" data-k="${k}"><span class="pn">${esc(PACKS[k].name)}</span>
+        <span class="pd">${n} ${esc(t("items"))}${o?" · "+o+" 📍":""}</span></button>`}).join("")}
+    <p class="hnote" id="hnote">${esc(S.note)}</p></div>`;
+  document.getElementById("lsel").addEventListener("change",e=>{L=e.target.value;save("lang",L);hello();});
+  document.getElementById("geo").addEventListener("click",()=>{
+    const n=document.getElementById("hnote");
+    if(!navigator.geolocation){n.textContent="This browser gives no location. Type a city instead.";return;}
+    n.textContent="…";
+    navigator.geolocation.getCurrentPosition(p=>{
+      const near=Object.keys(PACKS).map(k=>[k,Math.hypot(p.coords.latitude-PACKS[k].lat,(p.coords.longitude-PACKS[k].lng)*0.67)])
+        .sort((a,b)=>a[1]-b[1])[0];
+      if(near[1]<1.1)start(near[0],PACKS[near[0]].name);
+      else start(null,p.coords.latitude.toFixed(4)+", "+p.coords.longitude.toFixed(4));
+    },()=>{n.textContent="Location refused or blocked here. Type a city instead.";},
+    {enableHighAccuracy:true,timeout:9000,maximumAge:120000});});
+  const typed=()=>{const raw=(document.getElementById("cin").value||"").trim();
+    if(!raw)return;
+    const v=raw.toLowerCase();
+    const hit=Object.keys(PACKS).find(k=>PACKS[k].aka.some(a=>a.indexOf(v)===0||v.indexOf(a)===0));
+    start(hit||null,raw);};
+  document.getElementById("cgo").addEventListener("click",typed);
+  document.getElementById("cin").addEventListener("keydown",e=>{if(e.key==="Enter")typed();});
+  app.querySelectorAll(".pickbtn").forEach(b=>b.addEventListener("click",()=>start(b.dataset.k,PACKS[b.dataset.k].name)));
+}
+
+/* ===================== 3-stage loader ===================== */
+function start(packKey,label,force){
+  const names=[t("st1"),t("st2"),t("st3")];
+  app.innerHTML=`<div class="load"><div class="lc">First Bite</div><h2>${esc(label)}</h2>
+    <div class="steps">${names.map((n,i)=>
+      `<div class="step" id="s${i}"><span class="stit">${SV.tick}</span>
+        <span class="sbody"><span class="slbl">${esc(n)}</span><span class="ssub" id="u${i}"></span></span></div>`).join("")}</div>
+    <div id="lout"></div></div>`;
+  const step=(i,st,sub)=>{const e=document.getElementById("s"+i);if(!e)return;
+    e.className="step "+(st==="ok"?"ok":st==="err"?"err":"run");
+    const u=document.getElementById("u"+i); if(u&&sub!=null)u.textContent=sub;};
+  const fail=(i,msg)=>{step(i,"err");
+    const o=document.getElementById("lout");
+    o.innerHTML=`<p class="lerr">${esc(msg)}</p><button class="lback" id="lb">${esc(t("lback"))}</button>`;
+    document.getElementById("lb").addEventListener("click",()=>{S.note="";hello();});};
+
+  if(packKey&&PACKS[packKey]){
+    // researched pack: stages are real but quick, then hours refresh runs live in the background
+    step(0,"run",PACKS[packKey].sources.length+" reviewed sources");
+    setTimeout(()=>{step(0,"ok",PACKS[packKey].sources.map(s=>s.k).join(" · "));
+      step(1,"run",PACKS[packKey].items.length+" dishes");
+      setTimeout(()=>{S.pack=PACKS[packKey];S.city=packKey;REG=S.pack.items;
+        step(1,"ok",S.pack.items.length+" dishes · "+new Set(S.pack.items.map(i=>i.place||i.placeTxt)).size+" places");
+        step(2,"run","checking today");
+        setTimeout(()=>{step(2,"ok",DAYN[DAY]);
+          setTimeout(()=>{render();
+            refreshHours(S.pack,n=>{S.pack._hoursLive=n;S.pack._hoursAt=Date.now();if(S.city===packKey)render();});
+          },260);},300);},300);},320);
+    return;
+  }
+  // live city
+  const sl=slug(label);
+  const cached=!force&&cacheGet(sl);
+  if(cached){
+    step(0,"ok","cache · "+ago(cached.ts));step(1,"ok",cached.items.length+" dishes");
+    setTimeout(()=>{step(2,"ok",DAYN[DAY]);S.pack=cached;S.city=sl;REG=cached.items;setTimeout(render,240);},260);
+    return;
+  }
+  liveLookup(label,step).then(p=>{
+    step(2,"ok",p.items.length+" dishes · "+DAYN[DAY]);
+    cacheSet(sl,p); S.pack=p; S.city=sl; REG=p.items;
+    setTimeout(render,300);
+  }).catch(err=>{
+    const soft=err&&err.soft;
+    if(soft==="nocity"||soft==="nodish")fail(0,t("lnone"));
+    else fail(0,t("lfail"));
+  });
+}
+
+/* ===================== city view ===================== */
+function tagsFor(it){
+  const g=[];
+  if(it.only)g.push(["only",t("only")]);
+  if(it.local)g.push(["local",t("local")]);
+  if(it.live)g.push(["lv",t("livet")]);
+  if(it.seas&&inSeas(it))g.push(["seas",t("inseas")]);
+  else if(it.seas)g.push(["off",it.seas]);
+  if(it.reg)g.push(["reg",it.reg]);
+  if(shut(it))g.push(["shut",t("closed")]);
+  return g.length?`<div class="tags">${g.map(([c,x])=>`<span class="tg ${c}">${esc(x)}</span>`).join("")}</div>`:"";
+}
+function rowHTML(it){
+  const i=REG.indexOf(it), on=!!S.done[kk(it)];
+  const q=it.place?it.place+" "+(it.addr||""):(it.placeTxt||"");
+  return `<div class="row ${on?"done":""}" data-i="${i}"><div class="rmain">
+    <button class="tick" data-tk="${i}" aria-label="Mark eaten"><i>${SV.tick}</i></button>
+    <div class="rtext"><div class="dish">${esc(it.d)}</div>
+      ${it.vn?`<div class="vn">${esc(it.vn)}</div>`:""}
+      <div class="place">${it.place?esc(it.place)+(it.addr?", "+esc(it.addr):""):esc(it.placeTxt||"")}</div>
+      ${tagsFor(it)}</div>
+    <div class="acts">
+      ${it.place?`<a class="act" href="${esc(G(q,it.pid))}" target="_blank" rel="noopener" aria-label="Map">${SV.pin}</a>`:""}
+      <button class="act bi" data-i="${i}" aria-label="Info">${SV.info}</button>
+      <button class="act bv" data-i="${i}" aria-label="Alternatives">${SV.chev}</button></div>
+  </div><div class="alts" hidden></div></div>`;
+}
+function grouped(list){
+  const order=[],by={};
+  list.forEach(it=>{const c=it.cat||"Other";if(!by[c]){by[c]=[];order.push(c);}by[c].push(it);});
+  return order.map(c=>`<div class="type">${esc(c)}</div>`+by[c].map(rowHTML).join("")).join("");
+}
+const TABS=[["must","sMust"],["worth","sWorth"],["trip","sTrip"],["all","sAll"]];
+function listFor(tab,items){
+  if(tab==="all")return items.slice().sort((a,b)=>a.d.localeCompare(b.d));
+  return items.filter(i=>i.tier===tab);
+}
+function render(){
+  const P=S.pack; if(!P){hello();return;}
+  const items=vis(); REG=P.items;
+  const must=items.filter(i=>i.tier==="must");
+  const dOf=a=>a.filter(i=>S.done[kk(i)]).length;
+  const pM=must.length?Math.round(dOf(must)/must.length*100):0;
+  const pA=items.length?Math.round(dOf(items)/items.length*100):0;
+  const list=listFor(S.tab,items);
+  const live=!!P.live;
+  app.innerHTML=`
+  <div class="mast"><h1>${esc(t("title"))} ${esc(P.name)}</h1><button class="chg" id="chg">${esc(t("chg"))}</button></div>
+  <div class="prov">
+    <span class="pvt ${live?"lv":"cur"}">${esc(live?t("livep"):t("curated"))}</span>
+    ${live?`<span class="age">${esc(t("updated"))} ${esc(ago(P.ts))}</span><button class="rf" id="rfr">${esc(t("refresh"))}</button>`:""}
+    ${P._hoursLive?`<span class="age">${P._hoursLive} × OSM hours · ${esc(ago(P._hoursAt))}</span>`:""}
+  </div>
+  <div class="mx">
+    <div class="mxc only"><div class="mxh"><span class="em">📍</span>${esc(t("excl"))}</div><div class="mxn">${items.filter(i=>i.only).length}</div></div>
+    <div class="mxc"><div class="mxh"><span class="em">😋</span>${esc(t("mustM"))}</div><div class="mxn">${must.length}</div></div>
+    <div class="mxc"><div class="mxh">${esc(t("doneM"))}</div><div class="halves">
+      <div class="half"><div class="hn">${pM}%</div><div class="hk">${esc(t("hMust"))}</div><div class="hbar"><i style="width:${pM}%"></i></div></div>
+      <div class="half"><div class="hn">${pA}%</div><div class="hk">${esc(t("hAll"))}</div><div class="hbar"><i style="width:${pA}%"></i></div></div>
+    </div></div>
+  </div>
+  <div class="tabs">${TABS.map(([k,lbl])=>
+    `<button class="tb" data-tab="${k}" aria-pressed="${k===S.tab}">${esc(t(lbl))}<b>${listFor(k,items).length}</b></button>`).join("")}</div>
+  <div class="tools"><button class="tool" id="vegF" aria-pressed="${S.veg}">${esc(t("veg"))}</button>
+    <button class="tool" id="openF" aria-pressed="${S.openOnly}">${esc(t("open"))}</button></div>
+  <div class="sec">${list.length?(S.tab==="all"?list.map(rowHTML).join(""):grouped(list))
+    :`<p class="empty">${esc(S.tab==="trip"?t("noTrip"):"—")}</p>`}</div>
+  <div class="srcs"><h2>${esc(t("srcH"))}</h2>
+    ${P.sources.map(s=>`<div class="sitem"><div class="sn">${esc(s.n)}</div><div class="sk">${esc(s.k)}</div>
+      <div class="sb">${esc(s.b)}</div><div class="sb">${esc(s.note)}</div>
+      ${s.u?`<a class="sl" href="${esc(s.u)}" target="_blank" rel="noopener">Open source</a>`:""}</div>`).join("")}
+    <p class="cav">${esc(P.gap)}</p><p class="cav">${esc(t("cav"))}</p>
+    <p class="cav">Place and hours data © OpenStreetMap contributors, ODbL. Dish text from Wikipedia, CC BY-SA.</p></div>`;
+  document.getElementById("chg").addEventListener("click",()=>{S.pack=null;S.city=null;S.note="";hello();window.scrollTo(0,0);});
+  document.getElementById("vegF").addEventListener("click",()=>{S.veg=!S.veg;render();});
+  document.getElementById("openF").addEventListener("click",()=>{S.openOnly=!S.openOnly;render();});
+  const r=document.getElementById("rfr");
+  if(r)r.addEventListener("click",()=>start(null,P.name,true));
+  app.querySelectorAll(".tb").forEach(b=>b.addEventListener("click",()=>{
+    S.tab=b.dataset.tab;save("tab",S.tab);render();window.scrollTo(0,0);}));
+}
+
+app.addEventListener("click",e=>{
+  const bi=e.target.closest(".bi"), bv=e.target.closest(".bv"), tk=e.target.closest(".tick");
+  if(tk){const it=REG[+tk.dataset.tk],k=kk(it);
+    if(S.done[k])delete S.done[k];else S.done[k]=1;
+    save("done",JSON.stringify(S.done));render();return;}
+  if(bi){sheet(REG[+bi.dataset.i]);return;}
+  if(bv){const row=bv.closest(".row"),box=row.querySelector(".alts"),it=REG[+bv.dataset.i];
+    if(!box.hasChildNodes()){
+      box.innerHTML=(it.alts&&it.alts.length)?it.alts.map(a=>{
+        const q=a.n+" "+(a.d||"");
+        return `<div class="alt"><div class="at"><div class="an">${esc(a.n)}</div><div class="ad">${esc(a.d||"")}</div></div>
+          <div class="acts"><a class="act" href="${esc(G(q,a.pid))}" target="_blank" rel="noopener" aria-label="Map">${SV.pin}</a>
+          <a class="act" href="${esc(IMG(it.d+" "+a.n))}" target="_blank" rel="noopener" aria-label="Photos">${SV.cam}</a></div></div>`;}).join("")
+        :`<div class="none">${esc(t("alts"))}</div>`;}
+    const sh=box.hidden;box.hidden=!sh;bv.classList.toggle("on",sh);}
+});
+
+function sheet(it){
+  const q=it.place?it.place+" "+(it.addr||""):(it.placeTxt||"");
+  const f=(l,v,c)=>v?`<div class="fld ${c||""}"><span class="eb">${l}</span><p>${esc(v)}</p></div>`:"";
+  const d=document.createElement("div");d.className="scrim";
+  d.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">
+    <div class="shd"><div><h3>${esc(it.d)}</h3>${it.vn?`<div class="vn">${esc(it.vn)}</div>`:""}</div>
+      <button class="sx" aria-label="Close">×</button></div>
+    ${tagsFor(it)}
+    <a class="photos" href="${esc(IMG(it.d+" "+(it.place||"")+" "+(it.vn||"")))}" target="_blank" rel="noopener">${SV.cam} ${esc(t("photo"))}</a>
+    ${f(esc(t("what")),it.what)}${f(esc(t("order")),it.order)}
+    ${f(esc(t("where")),it.place?it.place+(it.addr?", "+it.addr:""):it.placeTxt)}
+    ${f(esc(t("why")),it.why)}
+    ${f(esc(t("hours"))+(it._liveH?" · OSM":""),it.hours,"mono")}
+    ${shut(it)?`<div class="fld"><span class="eb">${esc(t("closed"))}</span><p class="red">${esc(DAYN[DAY])}.</p></div>`:""}
+    ${it.warn?`<div class="fld"><span class="eb">${esc(t("warn"))}</span><p class="red">${esc(it.warn)}</p></div>`:""}
+    ${it.place?`<div class="fld"><span class="eb">${esc(t("where"))}</span><p><a href="${esc(G(q,it.pid))}" target="_blank" rel="noopener">Google Maps</a></p></div>`:""}
+  </div>`;
+  d.addEventListener("click",e=>{if(e.target===d||e.target.classList.contains("sx"))d.remove();});
+  document.body.appendChild(d);
+}
+hello();
+})();
+</script>
