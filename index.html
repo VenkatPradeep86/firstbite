@@ -692,7 +692,11 @@ async function opost(body){
   }
   throw last||new Error("overpass unreachable");
 }
-const FOODRE=/(dish|food|snack|sweet|dessert|cuisine|cake|bread|soup|stew|curry|rice|noodle|pastr|confection|beverage|drink|sausage|cheese|dumpling|pancake|fried|baked|steamed|roasted|savou?ry|pudding|biscuit|halwa|sweetmeat|batter|flatbread|parotta|paratha|roti|dosa|porridge|broth|pickle|chutney|ferment)/i;
+/* must name a concrete edible thing... */
+const FOODRE=/\b(dish|cake|torte|gateau|pastry|pastries|bread|flatbread|roll|bun|loaf|soup|broth|stew|goulash|dumpling|sausage|pudding|biscuit|cookie|beverage|drink|beer|wine|cider|cheese|sweet|sweets|dessert|snack|noodle|pasta|pancake|roast|strudel|schnitzel|halwa|curry|rice|biryani|porridge|fritter|pie|tart|confection|candy|chocolate|jam|preserve|parotta|paratha|roti|dosa|idli|sundal|chutney|pickle|salad)\b/i;
+/* ...and must NOT be a cuisine, a custom or a place. This is what Bush tucker,
+   Chifa and Christian dietary laws all trip over. */
+const NOTDISH=/(\bcuisine\b|dietary law|dietary practice|culinary tradition|refers to (the )?food|is a (term|region|country|city|province|state|ethnic|language)|food industry|agricultur|restaurant chain|is the practice|eating habits|table manners|is a style of cooking)/i;
 function catOf(s){
   s=(s||"").toLowerCase();
   if(/\b(halwa|barfi|laddu|laddoo|kheer|payasam|jaggery|sweetmeat|candy|toffee|fudge|marzipan)\b/.test(s))return "Sweet";
@@ -700,7 +704,7 @@ function catOf(s){
   if(/\b(pastry|biscuit|cookie|doughnut|donut|bun|croissant|scone)\b/.test(s))return "Pastry";
   if(/\b(bread|roti|parotta|paratha|naan|flatbread|loaf|chapati|dosa|dosai)\b/.test(s))return "Bread";
   if(/\b(soup|broth|consomm|rasam|shorba)\b/.test(s))return "Soup";
-  if(/\b(beer|wine|coffee|tea|juice|beverage|liquor|cocktail|spirit|cider|lassi)\b/.test(s))return "Drink";
+  if(/\b(beer|wine|coffee|tea|juice|beverage|liquor|cocktail|spirit|cider|lassi|drink|soda|lemonade|schnapps|spritz)\b/.test(s))return "Drink";
   if(/\b(ice cream|sorbet|gelato|pudding|custard|dessert)\b/.test(s))return "Dessert";
   if(/\b(dumpling|knödel|knodel|momo|pierogi|gnocchi)\b/.test(s))return "Dumpling";
   if(/\b(noodle|pasta|spätzle|spaetzle|vermicelli)\b/.test(s))return "Noodles";
@@ -720,18 +724,31 @@ async function liveLookup(q,step){
   if(!g)throw {soft:"nocity"};
   step(0,"run",g.display.split(",").slice(0,3).join(", "));
   const topic=g.state||g.country||g.name;
-  const sr=await jget(WP+"?action=query&list=search&format=json&origin=*&srlimit=4&srsearch="+enc(topic+" cuisine"),10000);
-  const hits=((sr.query||{}).search||[]).map(x=>x.title).filter(x=>/cuisine|food/i.test(x));
-  if(!hits.length)throw {soft:"nodish"};
-  step(0,"ok",g.display.split(",").slice(0,3).join(", ")+" · "+hits[0]);
+  let cats=[];
+  for(const probe of [g.state,g.country,topic].filter(Boolean)){
+    try{const cs=await jget(WP+"?action=query&list=search&srnamespace=14&srlimit=5&format=json&origin=*&srsearch="+enc(probe+" cuisine"),10000);
+      ((cs.query||{}).search||[]).forEach(x=>{if(/cuisine|dishes|desserts|food/i.test(x.title)&&cats.indexOf(x.title)<0)cats.push(x.title)});
+    }catch(e){}
+    if(cats.length)break;
+  }
+  if(!cats.length)throw {soft:"nodish"};
+  const label=cats[0].replace(/^Category:/,"");
+  step(0,"ok",g.display.split(",").slice(0,3).join(", ")+" · "+label);
 
   /* ---- stage 2: dishes + places ---- */
-  step(1,"run",hits[0]);
-  const lk=await jget(WP+"?action=query&prop=links&plnamespace=0&pllimit=400&format=json&origin=*&titles="+enc(hits[0]),12000);
-  const pages=(lk.query||{}).pages||{};
+  step(1,"run",label);
+  const seen={},subs=[];
   let titles=[];
-  Object.keys(pages).forEach(k=>{(pages[k].links||[]).forEach(l=>titles.push(l.title))});
-  titles=titles.filter(x=>!/^(List of|Category:|Cuisine of|.* cuisine$)/i.test(x));
+  async function members(cat,depth){
+    const cm=await jget(WP+"?action=query&list=categorymembers&cmtype=page%7Csubcat&cmlimit=300&format=json&origin=*&cmtitle="+enc(cat),12000);
+    ((cm.query||{}).categorymembers||[]).forEach(m=>{
+      if(m.ns===14){if(depth<1&&subs.length<7&&/cuisine|dish|dessert|bread|cake|sweet|pastr|soup|drink|beverage|snack/i.test(m.title)&&subs.indexOf(m.title)<0)subs.push(m.title);}
+      else if(!seen[m.title]){seen[m.title]=1;titles.push(m.title);}});
+  }
+  await members(cats[0],0);
+  for(const sc of subs.slice(0,6)){step(1,"run",sc.replace(/^Category:/,""));try{await members(sc,1)}catch(e){}}
+  titles=titles.filter(x=>!/^(List of|Category:|Cuisine of|Outline of|History of|.* cuisine$)/i.test(x));
+  if(!titles.length)throw {soft:"nodish"};
   const cLC=g.name.toLowerCase(), sLC=(g.state||"").toLowerCase();
   const hot=titles.filter(x=>{const l=x.toLowerCase();
     return (cLC.length>3&&l.indexOf(cLC)>-1)||(sLC.length>3&&l.indexOf(sLC)>-1);});
@@ -749,7 +766,7 @@ async function liveLookup(q,step){
       Object.keys(pp).forEach(k=>{if(pp[k].extract)ext[pp[k].title]=pp[k].extract.replace(/\s+/g," ").trim()});
     }catch(e){}
   }
-  const dishes=Object.keys(ext).filter(k=>FOODRE.test(ext[k])).slice(0,34);
+  const dishes=Object.keys(ext).filter(k=>FOODRE.test(ext[k])&&!NOTDISH.test(ext[k])&&!NOTDISH.test(k)).slice(0,40);
   if(!dishes.length)throw {soft:"nodish"};
 
   step(1,"run","openstreetmap · places near "+g.name);
@@ -814,10 +831,10 @@ async function liveLookup(q,step){
        b:"Nominatim turned the name you typed into coordinates. "+(placesErr?("The places step FAILED: "+placesErr+". Dish names below are real; the shops are missing because of this, not because the city has none."):("Overpass then returned "+places.length+" food businesses within 3 km, with whatever opening hours local mappers have recorded.")),
        note:"Opening hours here are as live as OpenStreetMap is, which varies by city. "+extra.length+" of these places had hours recorded. Nominatim's usage policy forbids autocomplete, so lookup only runs when you press Go.",
        u:"https://operations.osmfoundation.org/policies/nominatim/"},
-      {n:"Wikipedia, "+hits[0],k:"Live, encyclopaedic",
-       b:"The dish list comes from the articles linked out of this one, filtered to those whose own opening lines describe food.",
+      {n:"Wikipedia, "+label,k:"Live, encyclopaedic",
+       b:"Dishes come from the members of this category and its subcategories, then each one's opening lines must name a concrete edible thing. Articles about a cuisine, a custom or a place are rejected.",
        note:"It knows what the dishes are and nothing about where to eat them. That gap is the whole reason researched packs exist.",
-       u:"https://en.wikipedia.org/wiki/"+enc(hits[0].replace(/ /g,"_"))}],
+       u:"https://en.wikipedia.org/wiki/"+enc(cats[0].replace(/ /g,"_"))}],
     gap:"This pack was assembled live and nobody has reviewed it. It can tell you a dish exists in this region and find a shop of the right type nearby, but it cannot tell you which shop is good, which dish is exclusive to this city rather than the wider region, or what is worth a day trip. Dishes carrying the city's own name are promoted to Must try because that is the one exclusivity signal readable without a human."
   };
 }
@@ -861,9 +878,10 @@ try{
   const tb=localStorage.getItem("fb.tab"); if(tb)S.tab=tb;
 }catch(e){}
 const save=(k,v)=>{try{localStorage.setItem("fb."+k,v)}catch(e){}};
+const CACHE_V=3;
 const cacheGet=s=>{try{const j=JSON.parse(localStorage.getItem("fb.c."+s)||"null");
-  return j&&Date.now()-j.ts<86400000?j:null;}catch(e){return null}};
-const cacheSet=(s,p)=>{try{localStorage.setItem("fb.c."+s,JSON.stringify(p))}catch(e){}};
+  return j&&j.v===CACHE_V&&Date.now()-j.ts<86400000?j:null;}catch(e){return null}};
+const cacheSet=(s,p)=>{try{p.v=CACHE_V;localStorage.setItem("fb.c."+s,JSON.stringify(p))}catch(e){}};
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 
 const shut=it=>it.closedToday===true||(Array.isArray(it.closed)&&it.closed.indexOf(DAY)>-1);
